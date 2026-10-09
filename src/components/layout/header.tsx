@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/", label: "Home" },
+  { href: "/home-2", label: "Home V2" },
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
@@ -26,19 +27,29 @@ export function Header() {
         <Logo />
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Main Navigation">
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Main Navigation">
           {links.map((l) => {
-            const isActive = pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href));
+            const isActive =
+              l.href === "/"
+                ? pathname === "/"
+                : l.href === "/home-2"
+                  ? pathname === "/home-2" || pathname === "/v2"
+                  : pathname.startsWith(l.href);
             return (
               <Link
                 key={l.href}
                 href={l.href}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-foreground",
+                  "text-sm font-medium transition-colors hover:text-foreground flex items-center gap-1.5",
                   isActive ? "text-foreground font-semibold" : "text-muted-foreground",
                 )}
               >
                 {l.label}
+                {l.href === "/home-2" && (
+                  <span className="text-[10px] font-semibold bg-accent text-accent-foreground px-1.5 py-0.5 rounded-full leading-none">
+                    Paper
+                  </span>
+                )}
               </Link>
             );
           })}
