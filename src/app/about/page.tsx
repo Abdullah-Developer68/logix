@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { PageHero } from "@/components/ui/page-hero";
@@ -6,8 +7,8 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Avatar } from "@/components/ui/avatar";
 import { Cta } from "@/components/sections/cta";
+import { FadeIn, StaggerContainer, StaggerItem, MotionCardWrapper } from "@/components/ui/motion";
 
 export const metadata: Metadata = {
   title: "About Us — Logix Software Consultancy",
@@ -77,25 +78,25 @@ const leadership = [
     name: "Zain Malik",
     role: "Managing Director & Co-Founder",
     bio: "Former Staff Engineer at global tech firms. 14+ years designing high-throughput distributed systems.",
-    initials: "ZM",
+    image: "/images/team/zain.jpg",
   },
   {
     name: "Ayesha Tariq",
     role: "VP of Product Engineering",
     bio: "Specializes in Next.js architectures, scalable microfrontends, and rapid MVP execution.",
-    initials: "AT",
+    image: "/images/team/ayesha.jpg",
   },
   {
     name: "David Chen",
     role: "Head of Cloud & Infrastructure",
     bio: "AWS & GCP certified architect with deep experience in SOC2 compliance and zero-downtime migrations.",
-    initials: "DC",
+    image: "/images/team/david.jpg",
   },
   {
     name: "Sarah Jenkins",
     role: "Director of UX & Design Systems",
     bio: "Passionate about accessible human-centered interfaces, typography, and cohesive design tokens.",
-    initials: "SJ",
+    image: "/images/team/sarah.jpg",
   },
 ];
 
@@ -125,30 +126,70 @@ export default function AboutPage() {
           </ButtonLink>
         </PageHero>
 
+        {/* Studio / Engineering Office Visual Showcase */}
+        <section className="bg-background py-12 border-b border-border">
+          <div className="container-x">
+            <FadeIn>
+              <div className="relative h-[340px] sm:h-[480px] w-full overflow-hidden rounded-2xl border border-border/80 shadow-2xl">
+                <Image
+                  src="/images/about/team-office.jpg"
+                  alt="Logix engineering studio and collaborative workspace"
+                  fill
+                  priority
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/85 via-primary/20 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 sm:bottom-10 sm:left-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-white">
+                  <div>
+                    <Badge variant="brand" dot className="bg-brand text-primary font-semibold">
+                      Engineering Hubs
+                    </Badge>
+                    <h3 className="mt-3 text-xl sm:text-2xl font-bold text-white">
+                      Where craft meets velocity.
+                    </h3>
+                    <p className="mt-1 text-xs sm:text-sm text-white/80 max-w-lg">
+                      Our distributed engineering hubs in Karachi, Lahore, London, and Austin build around asynchronous deep work and rapid shipping.
+                    </p>
+                  </div>
+                  <div className="flex gap-3 shrink-0">
+                    <span className="rounded-lg bg-white/10 px-3 py-1.5 text-xs backdrop-blur border border-white/15">
+                      100% In-house
+                    </span>
+                    <span className="rounded-lg bg-white/10 px-3 py-1.5 text-xs backdrop-blur border border-white/15">
+                      Zero Outsource
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
         {/* Stats Grid */}
         <section className="border-b border-border bg-muted py-14">
           <div className="container-x">
-            <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+            <StaggerContainer className="grid grid-cols-2 gap-4 lg:grid-cols-4">
               {stats.map((s) => (
-                <div
-                  key={s.label}
-                  className={`rounded-xl p-6 border ${
-                    s.highlight
-                      ? "bg-accent border-brand-strong/20"
-                      : "bg-background border-border"
-                  }`}
-                >
+                <StaggerItem key={s.label}>
                   <div
-                    className={`text-4xl sm:text-5xl font-bold tracking-tight ${
-                      s.highlight ? "text-brand-strong" : "text-primary"
+                    className={`rounded-xl p-6 border transition-all hover:shadow-md ${
+                      s.highlight
+                        ? "bg-accent border-brand-strong/20"
+                        : "bg-background border-border"
                     }`}
                   >
-                    {s.value}
+                    <div
+                      className={`text-4xl sm:text-5xl font-bold tracking-tight ${
+                        s.highlight ? "text-brand-strong" : "text-primary"
+                      }`}
+                    >
+                      {s.value}
+                    </div>
+                    <div className="mt-1 text-sm font-medium text-muted-foreground">{s.label}</div>
                   </div>
-                  <div className="mt-1 text-sm font-medium text-muted-foreground">{s.label}</div>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
@@ -160,17 +201,21 @@ export default function AboutPage() {
               title="Four principles that define every Logix engagement."
               description="We founded Logix to provide the antithesis of the traditional dev shop. We believe software quality is directly proportional to craft and accountability."
             />
-            <div className="grid gap-6 md:grid-cols-2">
+            <StaggerContainer className="grid gap-6 md:grid-cols-2">
               {values.map((v) => (
-                <Card key={v.title} className="flex flex-col p-8">
-                  <div className="flex size-11 items-center justify-center rounded-lg bg-accent text-xl">
-                    {v.icon}
-                  </div>
-                  <h3 className="mt-6 text-lg font-bold text-primary">{v.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{v.description}</p>
-                </Card>
+                <StaggerItem key={v.title}>
+                  <MotionCardWrapper>
+                    <Card className="flex flex-col p-8 h-full shadow-sm">
+                      <div className="flex size-11 items-center justify-center rounded-lg bg-accent text-xl">
+                        {v.icon}
+                      </div>
+                      <h3 className="mt-6 text-lg font-bold text-primary">{v.title}</h3>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">{v.description}</p>
+                    </Card>
+                  </MotionCardWrapper>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
@@ -182,19 +227,26 @@ export default function AboutPage() {
               title="A decade of continuous engineering evolution."
               description="From boutique consultancy to a global technology partner trusted by industry leaders."
             />
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <StaggerContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {milestones.map((m) => (
-                <div key={m.year} className="rounded-xl border border-border bg-background p-6">
-                  <span className="inline-block text-2xl font-bold text-brand-strong">{m.year}</span>
-                  <h4 className="mt-3 text-base font-semibold text-primary">{m.title}</h4>
-                  <p className="mt-2 text-xs leading-5 text-muted-foreground">{m.description}</p>
-                </div>
+                <StaggerItem key={m.year}>
+                  <div className="rounded-xl border border-border bg-background p-6 h-full flex flex-col justify-between">
+                    <div>
+                      <span className="inline-block text-2xl font-bold text-brand-strong">{m.year}</span>
+                      <h4 className="mt-3 text-base font-semibold text-primary">{m.title}</h4>
+                      <p className="mt-2 text-xs leading-5 text-muted-foreground">{m.description}</p>
+                    </div>
+                    <div className="mt-4 pt-3 border-t border-border/40 text-[11px] font-medium text-brand-strong">
+                      ✓ Milestone Achieved
+                    </div>
+                  </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
-        {/* Leadership Team */}
+        {/* Leadership Team with Real Generated Portraits */}
         <section className="bg-background py-20 lg:py-28 border-b border-border">
           <div className="container-x">
             <SectionHeader
@@ -202,22 +254,34 @@ export default function AboutPage() {
               title="Led by engineers and practitioners."
               description="Our partners stay active on code review, architectural design, and direct client communication."
             />
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {leadership.map((member) => (
-                <Card key={member.name} className="flex flex-col justify-between p-6">
-                  <div>
-                    <Avatar initials={member.initials} className="size-14 text-base bg-accent text-brand-strong font-bold" />
-                    <h3 className="mt-4 text-base font-bold text-primary">{member.name}</h3>
-                    <p className="text-xs font-semibold text-brand-strong">{member.role}</p>
-                    <p className="mt-3 text-xs leading-5 text-muted-foreground">{member.bio}</p>
-                  </div>
-                  <div className="mt-6 pt-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
-                    <span>Verified Logix Lead</span>
-                    <Badge variant="brand" dot={false}>Core</Badge>
-                  </div>
-                </Card>
+                <StaggerItem key={member.name}>
+                  <MotionCardWrapper>
+                    <Card className="flex flex-col justify-between p-6 h-full shadow-sm hover:shadow-lg transition-shadow">
+                      <div>
+                        {/* Member Photo */}
+                        <div className="relative mb-5 h-48 w-full overflow-hidden rounded-xl border border-border bg-muted">
+                          <Image
+                            src={member.image}
+                            alt={member.name}
+                            fill
+                            className="object-cover transition-transform duration-500 hover:scale-105"
+                          />
+                        </div>
+                        <h3 className="text-lg font-bold text-primary">{member.name}</h3>
+                        <p className="text-xs font-semibold text-brand-strong">{member.role}</p>
+                        <p className="mt-3 text-xs leading-5 text-muted-foreground">{member.bio}</p>
+                      </div>
+                      <div className="mt-6 pt-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
+                        <span>Verified Logix Lead</span>
+                        <Badge variant="brand" dot={false}>Core</Badge>
+                      </div>
+                    </Card>
+                  </MotionCardWrapper>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 

@@ -1,4 +1,7 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface SectionHeaderProps {
@@ -19,7 +22,11 @@ export function SectionHeader({
   className,
 }: SectionHeaderProps) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
       className={cn(
         "flex flex-col gap-4 mb-12",
         align === "center" && "text-center items-center mx-auto max-w-2xl",
@@ -39,6 +46,6 @@ export function SectionHeader({
         )}
       </div>
       {action && <div className="shrink-0 pt-2 sm:pt-0">{action}</div>}
-    </div>
+    </motion.div>
   );
 }

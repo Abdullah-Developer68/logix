@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { PageHero } from "@/components/ui/page-hero";
@@ -7,6 +8,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Cta } from "@/components/sections/cta";
+import { FadeIn, StaggerContainer, StaggerItem, MotionCardWrapper } from "@/components/ui/motion";
 
 export const metadata: Metadata = {
   title: "Careers — Join the Logix Engineering Team",
@@ -94,6 +96,39 @@ export default function CareersPage() {
           </ButtonLink>
         </PageHero>
 
+        {/* Culture Visual Banner */}
+        <section className="bg-background py-10 border-b border-border">
+          <div className="container-x">
+            <FadeIn>
+              <div className="relative h-64 sm:h-80 w-full overflow-hidden rounded-2xl border border-border/80 shadow-xl">
+                <Image
+                  src="/images/about/team-office.jpg"
+                  alt="Logix engineering work environment"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-white">
+                  <div>
+                    <span className="eyebrow text-brand">LIFE AT LOGIX</span>
+                    <h3 className="mt-2 text-xl sm:text-2xl font-bold text-white">
+                      Built for engineers who take pride in their craft.
+                    </h3>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="rounded-lg bg-white/10 px-3 py-1 text-xs backdrop-blur border border-white/15">
+                      No Crunch Time
+                    </span>
+                    <span className="rounded-lg bg-white/10 px-3 py-1 text-xs backdrop-blur border border-white/15">
+                      Async First
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
         {/* Culture & Perks Grid */}
         <section className="bg-background py-20 lg:py-28 border-b border-border">
           <div className="container-x">
@@ -102,15 +137,19 @@ export default function CareersPage() {
               title="An environment built by engineers, for engineers."
               description="We respect deep work and prioritize substantive engineering results over performative corporate ceremonies."
             />
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <StaggerContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {perks.map((p) => (
-                <Card key={p.title} className="p-6">
-                  <span className="text-3xl">{p.icon}</span>
-                  <h3 className="mt-4 text-base font-bold text-primary">{p.title}</h3>
-                  <p className="mt-2 text-xs leading-5 text-muted-foreground">{p.description}</p>
-                </Card>
+                <StaggerItem key={p.title}>
+                  <MotionCardWrapper>
+                    <Card className="p-6 h-full shadow-sm hover:shadow-md transition-shadow">
+                      <span className="text-3xl">{p.icon}</span>
+                      <h3 className="mt-4 text-base font-bold text-primary">{p.title}</h3>
+                      <p className="mt-2 text-xs leading-5 text-muted-foreground">{p.description}</p>
+                    </Card>
+                  </MotionCardWrapper>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
@@ -122,26 +161,30 @@ export default function CareersPage() {
               title="Explore open technical positions."
               description="Ready to do the best work of your career? Review our active roles below."
             />
-            <div className="space-y-4">
+            <StaggerContainer className="space-y-4">
               {openRoles.map((role) => (
-                <Card key={role.title} className="p-6 sm:p-8 flex flex-col justify-between sm:flex-row sm:items-center gap-6">
-                  <div className="max-w-2xl">
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <Badge variant="brand" dot={false}>{role.department}</Badge>
-                      <Badge variant="outline">{role.location}</Badge>
-                      <span className="text-xs text-muted-foreground">{role.type}</span>
-                    </div>
-                    <h3 className="text-xl font-bold text-primary">{role.title}</h3>
-                    <p className="mt-2 text-xs sm:text-sm text-muted-foreground">{role.description}</p>
-                  </div>
-                  <div className="shrink-0">
-                    <ButtonLink href="mailto:careers@logix.dev" variant="default" size="default">
-                      Apply Now →
-                    </ButtonLink>
-                  </div>
-                </Card>
+                <StaggerItem key={role.title}>
+                  <MotionCardWrapper>
+                    <Card className="p-6 sm:p-8 flex flex-col justify-between sm:flex-row sm:items-center gap-6 shadow-sm hover:shadow-md transition-shadow">
+                      <div className="max-w-2xl">
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <Badge variant="brand" dot={false}>{role.department}</Badge>
+                          <Badge variant="outline">{role.location}</Badge>
+                          <span className="text-xs text-muted-foreground">{role.type}</span>
+                        </div>
+                        <h3 className="text-xl font-bold text-primary">{role.title}</h3>
+                        <p className="mt-2 text-xs sm:text-sm text-muted-foreground">{role.description}</p>
+                      </div>
+                      <div className="shrink-0">
+                        <ButtonLink href="mailto:careers@logix.dev" variant="default" size="default">
+                          Apply Now →
+                        </ButtonLink>
+                      </div>
+                    </Card>
+                  </MotionCardWrapper>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
@@ -154,4 +197,3 @@ export default function CareersPage() {
     </>
   );
 }
-

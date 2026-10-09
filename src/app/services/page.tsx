@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { PageHero } from "@/components/ui/page-hero";
@@ -9,6 +10,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion } from "@/components/ui/accordion";
 import { Cta } from "@/components/sections/cta";
+import { FadeIn, StaggerContainer, StaggerItem, MotionCardWrapper } from "@/components/ui/motion";
 
 export const metadata: Metadata = {
   title: "Services & Capabilities — Logix Software Consultancy",
@@ -231,6 +233,34 @@ export default function ServicesPage() {
           </ButtonLink>
         </PageHero>
 
+        {/* Visual Architecture Showcase */}
+        <section className="bg-background py-10 border-b border-border">
+          <div className="container-x">
+            <FadeIn>
+              <div className="relative h-64 sm:h-96 w-full overflow-hidden rounded-2xl border border-border/70 bg-primary shadow-xl">
+                <Image
+                  src="/images/blog/featured-tech.jpg"
+                  alt="Logix cloud microservices architecture & AI telemetry"
+                  fill
+                  className="object-cover opacity-80"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/60 to-transparent" />
+                <div className="absolute inset-0 flex flex-col justify-center p-8 sm:p-14 max-w-xl text-white">
+                  <Badge variant="brand" dot={false} className="w-fit mb-3 bg-brand text-primary font-bold">
+                    Architectural Excellence
+                  </Badge>
+                  <h3 className="text-2xl sm:text-3xl font-bold leading-tight text-white">
+                    Built for extreme scale and zero downtime.
+                  </h3>
+                  <p className="mt-2 text-xs sm:text-sm text-white/70 leading-6">
+                    Every service is backed by automated deployment pipelines, strict TypeScript contracts, and SOC2-compliant cloud infrastructure.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
         {/* Services Deep Dive Grid */}
         <section className="bg-background py-20 lg:py-28 border-b border-border">
           <div className="container-x">
@@ -240,87 +270,90 @@ export default function ServicesPage() {
               description="Every practice area is led by seasoned specialists who bring deep real-world experience to your technical architecture."
             />
 
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <StaggerContainer className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {serviceDetails.map((service) => (
-                <Card
-                  key={service.id}
-                  id={service.id}
-                  inverted={service.inverted}
-                  className="flex flex-col justify-between p-8"
-                >
-                  <div>
-                    <span
-                      className={`flex size-11 items-center justify-center rounded-lg text-base font-semibold ${
-                        service.inverted
-                          ? "bg-brand text-primary"
-                          : "bg-accent text-brand-strong"
-                      }`}
+                <StaggerItem key={service.id}>
+                  <MotionCardWrapper>
+                    <Card
+                      id={service.id}
+                      inverted={service.inverted}
+                      className="flex flex-col justify-between p-8 h-full shadow-sm hover:shadow-xl transition-shadow"
                     >
-                      {service.icon}
-                    </span>
-                    <h3 className="mt-6 text-xl font-bold">{service.title}</h3>
-                    <p
-                      className={`mt-3 text-sm leading-6 ${
-                        service.inverted ? "text-white/70" : "text-muted-foreground"
-                      }`}
-                    >
-                      {service.description}
-                    </p>
-
-                    {/* Tech Badges */}
-                    <div className="mt-5 flex flex-wrap gap-1.5">
-                      {service.tech.map((t) => (
+                      <div>
                         <span
-                          key={t}
-                          className={`rounded px-2 py-0.5 text-xs font-medium ${
+                          className={`flex size-11 items-center justify-center rounded-lg text-base font-semibold ${
                             service.inverted
-                              ? "bg-white/10 text-white"
-                              : "bg-muted text-muted-foreground border border-border"
+                              ? "bg-brand text-primary"
+                              : "bg-accent text-brand-strong"
                           }`}
                         >
-                          {t}
+                          {service.icon}
                         </span>
-                      ))}
-                    </div>
+                        <h3 className="mt-6 text-xl font-bold">{service.title}</h3>
+                        <p
+                          className={`mt-3 text-sm leading-6 ${
+                            service.inverted ? "text-white/70" : "text-muted-foreground"
+                          }`}
+                        >
+                          {service.description}
+                        </p>
 
-                    {/* Deliverables List */}
-                    <div className="mt-6 space-y-2 border-t border-border/50 pt-5">
-                      <p
-                        className={`text-xs font-semibold uppercase tracking-wider ${
-                          service.inverted ? "text-brand" : "text-brand-strong"
-                        }`}
-                      >
-                        Key Deliverables
-                      </p>
-                      <ul className="space-y-1.5 text-xs">
-                        {service.deliverables.map((item) => (
-                          <li
-                            key={item}
-                            className={`flex items-start gap-2 ${
-                              service.inverted ? "text-white/80" : "text-muted-foreground"
+                        {/* Tech Badges */}
+                        <div className="mt-5 flex flex-wrap gap-1.5">
+                          {service.tech.map((t) => (
+                            <span
+                              key={t}
+                              className={`rounded px-2 py-0.5 text-xs font-medium ${
+                                service.inverted
+                                  ? "bg-white/10 text-white"
+                                  : "bg-muted text-muted-foreground border border-border"
+                              }`}
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Deliverables List */}
+                        <div className="mt-6 space-y-2 border-t border-border/50 pt-5">
+                          <p
+                            className={`text-xs font-semibold uppercase tracking-wider ${
+                              service.inverted ? "text-brand" : "text-brand-strong"
                             }`}
                           >
-                            <span className="text-brand font-bold">✓</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
+                            Key Deliverables
+                          </p>
+                          <ul className="space-y-1.5 text-xs">
+                            {service.deliverables.map((item) => (
+                              <li
+                                key={item}
+                                className={`flex items-start gap-2 ${
+                                  service.inverted ? "text-white/80" : "text-muted-foreground"
+                                }`}
+                              >
+                                <span className="text-brand font-bold">✓</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
 
-                  <div className="mt-8 pt-4">
-                    <Link
-                      href={`/contact?service=${service.id}`}
-                      className={`inline-flex items-center gap-1.5 text-sm font-semibold transition-colors hover:underline ${
-                        service.inverted ? "text-brand hover:text-brand" : "text-primary hover:text-brand-strong"
-                      }`}
-                    >
-                      Inquire about {service.title} →
-                    </Link>
-                  </div>
-                </Card>
+                      <div className="mt-8 pt-4">
+                        <Link
+                          href={`/contact?service=${service.id}`}
+                          className={`inline-flex items-center gap-1.5 text-sm font-semibold transition-colors hover:underline ${
+                            service.inverted ? "text-brand hover:text-brand" : "text-primary hover:text-brand-strong"
+                          }`}
+                        >
+                          Inquire about {service.title} →
+                        </Link>
+                      </div>
+                    </Card>
+                  </MotionCardWrapper>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
@@ -333,20 +366,22 @@ export default function ServicesPage() {
               description="We avoid chaotic scrambles through clear sprints, automated verification, and transparent delivery milestones."
             />
 
-            <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-5">
+            <StaggerContainer className="grid gap-6 md:grid-cols-3 lg:grid-cols-5">
               {methodology.map((m) => (
-                <div key={m.step} className="rounded-xl border border-border bg-background p-6 flex flex-col justify-between">
-                  <div>
-                    <span className="text-2xl font-bold text-brand-strong">{m.step}</span>
-                    <h4 className="mt-4 text-base font-bold text-primary">{m.title}</h4>
-                    <p className="mt-2 text-xs leading-5 text-muted-foreground">{m.description}</p>
+                <StaggerItem key={m.step}>
+                  <div className="rounded-xl border border-border bg-background p-6 flex flex-col justify-between h-full shadow-sm hover:shadow-md transition-shadow">
+                    <div>
+                      <span className="text-2xl font-bold text-brand-strong">{m.step}</span>
+                      <h4 className="mt-4 text-base font-bold text-primary">{m.title}</h4>
+                      <p className="mt-2 text-xs leading-5 text-muted-foreground">{m.description}</p>
+                    </div>
+                    <div className="mt-6 pt-3 border-t border-border/50 text-[11px] font-medium text-brand-strong">
+                      Quality Gate Passed
+                    </div>
                   </div>
-                  <div className="mt-6 pt-3 border-t border-border/50 text-[11px] font-medium text-brand-strong">
-                    Quality Gate Passed
-                  </div>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
@@ -359,32 +394,36 @@ export default function ServicesPage() {
               description="Whether you require an autonomous squad or high-level architectural reinforcement, we have a model that fits."
             />
 
-            <div className="grid gap-6 md:grid-cols-3">
+            <StaggerContainer className="grid gap-6 md:grid-cols-3">
               {engagementModels.map((model) => (
-                <Card key={model.title} className="flex flex-col justify-between p-8">
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <Badge variant="brand" dot={false}>{model.tag}</Badge>
-                    </div>
-                    <h3 className="mt-4 text-xl font-bold text-primary">{model.title}</h3>
-                    <p className="mt-3 text-sm leading-6 text-muted-foreground">{model.description}</p>
-                    <ul className="mt-6 space-y-2.5 text-xs text-muted-foreground">
-                      {model.points.map((p) => (
-                        <li key={p} className="flex items-start gap-2">
-                          <span className="text-brand-strong font-bold">●</span>
-                          <span>{p}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="mt-8 pt-6 border-t border-border">
-                    <ButtonLink href="/contact" variant="outline" size="sm" className="w-full">
-                      Discuss This Model
-                    </ButtonLink>
-                  </div>
-                </Card>
+                <StaggerItem key={model.title}>
+                  <MotionCardWrapper>
+                    <Card className="flex flex-col justify-between p-8 h-full shadow-sm hover:shadow-lg transition-shadow">
+                      <div>
+                        <div className="flex items-center justify-between">
+                          <Badge variant="brand" dot={false}>{model.tag}</Badge>
+                        </div>
+                        <h3 className="mt-4 text-xl font-bold text-primary">{model.title}</h3>
+                        <p className="mt-3 text-sm leading-6 text-muted-foreground">{model.description}</p>
+                        <ul className="mt-6 space-y-2.5 text-xs text-muted-foreground">
+                          {model.points.map((p) => (
+                            <li key={p} className="flex items-start gap-2">
+                              <span className="text-brand-strong font-bold">●</span>
+                              <span>{p}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="mt-8 pt-6 border-t border-border">
+                        <ButtonLink href="/contact" variant="outline" size="sm" className="w-full">
+                          Discuss This Model
+                        </ButtonLink>
+                      </div>
+                    </Card>
+                  </MotionCardWrapper>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
@@ -397,9 +436,11 @@ export default function ServicesPage() {
               description="Clear answers about how we manage intellectual property, staffing, and project delivery."
               align="center"
             />
-            <div className="bg-background rounded-xl p-8 border border-border">
-              <Accordion items={serviceFaqs} />
-            </div>
+            <FadeIn>
+              <div className="bg-background rounded-xl p-8 border border-border shadow-sm">
+                <Accordion items={serviceFaqs} />
+              </div>
+            </FadeIn>
           </div>
         </section>
 
@@ -412,4 +453,3 @@ export default function ServicesPage() {
     </>
   );
 }
-

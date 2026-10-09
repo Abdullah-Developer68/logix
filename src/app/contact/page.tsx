@@ -6,6 +6,7 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { Card } from "@/components/ui/card";
 import { Accordion } from "@/components/ui/accordion";
 import { ContactForm } from "@/components/contact/contact-form";
+import { FadeIn, StaggerContainer, StaggerItem, MotionCardWrapper } from "@/components/ui/motion";
 
 export const metadata: Metadata = {
   title: "Contact Us & Start a Project — Logix Software Consultancy",
@@ -99,59 +100,63 @@ export default function ContactPage() {
           <div className="container-x">
             <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr]">
               {/* Left Column: Interactive Form */}
-              <div>
+              <FadeIn>
                 <SectionHeader
                   eyebrow="PROJECT INQUIRY"
                   title="Request an architectural assessment"
                   description="Fill out the specifications below. Our lead engineers review incoming requirements directly."
                 />
                 <ContactForm />
-              </div>
+              </FadeIn>
 
               {/* Right Column: Direct Info & Guarantees */}
               <div className="space-y-6">
-                <Card className="p-8">
-                  <h3 className="text-lg font-bold text-primary">Direct Inquiries</h3>
-                  <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                    Prefer direct email or phone? Reach our partnerships desk directly.
-                  </p>
-                  <div className="mt-6 space-y-4 text-sm">
-                    <div className="flex items-center gap-3">
-                      <span className="flex size-8 items-center justify-center rounded-lg bg-accent text-brand-strong font-bold">
-                        ✉
-                      </span>
-                      <div>
-                        <span className="block text-xs font-semibold text-muted-foreground">General Enquiries</span>
-                        <a href="mailto:hello@logix.dev" className="font-semibold text-primary hover:text-brand-strong">
-                          hello@logix.dev
-                        </a>
+                <FadeIn delay={0.1}>
+                  <Card className="p-8 shadow-sm">
+                    <h3 className="text-lg font-bold text-primary">Direct Inquiries</h3>
+                    <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                      Prefer direct email or phone? Reach our partnerships desk directly.
+                    </p>
+                    <div className="mt-6 space-y-4 text-sm">
+                      <div className="flex items-center gap-3">
+                        <span className="flex size-8 items-center justify-center rounded-lg bg-accent text-brand-strong font-bold">
+                          ✉
+                        </span>
+                        <div>
+                          <span className="block text-xs font-semibold text-muted-foreground">General Enquiries</span>
+                          <a href="mailto:hello@logix.dev" className="font-semibold text-primary hover:text-brand-strong">
+                            hello@logix.dev
+                          </a>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="flex size-8 items-center justify-center rounded-lg bg-accent text-brand-strong font-bold">
+                          📞
+                        </span>
+                        <div>
+                          <span className="block text-xs font-semibold text-muted-foreground">Phone Hotline</span>
+                          <a href="tel:+15550123456" className="font-semibold text-primary hover:text-brand-strong">
+                            +1 (555) 012-3456
+                          </a>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <span className="flex size-8 items-center justify-center rounded-lg bg-accent text-brand-strong font-bold">
-                        📞
-                      </span>
-                      <div>
-                        <span className="block text-xs font-semibold text-muted-foreground">Phone Hotline</span>
-                        <a href="tel:+15550123456" className="font-semibold text-primary hover:text-brand-strong">
-                          +1 (555) 012-3456
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
+                  </Card>
+                </FadeIn>
 
-                <Card inverted className="p-8">
-                  <span className="text-xs font-bold uppercase tracking-wider text-brand">The Logix Guarantee</span>
-                  <h4 className="mt-2 text-base font-bold text-white">No Junior Handoffs</h4>
-                  <p className="mt-2 text-xs leading-5 text-white/70">
-                    The leads you speak with during discovery are the same engineers who review pull requests and architect your database schemas.
-                  </p>
-                  <div className="mt-6 border-t border-white/10 pt-4 flex items-center justify-between text-xs text-white/60">
-                    <span>Response Time</span>
-                    <strong className="text-brand">Under 24 Hours</strong>
-                  </div>
-                </Card>
+                <FadeIn delay={0.2}>
+                  <Card inverted className="p-8 shadow-xl">
+                    <span className="text-xs font-bold uppercase tracking-wider text-brand">The Logix Guarantee</span>
+                    <h4 className="mt-2 text-base font-bold text-white">No Junior Handoffs</h4>
+                    <p className="mt-2 text-xs leading-5 text-white/70">
+                      The leads you speak with during discovery are the same engineers who review pull requests and architect your database schemas.
+                    </p>
+                    <div className="mt-6 border-t border-white/10 pt-4 flex items-center justify-between text-xs text-white/60">
+                      <span>Response Time</span>
+                      <strong className="text-brand">Under 24 Hours</strong>
+                    </div>
+                  </Card>
+                </FadeIn>
               </div>
             </div>
           </div>
@@ -166,26 +171,30 @@ export default function ContactPage() {
               description="With synchronized timezones across the Americas, Europe, and Asia, our pods provide round-the-clock delivery capability."
             />
 
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {offices.map((office) => (
-                <Card key={office.city} className="flex flex-col justify-between p-6">
-                  <div>
-                    <span className="text-xs font-bold text-brand-strong">{office.timezone}</span>
-                    <h3 className="mt-2 text-base font-bold text-primary">{office.city}</h3>
-                    <p className="text-xs font-semibold text-muted-foreground">{office.role}</p>
-                    <p className="mt-4 text-xs leading-5 text-muted-foreground">{office.address}</p>
-                  </div>
-                  <div className="mt-6 pt-4 border-t border-border space-y-1 text-xs">
-                    <p className="text-muted-foreground">{office.phone}</p>
-                    <p>
-                      <a href={`mailto:${office.email}`} className="text-brand-strong font-semibold hover:underline">
-                        {office.email}
-                      </a>
-                    </p>
-                  </div>
-                </Card>
+                <StaggerItem key={office.city}>
+                  <MotionCardWrapper>
+                    <Card className="flex flex-col justify-between p-6 h-full shadow-sm hover:shadow-md transition-shadow">
+                      <div>
+                        <span className="text-xs font-bold text-brand-strong">{office.timezone}</span>
+                        <h3 className="mt-2 text-base font-bold text-primary">{office.city}</h3>
+                        <p className="text-xs font-semibold text-muted-foreground">{office.role}</p>
+                        <p className="mt-4 text-xs leading-5 text-muted-foreground">{office.address}</p>
+                      </div>
+                      <div className="mt-6 pt-4 border-t border-border space-y-1 text-xs">
+                        <p className="text-muted-foreground">{office.phone}</p>
+                        <p>
+                          <a href={`mailto:${office.email}`} className="text-brand-strong font-semibold hover:underline">
+                            {office.email}
+                          </a>
+                        </p>
+                      </div>
+                    </Card>
+                  </MotionCardWrapper>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
@@ -198,9 +207,11 @@ export default function ContactPage() {
               description="Learn what to anticipate before booking your discovery session."
               align="center"
             />
-            <div className="bg-background rounded-xl p-8 border border-border">
-              <Accordion items={contactFaqs} />
-            </div>
+            <FadeIn>
+              <div className="bg-background rounded-xl p-8 border border-border shadow-sm">
+                <Accordion items={contactFaqs} />
+              </div>
+            </FadeIn>
           </div>
         </section>
       </main>
@@ -208,4 +219,3 @@ export default function ContactPage() {
     </>
   );
 }
-
