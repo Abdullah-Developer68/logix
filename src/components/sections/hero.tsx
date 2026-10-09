@@ -54,9 +54,9 @@ export function Hero() {
           className="relative rounded-xl bg-primary p-5 shadow-2xl border border-white/10"
         >
           <div className="flex gap-1.5">
-            <span className="size-2.5 rounded-full bg-white/20" />
-            <span className="size-2.5 rounded-full bg-white/20" />
-            <span className="size-2.5 rounded-full bg-white/20" />
+            <span className="size-2.5 rounded-full bg-[#ff5f56]" />
+            <span className="size-2.5 rounded-full bg-[#ffbd2e]" />
+            <span className="size-2.5 rounded-full bg-[#27c93f]" />
           </div>
           <pre className="mt-4 font-mono text-xs leading-6 text-white/70 overflow-x-auto">
 {`const logix = await build({

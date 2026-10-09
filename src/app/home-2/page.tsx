@@ -525,9 +525,9 @@ export default function HomeV2() {
             {/* Terminal Header */}
             <div style={{ alignItems: "center", boxSizing: "border-box", display: "flex", justifyContent: "space-between" }}>
               <div style={{ boxSizing: "border-box", display: "flex", gap: "6px" }}>
-                <div style={{ backgroundColor: "rgb(255 255 255 / 22%)", borderRadius: "var(--radius-full)", boxSizing: "border-box", flexShrink: "0", height: "10px", width: "10px" }} />
-                <div style={{ backgroundColor: "rgb(255 255 255 / 22%)", borderRadius: "var(--radius-full)", boxSizing: "border-box", flexShrink: "0", height: "10px", width: "10px" }} />
-                <div style={{ backgroundColor: "rgb(255 255 255 / 22%)", borderRadius: "var(--radius-full)", boxSizing: "border-box", flexShrink: "0", height: "10px", width: "10px" }} />
+                <div style={{ backgroundColor: "#ff5f56", borderRadius: "var(--radius-full)", boxSizing: "border-box", flexShrink: "0", height: "10px", width: "10px" }} />
+                <div style={{ backgroundColor: "#ffbd2e", borderRadius: "var(--radius-full)", boxSizing: "border-box", flexShrink: "0", height: "10px", width: "10px" }} />
+                <div style={{ backgroundColor: "#27c93f", borderRadius: "var(--radius-full)", boxSizing: "border-box", flexShrink: "0", height: "10px", width: "10px" }} />
               </div>
               <div style={{ boxSizing: "border-box", color: "rgb(255 255 255 / 55%)", display: "inline-block", fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", lineHeight: "16px" }}>
                 logix / client-portal
