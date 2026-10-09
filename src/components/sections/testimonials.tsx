@@ -31,19 +31,19 @@ export function Testimonials() {
             transition={{ duration: 0.6 }}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
           >
-            <Card inverted className="flex flex-col justify-between p-8 h-full shadow-lg">
-              <p className="text-xl font-medium leading-8">
+            <Card className="flex flex-col justify-between p-8 h-full shadow-sm bg-card border border-border">
+              <p className="text-xl font-medium leading-8 text-foreground">
                 “Logix rebuilt our dispatch platform in 14 weeks. Delivery times dropped 31% and our team finally has software they enjoy using.”
               </p>
               <div className="mt-10 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Avatar initials="SA" className="size-10 bg-brand text-primary font-bold" />
+                  <Avatar initials="SA" className="size-10 bg-accent text-brand-strong font-bold border border-brand-strong/20" />
                   <div className="text-sm">
-                    <div className="font-semibold">Sara Ahmed</div>
-                    <div className="text-white/60">COO, Northwind Logistics</div>
+                    <div className="font-semibold text-foreground">Sara Ahmed</div>
+                    <div className="text-muted-foreground">COO, Northwind Logistics</div>
                   </div>
                 </div>
-                <span className="font-semibold text-white/80">northwind</span>
+                <span className="font-bold text-muted-foreground/80 tracking-tight">northwind</span>
               </div>
             </Card>
           </motion.div>
