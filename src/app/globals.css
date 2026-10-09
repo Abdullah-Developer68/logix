@@ -1,26 +1,118 @@
 @import "tailwindcss";
 
+/* Logix design system tokens (see /designs) */
 :root {
+  --radius: 0.625rem;
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0b1f3a;
+  --primary: #0b1f3a;
+  --primary-foreground: #ffffff;
+  --brand: #1fc8aa;
+  --brand-foreground: #0b1f3a;
+  --brand-strong: #0e9983;
+  --accent: #e6f9f5;
+  --accent-foreground: #0e9983;
+  --muted: #f4f6fa;
+  --muted-foreground: #5b6b84;
+  --secondary: #f4f6fa;
+  --secondary-foreground: #0b1f3a;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #1fc8aa;
+  --destructive: #e5484d;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-strong: var(--brand-strong);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: var(--border);
   }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+  /* Typography scale from the design system */
+  h1 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  @media (min-width: 640px) {
+    h1 {
+      font-size: 3rem;
+      line-height: 1.1;
+    }
+  }
+  @media (min-width: 1024px) {
+    h1 {
+      font-size: 64px;
+      line-height: 68px;
+    }
+  }
+
+  h2 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  @media (min-width: 1024px) {
+    h2 {
+      font-size: 40px;
+      line-height: 52px;
+    }
+  }
+
+  h3 { font-size: 20px; line-height: 28px; font-weight: 600; }
+  h4 { font-size: 16px; line-height: 24px; font-weight: 600; }
+  p { font-size: 14px; line-height: 24px; font-weight: 400; }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brand-strong);
+  }
+  .lead {
+    font-size: 16px;
+    line-height: 28px;
+    font-weight: 400;
+    color: var(--muted-foreground);
+  }
+  .container-x {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 1200px;
+    padding-inline: 24px;
+  }
 }
