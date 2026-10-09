@@ -76,7 +76,7 @@ const services = [
     icon: <MobileDevIcon />,
     title: "Mobile App Development",
     text: "Native and cross-platform iOS & Android apps with Flutter and React Native.",
-    image: "/images/services/mobile-dev.jpg",
+    image: "/images/services/iphone-mobile-dev.jpg",
   },
   {
     id: "design",
