@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "@/components/ui/logo";
 import { ButtonLink } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -131,58 +130,49 @@ export function Header() {
       </div>
 
       {/* Mobile Drawer Menu & Overlay */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <>
-            <motion.div
-              id="mobile-nav-drawer"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="relative z-50 max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-border bg-background md:hidden"
-            >
-              <div className="px-4 sm:px-6 py-5 sm:py-6">
-                <nav className="flex flex-col gap-3" aria-label="Mobile Navigation">
-                  {links.map((l) => {
-                    const isActive = pathname === l.href;
-                    return (
-                      <Link
-                        key={l.href}
-                        href={l.href}
-                        onClick={(e) => handleNavClick(e, l.href)}
-                        className={cn(
-                          "text-base py-1.5 font-medium transition-colors",
-                          isActive ? "text-brand-strong font-semibold" : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        {l.label}
-                      </Link>
-                    );
-                  })}
-                </nav>
-                <div className="mt-5 flex flex-col gap-3 border-t border-border pt-4">
-                  <a href="tel:+15550123456" className="text-xs sm:text-sm font-medium text-muted-foreground">
-                    Call us: +1 (555) 012-3456
-                  </a>
-                  <ButtonLink href="/contact" size="default" className="w-full justify-center" onClick={() => setMobileMenuOpen(false)}>
-                    Get a quote
-                  </ButtonLink>
-                </div>
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 top-16 z-40 bg-black/40 backdrop-blur-xs md:hidden"
-              onClick={() => setMobileMenuOpen(false)}
-              aria-hidden="true"
-            />
-          </>
+      <div
+        id="mobile-nav-drawer"
+        className={cn(
+          "relative z-50 overflow-hidden border-b border-border bg-background md:hidden transition-[max-height,opacity] duration-300 ease-in-out",
+          mobileMenuOpen ? "max-h-[calc(100dvh-4rem)] opacity-100" : "max-h-0 opacity-0 pointer-events-none",
         )}
-      </AnimatePresence>
+      >
+        <div className="px-4 sm:px-6 py-5 sm:py-6">
+          <nav className="flex flex-col gap-3" aria-label="Mobile Navigation">
+            {links.map((l) => {
+              const isActive = pathname === l.href;
+              return (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  onClick={(e) => handleNavClick(e, l.href)}
+                  className={cn(
+                    "text-base py-1.5 font-medium transition-colors",
+                    isActive ? "text-brand-strong font-semibold" : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {l.label}
+                </Link>
+              );
+            })}
+          </nav>
+          <div className="mt-5 flex flex-col gap-3 border-t border-border pt-4">
+            <a href="tel:+15550123456" className="text-xs sm:text-sm font-medium text-muted-foreground">
+              Call us: +1 (555) 012-3456
+            </a>
+            <ButtonLink href="/contact" size="default" className="w-full justify-center" onClick={() => setMobileMenuOpen(false)}>
+              Get a quote
+            </ButtonLink>
+          </div>
+        </div>
+      </div>
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 top-16 z-40 bg-black/40 backdrop-blur-xs md:hidden transition-opacity duration-200"
+          onClick={() => setMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
     </header>
   );
 }

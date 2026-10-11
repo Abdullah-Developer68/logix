@@ -197,7 +197,7 @@ function getTokenClass(type: TokenType): string {
 
 export function HeroTerminal() {
   const [snippetIndex, setSnippetIndex] = useState(0);
-  const [charCount, setCharCount] = useState(0);
+  const [charCount, setCharCount] = useState(SNIPPETS[0].code.length);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -281,10 +281,8 @@ export function HeroTerminal() {
             </span>
           ))}
           {/* Animated Blinking Cursor */}
-          <motion.span
-            animate={{ opacity: [1, 0, 1] }}
-            transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
-            className="inline-block w-[2px] h-[13px] sm:h-[15px] bg-brand ml-0.5 translate-y-[2px] shadow-[0_0_8px_rgba(34,211,176,0.9)]"
+          <span
+            className="inline-block w-[2px] h-[13px] sm:h-[15px] bg-brand ml-0.5 translate-y-[2px] shadow-[0_0_8px_rgba(34,211,176,0.9)] animate-cursor-blink"
             aria-hidden
           />
         </code>
@@ -297,8 +295,9 @@ export function HeroTerminal() {
           return (
             <motion.div
               key={i}
-              initial={{ height: "0%" }}
-              animate={{ height: `${h}%` }}
+              style={{ height: `${h}%`, transformOrigin: "bottom" }}
+              initial={{ scaleY: 0 }}
+              animate={{ scaleY: 1 }}
               transition={{
                 duration: 0.8,
                 delay: 0.4 + i * 0.1,
@@ -306,8 +305,8 @@ export function HeroTerminal() {
               }}
               className={
                 isHighlighted
-                  ? "w-full rounded-t bg-brand shadow-[0_0_20px_rgba(31,200,170,0.5)] transition-all duration-500"
-                  : "w-full rounded-t bg-white/15 transition-all duration-500"
+                  ? "w-full rounded-t bg-brand shadow-[0_0_20px_rgba(31,200,170,0.5)] transition-colors duration-500"
+                  : "w-full rounded-t bg-white/15 transition-colors duration-500"
               }
             />
           );

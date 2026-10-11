@@ -1,6 +1,4 @@
-"use client";
-
-import { motion } from "framer-motion";
+// Pure server component with GPU-accelerated CSS marquee
 
 const clientLogos = [
   {
@@ -95,8 +93,8 @@ const clientLogos = [
   },
 ];
 
-// Duplicate items twice to ensure a completely seamless continuous infinite loop
-const marqueeItems = [...clientLogos, ...clientLogos, ...clientLogos];
+// Duplicate items once for a seamless -50% CSS keyframe loop
+const marqueeItems = [...clientLogos, ...clientLogos];
 
 export function Clients() {
   return (
@@ -115,15 +113,7 @@ export function Clients() {
           WebkitMaskImage: "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
         }}
       >
-        <motion.div
-          className="flex w-max items-center gap-12 sm:gap-20 md:gap-24 py-2"
-          animate={{ x: ["0%", "-33.333%"] }}
-          transition={{
-            ease: "linear",
-            duration: 22,
-            repeat: Infinity,
-          }}
-        >
+        <div className="marquee-track flex w-max items-center gap-12 sm:gap-20 md:gap-24 py-2">
           {marqueeItems.map((client, index) => (
             <div
               key={`${client.name}-${index}`}
@@ -132,7 +122,7 @@ export function Clients() {
               {client.render()}
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,9 +1,5 @@
-"use client";
-
-import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { ButtonLink } from "@/components/ui/button";
 
 function WebDevIcon() {
@@ -119,6 +115,8 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
             alt={service.title}
             fill
             sizes="(max-width: 640px) 260px, 310px"
+            loading="lazy"
+            decoding="async"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/25 via-transparent to-transparent" />
@@ -150,62 +148,36 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
 }
 
 export function Services() {
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.location.hash === "#services") {
-      const timer = setTimeout(() => {
-        const el = document.getElementById("services");
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  }, []);
-
   return (
     <section id="services" className="scroll-mt-16 overflow-hidden border-y border-border bg-muted/60">
       <div className="container-x pt-12 sm:pt-16 lg:pt-20">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end sm:gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
+          <div>
             <p className="eyebrow mb-2 sm:mb-4">Our services</p>
             <h2 className="max-w-md text-2xl leading-tight! sm:text-3xl lg:text-[32px]! break-words">
               End-to-end services, one accountable team.
             </h2>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+          </div>
+          <div>
             <ButtonLink href="/contact" variant="outline" size="sm" className="w-full sm:w-fit justify-center">
               Start a project
             </ButtonLink>
-          </motion.div>
+          </div>
         </div>
       </div>
 
-      {/* Deck of tilted cards sliding right to left. The set is rendered four
-          times (two per half) so the loop stays seamless on very wide screens;
-          every copy after the first is hidden from assistive tech. */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+      {/* Deck of tilted cards sliding right to left. The set is rendered twice
+          so the -50% loop stays seamless on any screen;
+          the duplicate copy is hidden from assistive tech. */}
+      <div
         className="relative py-8 pb-12 sm:py-10 sm:pb-16 lg:pb-24 overflow-hidden"
         style={{
           maskImage: "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
           WebkitMaskImage: "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
         }}
       >
-        <div className="deck-track flex w-max" style={{ animationDuration: "60s" }}>
-          {[0, 1, 2, 3].map((copy) => (
+        <div className="deck-track flex w-max" style={{ animationDuration: "50s" }}>
+          {[0, 1].map((copy) => (
             <div
               key={copy}
               className="flex shrink-0 gap-5 pr-5"
@@ -217,7 +189,7 @@ export function Services() {
             </div>
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

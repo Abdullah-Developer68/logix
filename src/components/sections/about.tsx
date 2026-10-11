@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const stats = [
@@ -15,12 +12,7 @@ export function About() {
   return (
     <section className="bg-background">
       <div className="container-x grid items-center gap-8 sm:gap-12 py-12 sm:py-16 lg:py-24 lg:grid-cols-2">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
-        >
+        <div>
           <p className="eyebrow mb-3 sm:mb-4">About us</p>
           <h2 className="text-2xl sm:text-3xl lg:text-[32px]! leading-tight!">
             A senior team of engineers, designers and strategists who treat your product like our own.
@@ -31,28 +23,14 @@ export function About() {
           <Link href="/about" className="mt-5 sm:mt-6 inline-block text-sm font-medium text-foreground hover:underline">
             More about us →
           </Link>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.1 } },
-          }}
-          className="grid grid-cols-2 gap-3 sm:gap-4"
-        >
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
           {stats.map((s) => (
-            <motion.div
+            <div
               key={s.label}
-              variants={{
-                hidden: { opacity: 0, scale: 0.95, y: 15 },
-                visible: { opacity: 1, scale: 1, y: 0 },
-              }}
-              whileHover={{ y: -4, transition: { duration: 0.2 } }}
               className={cn(
-                "rounded-xl p-3.5 sm:p-6 border transition-shadow",
+                "rounded-xl p-3.5 sm:p-6 border transition-all duration-200 hover:-translate-y-1 hover:shadow-md",
                 s.highlight ? "bg-accent border-brand-strong/20" : "bg-background border-border",
               )}
             >
@@ -60,9 +38,9 @@ export function About() {
                 {s.value}
               </div>
               <div className="mt-1 text-xs sm:text-sm text-muted-foreground">{s.label}</div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
