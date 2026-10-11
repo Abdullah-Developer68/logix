@@ -58,9 +58,9 @@ export function TechnicalPrinciples() {
     <section className="bg-background py-16 sm:py-20 lg:py-28 border-b border-border overflow-hidden">
       <div className="container-x">
         <SectionHeader
-          eyebrow="TECHNICAL RIGOR"
-          title="Technical principles that govern every system we ship."
-          description="We founded Logix to provide the antithesis of the traditional dev shop. We engineer software with strict typing, automated verification, cloud-native resilience, and zero-trust security."
+          eyebrow="SYSTEM ARCHITECTURE"
+          title="Six core engineering principles in continuous orbit."
+          description="Hover over any orbiting node to explore the pillars that govern every system we ship — from strict static typing and automated CI/CD gates to edge computing and zero-trust security."
         />
 
         {/* Orbit Visual Stage - Circular orbs rotating around the central orb */}
@@ -89,14 +89,9 @@ export function TechnicalPrinciples() {
             </div>
 
             {/* Central Orb */}
-            <div className="relative z-10 flex size-20 sm:size-28 lg:size-32 items-center justify-center rounded-full border border-brand/40 bg-background/95 dark:bg-[#081220]/95 p-3 text-center shadow-2xl backdrop-blur-md group cursor-default">
-              <div className="flex flex-col items-center">
-                <div className="flex size-8 sm:size-10 lg:size-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg ring-2 ring-brand/40 group-hover:scale-105 transition-transform">
-                  <Terminal className="size-4 sm:size-5 lg:size-6 text-brand" />
-                </div>
-                <span className="mt-1 text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-brand-strong">
-                  Core
-                </span>
+            <div className="relative z-10 flex size-16 sm:size-20 lg:size-24 items-center justify-center rounded-full border border-brand/40 bg-background/95 dark:bg-[#081220]/95 shadow-2xl backdrop-blur-md group cursor-default ring-4 ring-brand/10 transition-transform duration-300 hover:scale-105">
+              <div className="flex size-9 sm:size-11 lg:size-13 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg ring-2 ring-brand/40">
+                <Terminal className="size-4.5 sm:size-5.5 lg:size-6 text-brand" />
               </div>
             </div>
 
