@@ -5,11 +5,11 @@ import { Footer } from "@/components/layout/footer";
 import { PageHero } from "@/components/ui/page-hero";
 import { SectionHeader } from "@/components/ui/section-header";
 import { ButtonLink } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Cta } from "@/components/sections/cta";
 import { LeadershipDeck, type TeamMember } from "@/components/sections/leadership-deck";
-import { FadeIn, StaggerContainer, StaggerItem, MotionCardWrapper } from "@/components/ui/motion";
+import { TechnicalPrinciples } from "@/components/sections/technical-principles";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 
 export const metadata: Metadata = {
   title: "About Us — Logix Software Consultancy",
@@ -22,33 +22,6 @@ const stats = [
   { value: "120+", label: "Happy clients", highlight: false },
   { value: "9 yrs", label: "In business", highlight: false },
   { value: "96%", label: "Client retention", highlight: true },
-];
-
-const values = [
-  {
-    icon: "⚡",
-    title: "Senior Talent Only",
-    description:
-      "We do not pass your project to junior developers after the sale. Every engineer and designer on your project is an experienced practitioner who knows how to ship.",
-  },
-  {
-    icon: "🎯",
-    title: "Skin in the Game",
-    description:
-      "We tie our success to your business outcomes — speed to market, user conversion, uptime, and efficiency — rather than just counting billable hours.",
-  },
-  {
-    icon: "🔍",
-    title: "Radical Transparency",
-    description:
-      "Direct communication in shared Slack/Teams channels, weekly end-to-end demonstrations, and transparent sprint boards. No surprises, no guesswork.",
-  },
-  {
-    icon: "🏗️",
-    title: "Engineered for Longevity",
-    description:
-      "We build modular, maintainable architectures with strict typing, automated testing suites, and clear documentation that your team can own forever.",
-  },
 ];
 
 const milestones = [
@@ -236,31 +209,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Core Principles */}
-        <section className="bg-background py-20 lg:py-28 border-b border-border">
-          <div className="container-x">
-            <SectionHeader
-              eyebrow="HOW WE WORK"
-              title="Four principles that define every Logix engagement."
-              description="We founded Logix to provide the antithesis of the traditional dev shop. We believe software quality is directly proportional to craft and accountability."
-            />
-            <StaggerContainer className="grid gap-6 md:grid-cols-2">
-              {values.map((v) => (
-                <StaggerItem key={v.title}>
-                  <MotionCardWrapper>
-                    <Card className="flex flex-col p-8 h-full shadow-sm">
-                      <div className="flex size-11 items-center justify-center rounded-lg bg-accent text-xl">
-                        {v.icon}
-                      </div>
-                      <h3 className="mt-6 text-lg font-bold text-primary">{v.title}</h3>
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">{v.description}</p>
-                    </Card>
-                  </MotionCardWrapper>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
+        {/* Technical Principles - Rotating Circular Orbit */}
+        <TechnicalPrinciples />
 
         {/* Journey Timeline */}
         <section className="bg-muted py-20 lg:py-28 border-b border-border">

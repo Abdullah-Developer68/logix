@@ -95,70 +95,18 @@ export default function ContactPage() {
           description="Book a free 30-minute discovery session with our senior engineers. We will analyze your architecture, discuss trade-offs, and outline a realistic delivery timeline."
         />
 
-        {/* Form and Direct Contact Grid */}
+        {/* Single Vertical Contact Form */}
         <section className="bg-background py-16 lg:py-24 border-b border-border">
-          <div className="container-x">
-            <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr]">
-              {/* Left Column: Interactive Form */}
-              <FadeIn>
-                <SectionHeader
-                  eyebrow="PROJECT INQUIRY"
-                  title="Request an architectural assessment"
-                  description="Fill out the specifications below. Our lead engineers review incoming requirements directly."
-                />
-                <ContactForm />
-              </FadeIn>
-
-              {/* Right Column: Direct Info & Guarantees */}
-              <div className="space-y-6">
-                <FadeIn delay={0.1}>
-                  <Card className="p-8 shadow-sm">
-                    <h3 className="text-lg font-bold text-primary">Direct Inquiries</h3>
-                    <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                      Prefer direct email or phone? Reach our partnerships desk directly.
-                    </p>
-                    <div className="mt-6 space-y-4 text-sm">
-                      <div className="flex items-center gap-3">
-                        <span className="flex size-8 items-center justify-center rounded-lg bg-accent text-brand-strong font-bold">
-                          ✉
-                        </span>
-                        <div>
-                          <span className="block text-xs font-semibold text-muted-foreground">General Enquiries</span>
-                          <a href="mailto:hello@logix.dev" className="font-semibold text-primary hover:text-brand-strong">
-                            hello@logix.dev
-                          </a>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <span className="flex size-8 items-center justify-center rounded-lg bg-accent text-brand-strong font-bold">
-                          📞
-                        </span>
-                        <div>
-                          <span className="block text-xs font-semibold text-muted-foreground">Phone Hotline</span>
-                          <a href="tel:+15550123456" className="font-semibold text-primary hover:text-brand-strong">
-                            +1 (555) 012-3456
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </Card>
-                </FadeIn>
-
-                <FadeIn delay={0.2}>
-                  <Card inverted className="p-8 shadow-xl">
-                    <span className="text-xs font-bold uppercase tracking-wider text-brand">The Logix Guarantee</span>
-                    <h4 className="mt-2 text-base font-bold text-white">No Junior Handoffs</h4>
-                    <p className="mt-2 text-xs leading-5 text-white/70">
-                      The leads you speak with during discovery are the same engineers who review pull requests and architect your database schemas.
-                    </p>
-                    <div className="mt-6 border-t border-white/10 pt-4 flex items-center justify-between text-xs text-white/60">
-                      <span>Response Time</span>
-                      <strong className="text-brand">Under 24 Hours</strong>
-                    </div>
-                  </Card>
-                </FadeIn>
-              </div>
-            </div>
+          <div className="container-x max-w-xl">
+            <FadeIn>
+              <SectionHeader
+                eyebrow="PROJECT INQUIRY"
+                title="Start a conversation"
+                description="Fill out the details below. Our lead engineers review incoming requirements directly and respond within 24 hours."
+                align="center"
+              />
+              <ContactForm />
+            </FadeIn>
           </div>
         </section>
 

@@ -148,3 +148,39 @@
     overflow-x: auto;
   }
 }
+
+/* Circular orbital animation for Technical Principles */
+@keyframes orbit-cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-ccw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.orbit-track {
+  animation: orbit-cw 36s linear infinite;
+  will-change: transform;
+}
+
+.orbit-item {
+  animation: orbit-ccw 36s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-track,
+  .orbit-item {
+    animation: none !important;
+  }
+}

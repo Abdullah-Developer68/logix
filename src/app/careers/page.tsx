@@ -11,62 +11,53 @@ import { Cta } from "@/components/sections/cta";
 import { FadeIn, StaggerContainer, StaggerItem, MotionCardWrapper } from "@/components/ui/motion";
 
 export const metadata: Metadata = {
-  title: "Careers — Join the Logix Engineering Team",
+  title: "Careers — Remote Engineering Internships at Logix",
   description:
-    "We are hiring senior software engineers, system architects, and product designers. Remote-first, competitive compensation, and high-impact projects.",
+    "Launch your engineering journey with Logix. All internships are 100% remote with hands-on mentorship from senior practitioners, real-world production systems, and paid stipends.",
 };
-
-const perks = [
-  {
-    icon: "🌍",
-    title: "Remote-First Flexibility",
-    description: "Work from our hubs in Karachi, Lahore, London, Austin, or anywhere across compatible timezones.",
-  },
-  {
-    icon: "📈",
-    title: "Senior Peer Culture",
-    description: "Collaborate with experienced engineers who care deeply about code craft, architecture, and developer joy.",
-  },
-  {
-    icon: "💻",
-    title: "Top-Tier Hardware & Budget",
-    description: "Latest Apple MacBook Pro / Linux workstations, plus a dedicated annual learning and book stipend.",
-  },
-  {
-    icon: "🩺",
-    title: "Comprehensive Health & Wellness",
-    description: "Full health, dental, and vision coverage for you and your dependents, plus generous paid time off.",
-  },
-];
 
 const openRoles = [
   {
-    title: "Staff Fullstack Engineer (Next.js / Node)",
+    title: "Software Engineering Intern (Fullstack Web)",
     department: "Web Platform Pod",
-    location: "Remote / Hybrid (PK / UK / US)",
-    type: "Full-time",
-    description: "Lead technical architecture and implementation for mission-critical client platforms using Next.js App Router, TypeScript, and distributed Node services.",
+    location: "100% Remote",
+    type: "Internship (Paid · 3-6 Months)",
+    description: "Work directly alongside senior engineers shipping production features using Next.js App Router, React, TypeScript, and modern Node.js services.",
   },
   {
-    title: "Senior Mobile Engineer (React Native)",
+    title: "Mobile App Development Intern (React Native / Flutter)",
     department: "Mobile Engineering",
-    location: "Remote / Lahore Lab",
-    type: "Full-time",
-    description: "Engineer offline-first mobile apps for enterprise logistics and health clients with React Native, SQLite, and custom native Swift/Kotlin modules.",
+    location: "100% Remote",
+    type: "Internship (Paid · 3-6 Months)",
+    description: "Build user-facing mobile interfaces and assist in engineering cross-platform apps with React Native, TypeScript, and native mobile device integrations.",
   },
   {
-    title: "Principal Cloud & DevOps Architect",
+    title: "Cloud & DevOps Engineering Intern",
     department: "Infrastructure Pod",
-    location: "Remote",
-    type: "Full-time",
-    description: "Design Terraform-managed multi-region AWS/GCP infrastructure, Kubernetes clusters, and zero-downtime CI/CD automation pipelines.",
+    location: "100% Remote",
+    type: "Internship (Paid · 3-6 Months)",
+    description: "Learn modern infrastructure automation, Docker containerization, CI/CD pipelines with GitHub Actions, and cloud deployments on AWS/GCP.",
   },
   {
-    title: "Senior Product Designer (UI/UX Systems)",
+    title: "UI/UX & Product Design Intern",
     department: "Design Systems",
-    location: "Remote / London / Karachi",
-    type: "Full-time",
-    description: "Own end-to-end user research, Figma token libraries, and high-fidelity interaction design for data-dense B2B platforms.",
+    location: "100% Remote",
+    type: "Internship (Paid · 3-6 Months)",
+    description: "Collaborate with lead designers on Figma design systems, wireframes, user journeys, and component library maintenance for client platforms.",
+  },
+  {
+    title: "AI & Data Engineering Intern",
+    department: "AI & Automation Pod",
+    location: "100% Remote",
+    type: "Internship (Paid · 3-6 Months)",
+    description: "Contribute to LLM-powered applications, document processing pipelines, prompt workflows, and automated retrieval-augmented systems (RAG).",
+  },
+  {
+    title: "QA & Test Automation Intern",
+    department: "Quality Engineering",
+    location: "100% Remote",
+    type: "Internship (Paid · 3-6 Months)",
+    description: "Learn automated end-to-end testing with Playwright, write regression test suites, and ensure zero-defect software releases.",
   },
 ];
 
@@ -78,18 +69,18 @@ export default function CareersPage() {
         {/* Page Hero */}
         <PageHero
           eyebrow="CAREERS AT LOGIX"
-          badgeText="We're Hiring"
+          badgeText="100% Remote Internships"
           badgeDot
           title={
             <>
-              Build software that matters with a team of{" "}
-              <span className="text-brand-strong">proven senior practitioners.</span>
+              Launch your engineering career with a team of{" "}
+              <span className="text-brand-strong">proven practitioners.</span>
             </>
           }
-          description="We are a senior-only engineering team. No artificial bureaucracy, no junior handoffs, and no endless meetings. Just craft, accountability, and meaningful work."
+          description="Learn alongside senior architects and product designers from anywhere in the world. All Logix internships are 100% remote with paid stipends and dedicated 1-on-1 mentorship from day one."
         >
           <ButtonLink href="#roles" size="lg">
-            View open positions
+            View remote positions
           </ButtonLink>
           <ButtonLink href="/about" variant="outline" size="lg">
             About our culture
@@ -116,11 +107,14 @@ export default function CareersPage() {
                     </h3>
                   </div>
                   <div className="flex gap-2">
-                    <span className="rounded-lg bg-white/10 px-3 py-1 text-xs backdrop-blur border border-white/15">
-                      No Crunch Time
+                    <span className="rounded-lg bg-brand/20 text-brand px-3 py-1 text-xs font-semibold backdrop-blur border border-brand/30">
+                      100% Remote
                     </span>
                     <span className="rounded-lg bg-white/10 px-3 py-1 text-xs backdrop-blur border border-white/15">
-                      Async First
+                      Dedicated Mentorship
+                    </span>
+                    <span className="rounded-lg bg-white/10 px-3 py-1 text-xs backdrop-blur border border-white/15">
+                      Production Impact
                     </span>
                   </div>
                 </div>
@@ -129,37 +123,13 @@ export default function CareersPage() {
           </div>
         </section>
 
-        {/* Culture & Perks Grid */}
-        <section className="bg-background py-20 lg:py-28 border-b border-border">
-          <div className="container-x">
-            <SectionHeader
-              eyebrow="WHY WORK WITH US"
-              title="An environment built by engineers, for engineers."
-              description="We respect deep work and prioritize substantive engineering results over performative corporate ceremonies."
-            />
-            <StaggerContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {perks.map((p) => (
-                <StaggerItem key={p.title}>
-                  <MotionCardWrapper>
-                    <Card className="p-6 h-full shadow-sm hover:shadow-md transition-shadow">
-                      <span className="text-3xl">{p.icon}</span>
-                      <h3 className="mt-4 text-base font-bold text-primary">{p.title}</h3>
-                      <p className="mt-2 text-xs leading-5 text-muted-foreground">{p.description}</p>
-                    </Card>
-                  </MotionCardWrapper>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
-
-        {/* Open Roles */}
+        {/* Open Roles - Internships */}
         <section id="roles" className="bg-muted py-20 lg:py-28 border-b border-border">
           <div className="container-x">
             <SectionHeader
-              eyebrow="CURRENT OPENINGS"
-              title="Explore open technical positions."
-              description="Ready to do the best work of your career? Review our active roles below."
+              eyebrow="REMOTE INTERNSHIP OPPORTUNITIES"
+              title="Explore open remote intern positions."
+              description="All internships at Logix are 100% remote. Kickstart your engineering career with flexible remote hours, hands-on mentorship, paid stipends, and clear pathways to full-time roles."
             />
             <StaggerContainer className="space-y-4">
               {openRoles.map((role) => (
@@ -169,8 +139,10 @@ export default function CareersPage() {
                       <div className="max-w-2xl">
                         <div className="flex flex-wrap items-center gap-2 mb-2">
                           <Badge variant="brand" dot={false}>{role.department}</Badge>
-                          <Badge variant="outline">{role.location}</Badge>
-                          <span className="text-xs text-muted-foreground">{role.type}</span>
+                          <Badge variant="outline" className="border-brand-strong/30 text-brand-strong bg-brand/5">
+                            {role.location}
+                          </Badge>
+                          <span className="text-xs font-medium text-brand-strong bg-brand/10 rounded-full px-2 py-0.5">{role.type}</span>
                         </div>
                         <h3 className="text-xl font-bold text-primary">{role.title}</h3>
                         <p className="mt-2 text-xs sm:text-sm text-muted-foreground">{role.description}</p>
