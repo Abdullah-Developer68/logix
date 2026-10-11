@@ -34,8 +34,21 @@ export function Hero() {
               </ButtonLink>
             </motion.div>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
-              <ButtonLink href="/portfolio" variant="outline" size="lg" className="w-full sm:w-auto justify-center">
-                View our work
+              <ButtonLink
+                href="#services"
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto justify-center"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const el = document.getElementById("services");
+                  if (el) {
+                    el.scrollIntoView({ behavior: "smooth" });
+                    window.history.pushState(null, "", "#services");
+                  }
+                }}
+              >
+                Explore services
               </ButtonLink>
             </motion.div>
           </div>

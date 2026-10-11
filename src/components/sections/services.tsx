@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -137,10 +138,10 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
       <div className="px-5 pb-5">
         <div className="border-t border-border/60 pt-3">
           <Link
-            href={`/services#${service.id}`}
+            href="/contact"
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary transition-colors hover:text-brand-strong"
           >
-            Learn more →
+            Get in touch →
           </Link>
         </div>
       </div>
@@ -149,9 +150,21 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
 }
 
 export function Services() {
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash === "#services") {
+      const timer = setTimeout(() => {
+        const el = document.getElementById("services");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   return (
-    <section className="overflow-hidden border-y border-border bg-muted/60">
-      <div className="container-x pt-12 sm:pt-16 lg:pt-24">
+    <section id="services" className="scroll-mt-16 overflow-hidden border-y border-border bg-muted/60">
+      <div className="container-x pt-12 sm:pt-16 lg:py-0">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end sm:gap-6">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -170,8 +183,8 @@ export function Services() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <ButtonLink href="/services" variant="outline" size="sm" className="w-fit">
-              All services
+            <ButtonLink href="/contact" variant="outline" size="sm" className="w-fit">
+              Start a project
             </ButtonLink>
           </motion.div>
         </div>

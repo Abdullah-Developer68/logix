@@ -7,20 +7,18 @@ const columns = [
     links: [
       { label: "About", href: "/about" },
       { label: "Careers", href: "/careers" },
-      { label: "Portfolio", href: "/portfolio" },
-      { label: "Blog", href: "/blog" },
       { label: "Contact", href: "/contact" },
     ],
   },
   {
     title: "Services",
     links: [
-      { label: "Web Development", href: "/services#web" },
-      { label: "Mobile Apps", href: "/services#mobile" },
-      { label: "UI/UX Design", href: "/services#design" },
-      { label: "Custom Software", href: "/services#custom" },
-      { label: "Cloud & DevOps", href: "/services#cloud" },
-      { label: "AI & Automation", href: "/services#ai" },
+      { label: "Web Development", href: "/#services" },
+      { label: "Mobile Apps", href: "/#services" },
+      { label: "UI/UX Design", href: "/#services" },
+      { label: "Custom Software", href: "/#services" },
+      { label: "Cloud & DevOps", href: "/#services" },
+      { label: "AI & Automation", href: "/#services" },
     ],
   },
   {

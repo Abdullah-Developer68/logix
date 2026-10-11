@@ -10,15 +10,34 @@ import { cn } from "@/lib/utils";
 const links = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/blog", label: "Blog" },
+  { href: "/#services", label: "Services" },
+  { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact" },
 ];
 
 export function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href === "/#services") {
+      if (pathname === "/") {
+        e.preventDefault();
+        const element = document.getElementById("services");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          window.history.pushState(null, "", "/#services");
+        }
+      }
+    } else if (href === "/") {
+      if (pathname === "/") {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.history.pushState(null, "", "/");
+      }
+    }
+    setMobileMenuOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-md">
@@ -33,6 +52,7 @@ export function Header() {
               <Link
                 key={l.href}
                 href={l.href}
+                onClick={(e) => handleNavClick(e, l.href)}
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-foreground",
                   isActive ? "text-foreground font-semibold" : "text-muted-foreground",
@@ -87,7 +107,7 @@ export function Header() {
                 <Link
                   key={l.href}
                   href={l.href}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => handleNavClick(e, l.href)}
                   className={cn(
                     "text-base py-1 font-medium transition-colors",
                     isActive ? "text-brand-strong font-semibold" : "text-muted-foreground hover:text-foreground",

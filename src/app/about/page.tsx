@@ -164,7 +164,7 @@ export default function AboutPage() {
           <ButtonLink href="/contact" size="lg">
             Start a project
           </ButtonLink>
-          <ButtonLink href="/services" variant="outline" size="lg">
+          <ButtonLink href="/#services" variant="outline" size="lg">
             Our capabilities
           </ButtonLink>
         </PageHero>
