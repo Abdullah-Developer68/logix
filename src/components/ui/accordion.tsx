@@ -34,10 +34,10 @@ export function Accordion({
               className="flex w-full items-center justify-between text-left font-medium text-foreground transition-colors hover:text-brand-strong"
               aria-expanded={isOpen}
             >
-              <span className="text-base font-semibold">{item.question}</span>
+              <span className="text-sm sm:text-base font-semibold pr-2">{item.question}</span>
               <span
                 className={cn(
-                  "ml-4 flex size-7 shrink-0 items-center justify-center rounded-full border border-border text-xs transition-transform duration-200",
+                  "ml-2 sm:ml-4 flex size-7 shrink-0 items-center justify-center rounded-full border border-border text-xs transition-transform duration-200",
                   isOpen ? "rotate-45 bg-accent text-brand-strong border-brand-strong/30" : "bg-muted text-muted-foreground",
                 )}
                 aria-hidden="true"
@@ -46,7 +46,7 @@ export function Accordion({
               </span>
             </button>
             {isOpen && (
-              <div className="mt-3 text-sm leading-6 text-muted-foreground pr-8">
+              <div className="mt-3 text-xs sm:text-sm leading-5 sm:leading-6 text-muted-foreground pr-2 sm:pr-8">
                 {item.answer}
               </div>
             )}

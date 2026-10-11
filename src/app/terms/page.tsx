@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col overflow-x-clip">
       <Header />
-      <main>
+      <main className="flex-1">
         <PageHero
           eyebrow="LEGAL & TERMS"
           badgeText="Updated October 2026"
@@ -21,47 +21,47 @@ export default function TermsPage() {
           description="These terms govern your use of our digital platforms and define the general operational framework for Logix engineering engagements."
         />
 
-        <section className="bg-background py-16 lg:py-24">
-          <div className="container-x max-w-3xl space-y-10 text-sm leading-7 text-muted-foreground">
+        <section className="bg-background py-12 sm:py-16 lg:py-24">
+          <div className="container-x max-w-3xl space-y-8 sm:space-y-10 text-sm leading-6 sm:leading-7 text-muted-foreground">
             <div>
-              <h2 className="text-xl font-bold text-primary mb-3">1. Scope of Engagements</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-primary mb-2 sm:mb-3">1. Scope of Engagements</h2>
               <p>
                 All consulting services, dedicated engineering pods, and fixed-scope delivery projects performed by Logix are governed by a mutually executed Statement of Work (SOW) and Master Services Agreement (MSA). The specific deliverables, milestones, and timelines defined in the SOW supersede general website descriptions.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-primary mb-3">2. Intellectual Property (IP) Transfer</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-primary mb-2 sm:mb-3">2. Intellectual Property (IP) Transfer</h2>
               <p>
                 Upon payment of corresponding milestone invoices, 100% of all custom software code, repository assets, architectural diagrams, and user interface designs created for the client are irrevocably assigned to the client. Pre-existing open-source libraries remain licensed under their respective open-source terms.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-primary mb-3">3. Warranty & Defect Resolution</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-primary mb-2 sm:mb-3">3. Warranty & Defect Resolution</h2>
               <p>
                 All fixed-scope milestone projects include a standard 30-day post-launch warranty period during which any defects or deviations from approved specifications are remediated at zero additional cost.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-primary mb-3">4. Limitation of Liability</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-primary mb-2 sm:mb-3">4. Limitation of Liability</h2>
               <p>
                 Logix provides software engineering and advisory services using industry best practices. Liability for any engagement is explicitly defined and limited in the executed Master Services Agreement.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-primary mb-3">5. Contact Legal Desk</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-primary mb-2 sm:mb-3">5. Contact Legal Desk</h2>
               <p>
-                For legal inquiries, contract reviews, or enterprise vendor compliance requests, please email <a href="mailto:legal@logix.dev" className="text-brand-strong font-semibold hover:underline">legal@logix.dev</a>.
+                For legal inquiries, contract reviews, or enterprise vendor compliance requests, please email <a href="mailto:legal@logix.dev" className="text-brand-strong font-semibold hover:underline break-all">legal@logix.dev</a>.
               </p>
             </div>
           </div>
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 

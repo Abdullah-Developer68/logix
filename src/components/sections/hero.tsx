@@ -18,7 +18,7 @@ export function Hero() {
           <Badge variant="brand" dot className="mb-4 sm:mb-6">
             Available for Q4 projects
           </Badge>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[56px] font-bold leading-[1.12] tracking-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[56px] font-bold leading-[1.12] tracking-tight break-words">
             Software that moves your business{" "}
             <span className="text-brand-strong">forward.</span>
           </h1>
@@ -101,14 +101,14 @@ export function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1.1, ease: "easeOut" }}
-            className="absolute bottom-3 left-3 right-3 sm:right-auto sm:bottom-6 sm:left-6 flex items-center gap-3 rounded-lg bg-white/10 px-3.5 py-2.5 sm:px-4 sm:py-3 text-white backdrop-blur border border-white/10 shadow-lg"
+            className="absolute bottom-3 left-3 right-3 sm:right-auto sm:bottom-6 sm:left-6 flex items-center gap-2.5 sm:gap-3 rounded-lg bg-white/10 px-3 py-2 sm:px-4 sm:py-3 text-white backdrop-blur border border-white/10 shadow-lg"
           >
             <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-brand text-xs font-bold text-primary">
               ✓
             </span>
             <span className="text-xs">
               <strong className="block font-semibold">Deployed to production</strong>
-              <span className="text-white/60">14 weeks · on schedule</span>
+              <span className="text-white/60 text-[11px] sm:text-xs">14 weeks · on schedule</span>
             </span>
           </motion.div>
         </motion.div>

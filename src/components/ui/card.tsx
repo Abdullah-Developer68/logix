@@ -9,7 +9,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-xl border p-6",
+        "rounded-xl border p-5 sm:p-6",
         inverted
           ? "border-primary bg-[#0b1f3a] text-white dark:bg-card dark:border-border dark:text-foreground"
           : "border-border bg-card text-foreground",

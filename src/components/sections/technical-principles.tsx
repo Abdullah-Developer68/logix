@@ -11,7 +11,6 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { SectionHeader } from "@/components/ui/section-header";
-import { cn } from "@/lib/utils";
 
 interface Principle {
   id: string;
@@ -91,20 +90,8 @@ export function TechnicalPrinciples() {
         />
 
         {/* Orbit Visual Stage - Cards continuously rotating around the central orb */}
-        <div className="relative mx-auto mt-6 sm:mt-10 flex items-center justify-center">
-          <div
-            className={cn(
-              "relative flex items-center justify-center select-none",
-              "h-[480px] w-full max-w-[480px] sm:h-[580px] sm:max-w-[580px] lg:h-[660px] lg:max-w-[660px]",
-              // Responsive scaling for seamless mobile fit
-              "scale-[0.78] sm:scale-95 lg:scale-100 transition-transform origin-center"
-            )}
-            style={
-              {
-                "--orbit-r": "clamp(150px, 26vw, 245px)",
-              } as React.CSSProperties
-            }
-          >
+        <div className="relative mx-auto mt-4 sm:mt-10 flex h-[clamp(330px,92vw,440px)] sm:h-[570px] lg:h-[680px] items-center justify-center">
+          <div className="orbit-stage relative flex items-center justify-center select-none w-[396px] h-[396px] sm:w-[555px] sm:h-[555px] lg:w-[675px] lg:h-[675px] transition-transform origin-center">
             {/* Background Decorative Orbit Rings */}
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
               {/* Outer Dashed Orbit Path */}
@@ -124,26 +111,26 @@ export function TechnicalPrinciples() {
                 }}
               />
               {/* Central Glowing Pulse Aura */}
-              <div className="absolute size-52 sm:size-60 rounded-full bg-brand/10 blur-2xl" />
+              <div className="absolute size-28 sm:size-44 lg:size-56 rounded-full bg-brand/10 blur-2xl" />
             </div>
 
             {/* Central Orb */}
-            <div className="relative z-10 flex size-40 sm:size-48 lg:size-56 items-center justify-center rounded-full border border-brand/30 bg-background/95 p-5 text-center shadow-2xl backdrop-blur-md">
+            <div className="relative z-10 flex size-[84px] sm:size-[140px] lg:size-[180px] items-center justify-center rounded-full border border-brand/30 bg-background/95 p-1.5 sm:p-3 lg:p-4 text-center shadow-2xl backdrop-blur-md">
               <div className="flex flex-col items-center">
-                <div className="flex size-11 sm:size-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg ring-2 ring-brand/40">
-                  <Terminal className="size-5 sm:size-6 text-brand" />
+                <div className="flex size-6 sm:size-10 lg:size-12 items-center justify-center rounded-lg sm:rounded-xl lg:rounded-2xl bg-primary text-primary-foreground shadow-lg ring-1 sm:ring-2 ring-brand/40">
+                  <Terminal className="size-3 sm:size-5 lg:size-6 text-brand" />
                 </div>
-                <span className="mt-2.5 rounded-full bg-brand/10 px-2.5 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider text-brand-strong">
+                <span className="mt-0.5 sm:mt-1 rounded-full bg-brand/10 px-1.5 sm:px-2 py-0.5 text-[7px] sm:text-[9px] lg:text-[10px] font-mono font-bold uppercase tracking-wider text-brand-strong">
                   Logix Core
                 </span>
-                <h4 className="mt-1 text-xs sm:text-sm font-bold tracking-tight text-primary">
+                <h4 className="mt-0.5 sm:mt-1 text-[9px] sm:text-xs lg:text-sm font-bold tracking-tight text-primary leading-tight">
                   System Architecture
                 </h4>
-                <p className="mt-1 text-[11px] leading-tight text-muted-foreground max-w-[140px]">
-                  6 autonomous production pillars
+                <p className="mt-0.5 text-[7px] sm:text-[9px] lg:text-[10px] leading-tight text-muted-foreground max-w-[70px] sm:max-w-[120px]">
+                  6 autonomous pillars
                 </p>
-                <div className="mt-2 flex items-center gap-1.5 text-[10px] font-medium text-brand-strong">
-                  <span className="size-1.5 rounded-full bg-brand-strong animate-ping" />
+                <div className="mt-0.5 sm:mt-1 flex items-center gap-1 text-[7px] sm:text-[9px] font-medium text-brand-strong">
+                  <span className="size-1 sm:size-1.5 rounded-full bg-brand-strong animate-ping" />
                   <span>Production Ready</span>
                 </div>
               </div>
@@ -169,28 +156,28 @@ export function TechnicalPrinciples() {
                   >
                     {/* Orbit Item - Counter-rotating counter-clockwise so the card stays upright */}
                     <div className="orbit-item pointer-events-auto">
-                      <article className="group flex w-[180px] sm:w-[210px] flex-col rounded-xl border border-border bg-background/95 p-3 sm:p-3.5 text-left shadow-md backdrop-blur-md transition-all duration-300 hover:border-brand-strong/60 hover:shadow-xl hover:scale-105 select-none">
+                      <article className="group flex w-[124px] sm:w-[165px] lg:w-[195px] flex-col rounded-xl border border-border bg-background/95 p-2 sm:p-3 lg:p-3.5 text-left shadow-md backdrop-blur-md transition-all duration-300 hover:border-brand-strong/60 hover:shadow-xl hover:scale-105 select-none">
                         {/* Header */}
-                        <div className="flex items-center justify-between gap-2">
-                          <div className="flex size-7 sm:size-8 shrink-0 items-center justify-center rounded-lg border border-brand-strong/20 bg-accent text-brand-strong shadow-xs transition-colors group-hover:bg-brand-strong group-hover:text-white">
-                            <Icon className="size-3.5 sm:size-4" />
+                        <div className="flex items-center justify-between gap-1">
+                          <div className="flex size-5 sm:size-7 lg:size-8 shrink-0 items-center justify-center rounded-lg border border-brand-strong/20 bg-accent text-brand-strong shadow-xs transition-colors group-hover:bg-brand-strong group-hover:text-white">
+                            <Icon className="size-2.5 sm:size-3.5 lg:size-4" />
                           </div>
-                          <span className="truncate rounded-md bg-muted px-1.5 py-0.5 text-[9px] sm:text-[10px] font-mono font-medium text-muted-foreground border border-border">
+                          <span className="truncate rounded bg-muted px-1.5 py-0.5 text-[7px] sm:text-[9px] lg:text-[10px] font-mono font-medium text-muted-foreground border border-border">
                             {item.tech.split("·")[0].trim()}
                           </span>
                         </div>
 
                         {/* Title & Short Description */}
-                        <h4 className="mt-2 text-xs sm:text-sm font-bold tracking-tight text-primary">
+                        <h4 className="mt-1 sm:mt-2 text-[10px] sm:text-xs lg:text-sm font-bold tracking-tight text-primary truncate">
                           {item.title}
                         </h4>
-                        <p className="mt-1 text-[11px] leading-4 text-muted-foreground line-clamp-2">
+                        <p className="mt-0.5 sm:mt-1 text-[8px] sm:text-[10px] lg:text-[11px] leading-3 sm:leading-3.5 lg:leading-4 text-muted-foreground line-clamp-2">
                           {item.shortDesc}
                         </p>
 
                         {/* Metric Badge */}
-                        <div className="mt-2.5 flex items-center gap-1 border-t border-border/60 pt-1.5 text-[10px] font-medium text-brand-strong">
-                          <CheckCircle2 className="size-3 shrink-0" />
+                        <div className="mt-1 sm:mt-2 flex items-center gap-1 border-t border-border/60 pt-1 sm:pt-1.5 text-[7px] sm:text-[9px] lg:text-[10px] font-medium text-brand-strong">
+                          <CheckCircle2 className="size-2.5 sm:size-3 shrink-0" />
                           <span className="truncate">{item.metric}</span>
                         </div>
                       </article>

@@ -51,6 +51,7 @@ html.dark,
 }
 
 @theme inline {
+  --breakpoint-xs: 24rem;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
@@ -81,6 +82,8 @@ html.dark,
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
+    max-width: 100%;
   }
   * {
     border-color: var(--border);
@@ -89,6 +92,8 @@ html.dark,
     background: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans), system-ui, sans-serif;
+    overflow-x: clip;
+    max-width: 100%;
   }
   /* Typography scale from the design system */
   h1 {
@@ -169,7 +174,8 @@ html.dark,
   animation: deck-slide 45s linear infinite;
   will-change: transform;
 }
-.deck-track:hover {
+.deck-track:hover,
+.deck-track:active {
   animation-play-state: paused;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -206,6 +212,35 @@ html.dark,
 .orbit-item {
   animation: orbit-ccw 36s linear infinite;
   will-change: transform;
+}
+
+.orbit-track:hover,
+.orbit-track:active,
+.orbit-track:hover .orbit-item,
+.orbit-track:active .orbit-item {
+  animation-play-state: paused;
+}
+
+.orbit-stage {
+  --orbit-stage-scale: clamp(0.68, calc((100vw - 32px) / 396), 1);
+  --orbit-r: 136px;
+  transform: scale(var(--orbit-stage-scale));
+}
+
+@media (min-width: 640px) {
+  .orbit-stage {
+    --orbit-stage-scale: 0.95;
+    --orbit-r: 195px;
+    transform: scale(var(--orbit-stage-scale));
+  }
+}
+
+@media (min-width: 1024px) {
+  .orbit-stage {
+    --orbit-stage-scale: 1;
+    --orbit-r: 240px;
+    transform: scale(var(--orbit-stage-scale));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

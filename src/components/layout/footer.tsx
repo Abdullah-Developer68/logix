@@ -39,12 +39,12 @@ export function Footer() {
         <div className="grid gap-8 sm:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div className="sm:col-span-2 lg:col-span-1">
             <Logo light />
-            <p className="mt-4 max-w-xs text-sm leading-6 text-white/70">
+            <p className="mt-4 max-w-xs text-sm leading-6 text-white/70 break-words">
               Logix is a software company that designs, builds and scales digital products for ambitious businesses.
             </p>
             <div className="mt-5 space-y-1 text-sm text-white/60">
               <p>
-                <a href="mailto:hello@logix.dev" className="hover:text-brand transition-colors">hello@logix.dev</a>
+                <a href="mailto:hello@logix.dev" className="hover:text-brand transition-colors break-all">hello@logix.dev</a>
               </p>
               <p>
                 <a href="tel:+15550123456" className="hover:text-brand transition-colors">+1 (555) 012-3456</a>
@@ -60,7 +60,7 @@ export function Footer() {
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="text-sm text-white/60 transition-colors hover:text-white"
+                      className="text-sm text-white/60 transition-colors hover:text-white leading-5 inline-block"
                     >
                       {l.label}
                     </Link>
@@ -72,8 +72,8 @@ export function Footer() {
         </div>
 
         <div className="mt-10 sm:mt-14 flex flex-col justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center">
-          <span>© 2026 Logix Technologies Inc. All rights reserved.</span>
-          <div className="flex flex-wrap gap-x-6 gap-y-2">
+          <span className="break-words">© 2026 Logix Technologies Inc. All rights reserved.</span>
+          <div className="flex flex-wrap gap-x-4 sm:gap-x-6 gap-y-2">
             <Link href="/privacy" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>

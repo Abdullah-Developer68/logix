@@ -63,9 +63,9 @@ const openRoles = [
 
 export default function CareersPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col overflow-x-clip">
       <Header />
-      <main>
+      <main className="flex-1">
         {/* Page Hero */}
         <PageHero
           eyebrow="CAREERS AT LOGIX"
@@ -79,41 +79,41 @@ export default function CareersPage() {
           }
           description="Learn alongside senior architects and product designers from anywhere in the world. All Logix internships are 100% remote with paid stipends and dedicated 1-on-1 mentorship from day one."
         >
-          <ButtonLink href="#roles" size="lg">
+          <ButtonLink href="#roles" size="lg" className="w-full sm:w-auto justify-center">
             View remote positions
           </ButtonLink>
-          <ButtonLink href="/about" variant="outline" size="lg">
+          <ButtonLink href="/about" variant="outline" size="lg" className="w-full sm:w-auto justify-center">
             About our culture
           </ButtonLink>
         </PageHero>
 
         {/* Culture Visual Banner */}
-        <section className="bg-background py-10 border-b border-border">
+        <section className="bg-background py-8 sm:py-10 border-b border-border">
           <div className="container-x">
             <FadeIn>
-              <div className="relative h-64 sm:h-80 w-full overflow-hidden rounded-2xl border border-border/80 shadow-xl">
+              <div className="relative h-72 sm:h-80 w-full overflow-hidden rounded-2xl border border-border/80 shadow-xl">
                 <Image
                   src="/images/about/team-office.jpg"
                   alt="Logix engineering work environment"
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0b1f3a]/90 via-[#0b1f3a]/30 to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-white">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b1f3a]/95 via-[#0b1f3a]/30 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 sm:bottom-8 sm:left-8 sm:right-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-white">
                   <div>
                     <span className="eyebrow text-brand">LIFE AT LOGIX</span>
-                    <h3 className="mt-2 text-xl sm:text-2xl font-bold text-white">
+                    <h3 className="mt-2 text-lg sm:text-2xl font-bold text-white">
                       Built for engineers who take pride in their craft.
                     </h3>
                   </div>
-                  <div className="flex gap-2">
-                    <span className="rounded-lg bg-brand/20 text-brand px-3 py-1 text-xs font-semibold backdrop-blur border border-brand/30">
+                  <div className="flex flex-wrap gap-2">
+                    <span className="rounded-lg bg-brand/20 text-brand px-2.5 py-1 text-xs font-semibold backdrop-blur border border-brand/30">
                       100% Remote
                     </span>
-                    <span className="rounded-lg bg-white/10 px-3 py-1 text-xs backdrop-blur border border-white/15">
+                    <span className="rounded-lg bg-white/10 px-2.5 py-1 text-xs backdrop-blur border border-white/15">
                       Dedicated Mentorship
                     </span>
-                    <span className="rounded-lg bg-white/10 px-3 py-1 text-xs backdrop-blur border border-white/15">
+                    <span className="rounded-lg bg-white/10 px-2.5 py-1 text-xs backdrop-blur border border-white/15">
                       Production Impact
                     </span>
                   </div>
@@ -124,7 +124,7 @@ export default function CareersPage() {
         </section>
 
         {/* Open Roles - Internships */}
-        <section id="roles" className="bg-muted py-20 lg:py-28 border-b border-border">
+        <section id="roles" className="bg-muted py-16 sm:py-20 lg:py-28 border-b border-border">
           <div className="container-x">
             <SectionHeader
               eyebrow="REMOTE INTERNSHIP OPPORTUNITIES"
@@ -135,20 +135,20 @@ export default function CareersPage() {
               {openRoles.map((role) => (
                 <StaggerItem key={role.title}>
                   <MotionCardWrapper>
-                    <Card className="p-6 sm:p-8 flex flex-col justify-between sm:flex-row sm:items-center gap-6 shadow-sm hover:shadow-md transition-shadow">
+                    <Card className="p-5 sm:p-8 flex flex-col justify-between sm:flex-row sm:items-center gap-5 sm:gap-6 shadow-sm hover:shadow-md transition-shadow">
                       <div className="max-w-2xl">
-                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2">
                           <Badge variant="brand" dot={false}>{role.department}</Badge>
                           <Badge variant="outline" className="border-brand-strong/30 text-brand-strong bg-brand/5">
                             {role.location}
                           </Badge>
-                          <span className="text-xs font-medium text-brand-strong bg-brand/10 rounded-full px-2 py-0.5">{role.type}</span>
+                          <span className="text-[11px] sm:text-xs font-medium text-brand-strong bg-brand/10 rounded-full px-2 py-0.5">{role.type}</span>
                         </div>
-                        <h3 className="text-xl font-bold text-primary">{role.title}</h3>
+                        <h3 className="text-lg sm:text-xl font-bold text-primary">{role.title}</h3>
                         <p className="mt-2 text-xs sm:text-sm text-muted-foreground">{role.description}</p>
                       </div>
-                      <div className="shrink-0">
-                        <ButtonLink href="mailto:careers@logix.dev" variant="default" size="default">
+                      <div className="shrink-0 w-full sm:w-auto">
+                        <ButtonLink href="mailto:careers@logix.dev" variant="default" size="default" className="w-full sm:w-auto text-center justify-center">
                           Apply Now →
                         </ButtonLink>
                       </div>
@@ -166,6 +166,6 @@ export default function CareersPage() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

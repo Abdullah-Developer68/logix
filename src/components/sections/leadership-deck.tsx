@@ -11,22 +11,22 @@ export type TeamMember = {
 
 function MemberCard({ member }: { member: TeamMember }) {
   return (
-    <article className="group flex h-full w-[260px] -rotate-3 flex-col justify-between rounded-xl border border-border bg-card p-5 shadow-md transition-all duration-300 hover:z-10 hover:-translate-y-3 hover:rotate-0 hover:shadow-2xl sm:w-[290px]">
+    <article className="group flex h-full w-[250px] sm:w-[290px] -rotate-2 sm:-rotate-3 flex-col justify-between rounded-xl border border-border bg-card p-4 sm:p-5 shadow-md transition-all duration-300 hover:z-10 hover:-translate-y-3 hover:rotate-0 hover:shadow-2xl">
       <div>
-        <div className="relative mb-4 h-44 w-full overflow-hidden rounded-lg border border-border bg-muted sm:h-48">
+        <div className="relative mb-3.5 h-40 w-full overflow-hidden rounded-lg border border-border bg-muted sm:h-48 sm:mb-4">
           <Image
             src={member.image}
             alt={member.name}
             fill
-            sizes="290px"
+            sizes="(max-width: 640px) 250px, 290px"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-        <h3 className="text-lg font-bold text-primary">{member.name}</h3>
+        <h3 className="text-base sm:text-lg font-bold text-primary">{member.name}</h3>
         <p className="text-xs font-semibold text-brand-strong">{member.role}</p>
-        <p className="mt-3 text-xs leading-5 text-muted-foreground">{member.bio}</p>
+        <p className="mt-2.5 sm:mt-3 text-xs leading-5 text-muted-foreground">{member.bio}</p>
       </div>
-      <div className="mt-5 flex items-center justify-between border-t border-border pt-3 text-xs text-muted-foreground">
+      <div className="mt-4 sm:mt-5 flex items-center justify-between border-t border-border pt-3 text-xs text-muted-foreground">
         <span>Verified Logix Lead</span>
         <Badge variant="brand" dot={false}>
           {member.tag ?? "Core"}

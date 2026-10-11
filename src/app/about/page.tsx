@@ -118,9 +118,9 @@ const leadership: TeamMember[] = [
 
 export default function AboutPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col overflow-x-clip">
       <Header />
-      <main>
+      <main className="flex-1">
         {/* Page Hero */}
         <PageHero
           eyebrow="ABOUT LOGIX"
@@ -134,19 +134,19 @@ export default function AboutPage() {
           }
           description="Since 2016, Logix has partnered with founders and technology leaders to turn ambitious ideas into dependable, high-performing software products. No juniors, no runarounds — just accountable engineering."
         >
-          <ButtonLink href="/contact" size="lg">
+          <ButtonLink href="/contact" size="lg" className="w-full sm:w-auto justify-center">
             Start a project
           </ButtonLink>
-          <ButtonLink href="/#services" variant="outline" size="lg">
+          <ButtonLink href="/#services" variant="outline" size="lg" className="w-full sm:w-auto justify-center">
             Our capabilities
           </ButtonLink>
         </PageHero>
 
         {/* Studio / Engineering Office Visual Showcase */}
-        <section className="bg-background py-12 border-b border-border">
+        <section className="bg-background py-10 sm:py-12 border-b border-border">
           <div className="container-x">
             <FadeIn>
-              <div className="relative h-[340px] sm:h-[480px] w-full overflow-hidden rounded-2xl border border-border/80 shadow-2xl">
+              <div className="relative h-[360px] sm:h-[440px] md:h-[480px] w-full overflow-hidden rounded-2xl border border-border/80 shadow-2xl">
                 <Image
                   src="/images/about/team-office.jpg"
                   alt="Logix engineering studio and collaborative workspace"
@@ -154,24 +154,24 @@ export default function AboutPage() {
                   priority
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/85 via-primary/20 to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6 sm:bottom-10 sm:left-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-white">
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/30 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 sm:bottom-10 sm:left-10 sm:right-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-white">
                   <div>
                     <Badge variant="brand" dot className="bg-brand text-primary font-semibold">
                       Engineering Hubs
                     </Badge>
-                    <h3 className="mt-3 text-xl sm:text-2xl font-bold text-white">
+                    <h3 className="mt-2.5 text-lg sm:text-2xl font-bold text-white">
                       Where craft meets velocity.
                     </h3>
                     <p className="mt-1 text-xs sm:text-sm text-white/80 max-w-lg">
                       Our distributed engineering hubs in Karachi, Lahore, London, and Austin build around asynchronous deep work and rapid shipping.
                     </p>
                   </div>
-                  <div className="flex gap-3 shrink-0">
-                    <span className="rounded-lg bg-white/10 px-3 py-1.5 text-xs backdrop-blur border border-white/15">
+                  <div className="flex flex-wrap gap-2 sm:gap-3 shrink-0">
+                    <span className="rounded-lg bg-white/10 px-2.5 py-1 text-xs backdrop-blur border border-white/15">
                       100% In-house
                     </span>
-                    <span className="rounded-lg bg-white/10 px-3 py-1.5 text-xs backdrop-blur border border-white/15">
+                    <span className="rounded-lg bg-white/10 px-2.5 py-1 text-xs backdrop-blur border border-white/15">
                       Zero Outsource
                     </span>
                   </div>
@@ -182,26 +182,26 @@ export default function AboutPage() {
         </section>
 
         {/* Stats Grid */}
-        <section className="border-b border-border bg-muted py-14">
+        <section className="border-b border-border bg-muted py-10 sm:py-14">
           <div className="container-x">
-            <StaggerContainer className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+            <StaggerContainer className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
               {stats.map((s) => (
                 <StaggerItem key={s.label}>
                   <div
-                    className={`rounded-xl p-6 border transition-all hover:shadow-md ${
+                    className={`rounded-xl p-3.5 sm:p-6 border transition-all hover:shadow-md ${
                       s.highlight
                         ? "bg-accent border-brand-strong/20"
                         : "bg-background border-border"
                     }`}
                   >
                     <div
-                      className={`text-4xl sm:text-5xl font-bold tracking-tight ${
+                      className={`text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight ${
                         s.highlight ? "text-brand-strong" : "text-primary"
                       }`}
                     >
                       {s.value}
                     </div>
-                    <div className="mt-1 text-sm font-medium text-muted-foreground">{s.label}</div>
+                    <div className="mt-1 text-xs sm:text-sm font-medium text-muted-foreground">{s.label}</div>
                   </div>
                 </StaggerItem>
               ))}
@@ -259,6 +259,6 @@ export default function AboutPage() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

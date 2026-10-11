@@ -31,19 +31,19 @@ export function Testimonials() {
             transition={{ duration: 0.6 }}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
           >
-            <Card className="flex flex-col justify-between p-6 sm:p-8 h-full shadow-sm bg-card border border-border">
-              <p className="text-lg sm:text-xl font-medium leading-7 sm:leading-8 text-foreground">
+            <Card className="flex flex-col justify-between p-5 sm:p-8 h-full shadow-sm bg-card border border-border">
+              <p className="text-base sm:text-xl font-medium leading-6 sm:leading-8 text-foreground">
                 “Logix rebuilt our dispatch platform in 14 weeks. Delivery times dropped 31% and our team finally has software they enjoy using.”
               </p>
-              <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-between gap-3">
+              <div className="mt-6 sm:mt-10 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <Avatar initials="SA" className="size-10 bg-accent text-brand-strong font-bold border border-brand-strong/20" />
-                  <div className="text-sm">
+                  <Avatar initials="SA" className="size-9 sm:size-10 bg-accent text-brand-strong font-bold border border-brand-strong/20" />
+                  <div className="text-xs sm:text-sm">
                     <div className="font-semibold text-foreground">Sara Ahmed</div>
                     <div className="text-muted-foreground">COO, Northwind Logistics</div>
                   </div>
                 </div>
-                <span className="font-bold text-muted-foreground/80 tracking-tight">northwind</span>
+                <span className="font-bold text-muted-foreground/80 tracking-tight text-sm">northwind</span>
               </div>
             </Card>
           </motion.div>
@@ -59,7 +59,7 @@ export function Testimonials() {
                 whileHover={{ y: -3, transition: { duration: 0.2 } }}
                 className="flex-1"
               >
-                <Card className="flex flex-col justify-between h-full p-5 sm:p-6">
+                <Card className="flex flex-col justify-between h-full p-4 sm:p-6">
                   <p className="text-sm leading-6">“{t.quote}”</p>
                   <div className="mt-4 flex items-center gap-3">
                     <Avatar initials={t.initials} className="bg-accent text-brand-strong font-semibold" />

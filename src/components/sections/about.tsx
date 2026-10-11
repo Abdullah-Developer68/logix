@@ -52,11 +52,11 @@ export function About() {
               }}
               whileHover={{ y: -4, transition: { duration: 0.2 } }}
               className={cn(
-                "rounded-xl p-4 sm:p-6 border transition-shadow",
+                "rounded-xl p-3.5 sm:p-6 border transition-shadow",
                 s.highlight ? "bg-accent border-brand-strong/20" : "bg-background border-border",
               )}
             >
-              <div className={cn("text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight", s.highlight ? "text-brand-strong" : "text-primary")}>
+              <div className={cn("text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight", s.highlight ? "text-brand-strong" : "text-primary")}>
                 {s.value}
               </div>
               <div className="mt-1 text-xs sm:text-sm text-muted-foreground">{s.label}</div>

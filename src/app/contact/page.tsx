@@ -78,9 +78,9 @@ const contactFaqs = [
 
 export default function ContactPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col overflow-x-clip">
       <Header />
-      <main>
+      <main className="flex-1">
         {/* Page Hero */}
         <PageHero
           eyebrow="START A PROJECT"
@@ -96,7 +96,7 @@ export default function ContactPage() {
         />
 
         {/* Single Vertical Contact Form */}
-        <section className="bg-background py-16 lg:py-24 border-b border-border">
+        <section className="bg-background py-12 sm:py-16 lg:py-24 border-b border-border">
           <div className="container-x max-w-xl">
             <FadeIn>
               <SectionHeader
@@ -111,7 +111,7 @@ export default function ContactPage() {
         </section>
 
         {/* Global Office Locations */}
-        <section id="offices" className="bg-muted py-20 lg:py-28 border-b border-border">
+        <section id="offices" className="bg-muted py-16 sm:py-20 lg:py-28 border-b border-border">
           <div className="container-x">
             <SectionHeader
               eyebrow="GLOBAL REACH"
@@ -123,7 +123,7 @@ export default function ContactPage() {
               {offices.map((office) => (
                 <StaggerItem key={office.city}>
                   <MotionCardWrapper>
-                    <Card className="flex flex-col justify-between p-6 h-full shadow-sm hover:shadow-md transition-shadow">
+                    <Card className="flex flex-col justify-between p-5 sm:p-6 h-full shadow-sm hover:shadow-md transition-shadow">
                       <div>
                         <span className="text-xs font-bold text-brand-strong">{office.timezone}</span>
                         <h3 className="mt-2 text-base font-bold text-primary">{office.city}</h3>
@@ -133,7 +133,7 @@ export default function ContactPage() {
                       <div className="mt-6 pt-4 border-t border-border space-y-1 text-xs">
                         <p className="text-muted-foreground">{office.phone}</p>
                         <p>
-                          <a href={`mailto:${office.email}`} className="text-brand-strong font-semibold hover:underline">
+                          <a href={`mailto:${office.email}`} className="text-brand-strong font-semibold hover:underline break-all">
                             {office.email}
                           </a>
                         </p>
@@ -147,7 +147,7 @@ export default function ContactPage() {
         </section>
 
         {/* FAQ Section */}
-        <section className="bg-background py-20 lg:py-28">
+        <section className="bg-background py-16 sm:py-20 lg:py-28">
           <div className="container-x max-w-4xl">
             <SectionHeader
               eyebrow="COMMON QUESTIONS"
@@ -156,7 +156,7 @@ export default function ContactPage() {
               align="center"
             />
             <FadeIn>
-              <div className="bg-background rounded-xl p-8 border border-border shadow-sm">
+              <div className="bg-background rounded-xl p-5 sm:p-8 border border-border shadow-sm">
                 <Accordion items={contactFaqs} />
               </div>
             </FadeIn>
@@ -164,6 +164,6 @@ export default function ContactPage() {
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

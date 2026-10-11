@@ -12,11 +12,11 @@ export function Cta() {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="grid items-center gap-6 sm:gap-8 rounded-xl bg-brand text-[#0b1f3a] p-6 sm:p-10 md:grid-cols-[1.4fr_1fr] md:p-14 shadow-xl"
+          className="grid items-center gap-6 sm:gap-8 rounded-xl bg-brand text-[#0b1f3a] p-5 sm:p-10 md:grid-cols-[1.4fr_1fr] md:p-14 shadow-xl"
         >
           <div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-[#0b1f3a]">Have an idea? Let&apos;s build it together.</h2>
-            <p className="mt-3 sm:mt-4 max-w-md text-sm leading-6 text-[#0b1f3a]/80">
+            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold leading-tight text-[#0b1f3a]">Have an idea? Let&apos;s build it together.</h2>
+            <p className="mt-2.5 sm:mt-4 max-w-md text-xs sm:text-sm leading-5 sm:leading-6 text-[#0b1f3a]/80">
               Book a free 30-minute discovery call. Tell us what you&apos;re building and we&apos;ll show you how we&apos;d approach it.
             </p>
           </div>

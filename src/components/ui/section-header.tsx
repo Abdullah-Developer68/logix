@@ -36,7 +36,7 @@ export function SectionHeader({
     >
       <div>
         {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
-        <h2 className="text-2xl sm:text-3xl lg:text-[36px] lg:leading-[44px] font-bold text-primary tracking-tight">
+        <h2 className="text-2xl sm:text-3xl lg:text-[36px] lg:leading-[44px] font-bold text-primary tracking-tight break-words">
           {title}
         </h2>
         {description && (

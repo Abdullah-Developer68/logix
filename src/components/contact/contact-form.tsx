@@ -35,7 +35,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-5 rounded-xl border border-border bg-background p-6 sm:p-8 shadow-sm"
+      className="flex flex-col gap-4 sm:gap-5 rounded-xl border border-border bg-background p-5 sm:p-8 shadow-sm"
     >
       <div className="flex flex-col gap-1.5">
         <label htmlFor="name" className="text-xs font-semibold uppercase tracking-wider text-primary">

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "@/components/ui/logo";
 import { ButtonLink } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -19,6 +20,32 @@ const links = [
 export function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setMobileMenuOpen(false);
+  }
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMobileMenuOpen(false);
+      }
+    };
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setMobileMenuOpen(false);
+      }
+    };
+    if (mobileMenuOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [mobileMenuOpen]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href === "/#services") {
@@ -85,8 +112,9 @@ export function Header() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="inline-flex size-10 items-center justify-center rounded-lg border border-border text-foreground hover:bg-muted"
+            className="inline-flex size-10 items-center justify-center rounded-lg border border-border text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-nav-drawer"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? (
@@ -102,37 +130,59 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="border-b border-border bg-background px-6 py-6 md:hidden">
-          <nav className="flex flex-col gap-4">
-            {links.map((l) => {
-              const isActive = pathname === l.href;
-              return (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  onClick={(e) => handleNavClick(e, l.href)}
-                  className={cn(
-                    "text-base py-1 font-medium transition-colors",
-                    isActive ? "text-brand-strong font-semibold" : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  {l.label}
-                </Link>
-              );
-            })}
-          </nav>
-          <div className="mt-6 flex flex-col gap-3 border-t border-border pt-4">
-            <a href="tel:+15550123456" className="text-sm font-medium text-muted-foreground">
-              Call us: +1 (555) 012-3456
-            </a>
-            <ButtonLink href="/contact" size="default" onClick={() => setMobileMenuOpen(false)}>
-              Get a quote
-            </ButtonLink>
-          </div>
-        </div>
-      )}
+      {/* Mobile Drawer Menu & Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            <motion.div
+              id="mobile-nav-drawer"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              className="relative z-50 max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-border bg-background md:hidden"
+            >
+              <div className="px-4 sm:px-6 py-5 sm:py-6">
+                <nav className="flex flex-col gap-3" aria-label="Mobile Navigation">
+                  {links.map((l) => {
+                    const isActive = pathname === l.href;
+                    return (
+                      <Link
+                        key={l.href}
+                        href={l.href}
+                        onClick={(e) => handleNavClick(e, l.href)}
+                        className={cn(
+                          "text-base py-1.5 font-medium transition-colors",
+                          isActive ? "text-brand-strong font-semibold" : "text-muted-foreground hover:text-foreground",
+                        )}
+                      >
+                        {l.label}
+                      </Link>
+                    );
+                  })}
+                </nav>
+                <div className="mt-5 flex flex-col gap-3 border-t border-border pt-4">
+                  <a href="tel:+15550123456" className="text-xs sm:text-sm font-medium text-muted-foreground">
+                    Call us: +1 (555) 012-3456
+                  </a>
+                  <ButtonLink href="/contact" size="default" className="w-full justify-center" onClick={() => setMobileMenuOpen(false)}>
+                    Get a quote
+                  </ButtonLink>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 top-16 z-40 bg-black/40 backdrop-blur-xs md:hidden"
+              onClick={() => setMobileMenuOpen(false)}
+              aria-hidden="true"
+            />
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

@@ -110,32 +110,32 @@ const services = [
 
 function ServiceCard({ service }: { service: (typeof services)[number] }) {
   return (
-    <article className="group flex h-full w-[280px] -rotate-3 flex-col justify-between overflow-hidden rounded-xl border border-border bg-card shadow-md transition-all duration-300 hover:z-10 hover:-translate-y-3 hover:rotate-0 hover:shadow-2xl sm:w-[310px]">
+    <article className="group flex h-full w-[260px] sm:w-[310px] -rotate-2 sm:-rotate-3 flex-col justify-between overflow-hidden rounded-xl border border-border bg-card shadow-md transition-all duration-300 hover:z-10 hover:-translate-y-3 hover:rotate-0 hover:shadow-2xl">
       <div>
         {/* Service image preview */}
-        <div className="relative h-44 w-full overflow-hidden bg-muted sm:h-48">
+        <div className="relative h-40 w-full overflow-hidden bg-muted sm:h-48">
           <Image
             src={service.image}
             alt={service.title}
             fill
-            sizes="310px"
+            sizes="(max-width: 640px) 260px, 310px"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/25 via-transparent to-transparent" />
-          <div className="absolute left-3.5 top-3.5 z-10">
-            <div className="flex size-10 items-center justify-center rounded-lg border border-brand-strong/20 bg-background/90 text-brand-strong shadow-md backdrop-blur-md">
+          <div className="absolute left-3 top-3 sm:left-3.5 sm:top-3.5 z-10">
+            <div className="flex size-9 sm:size-10 items-center justify-center rounded-lg border border-brand-strong/20 bg-background/90 text-brand-strong shadow-md backdrop-blur-md">
               {service.icon}
             </div>
           </div>
         </div>
 
-        <div className="p-5">
-          <h3 className="text-lg font-bold tracking-tight text-primary">{service.title}</h3>
-          <p className="mt-2 text-xs leading-6 text-muted-foreground sm:text-sm">{service.text}</p>
+        <div className="p-4 sm:p-5">
+          <h3 className="text-base sm:text-lg font-bold tracking-tight text-primary">{service.title}</h3>
+          <p className="mt-1.5 sm:mt-2 text-xs leading-5 sm:leading-6 text-muted-foreground sm:text-sm">{service.text}</p>
         </div>
       </div>
 
-      <div className="px-5 pb-5">
+      <div className="px-4 pb-4 sm:px-5 sm:pb-5">
         <div className="border-t border-border/60 pt-3">
           <Link
             href="/contact"
@@ -164,7 +164,7 @@ export function Services() {
 
   return (
     <section id="services" className="scroll-mt-16 overflow-hidden border-y border-border bg-muted/60">
-      <div className="container-x pt-12 sm:pt-16 lg:py-0">
+      <div className="container-x pt-12 sm:pt-16 lg:pt-20">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end sm:gap-6">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -172,8 +172,8 @@ export function Services() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <p className="eyebrow mb-3 sm:mb-4">Our services</p>
-            <h2 className="max-w-md text-2xl leading-tight! sm:text-3xl lg:text-[32px]!">
+            <p className="eyebrow mb-2 sm:mb-4">Our services</p>
+            <h2 className="max-w-md text-2xl leading-tight! sm:text-3xl lg:text-[32px]! break-words">
               End-to-end services, one accountable team.
             </h2>
           </motion.div>
@@ -183,7 +183,7 @@ export function Services() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <ButtonLink href="/contact" variant="outline" size="sm" className="w-fit">
+            <ButtonLink href="/contact" variant="outline" size="sm" className="w-full sm:w-fit justify-center">
               Start a project
             </ButtonLink>
           </motion.div>
@@ -198,7 +198,7 @@ export function Services() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="relative py-10 pb-12 sm:pb-16 lg:pb-24"
+        className="relative py-8 pb-12 sm:py-10 sm:pb-16 lg:pb-24 overflow-hidden"
         style={{
           maskImage: "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
           WebkitMaskImage: "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
