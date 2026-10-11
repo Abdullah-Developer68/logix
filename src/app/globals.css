@@ -222,15 +222,15 @@ html.dark,
 }
 
 .orbit-stage {
-  --orbit-stage-scale: clamp(0.68, calc((100vw - 32px) / 396), 1);
-  --orbit-r: 136px;
+  --orbit-stage-scale: clamp(0.75, calc((100vw - 32px) / 360), 1);
+  --orbit-r: 125px;
   transform: scale(var(--orbit-stage-scale));
 }
 
 @media (min-width: 640px) {
   .orbit-stage {
-    --orbit-stage-scale: 0.95;
-    --orbit-r: 195px;
+    --orbit-stage-scale: 1;
+    --orbit-r: 175px;
     transform: scale(var(--orbit-stage-scale));
   }
 }
@@ -238,7 +238,7 @@ html.dark,
 @media (min-width: 1024px) {
   .orbit-stage {
     --orbit-stage-scale: 1;
-    --orbit-r: 240px;
+    --orbit-r: 210px;
     transform: scale(var(--orbit-stage-scale));
   }
 }
