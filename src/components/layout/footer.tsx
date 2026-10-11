@@ -34,7 +34,7 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer className="bg-primary text-primary-foreground border-t border-primary">
+    <footer className="bg-[#0b1f3a] dark:bg-[#050c18] text-white border-t border-white/10">
       <div className="container-x pt-12 sm:pt-16 pb-8 sm:pb-10">
         <div className="grid gap-8 sm:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div className="sm:col-span-2 lg:col-span-1">

@@ -9,6 +9,11 @@ const variants = {
   outline: "border border-input bg-background text-foreground hover:bg-muted",
   ghost: "text-foreground hover:bg-accent",
   link: "text-foreground underline-offset-4 hover:underline",
+  dark: "bg-[#0b1f3a] text-white hover:bg-[#0b1f3a]/90 shadow-md",
+  "outline-dark": "border-2 border-[#0b1f3a] text-[#0b1f3a] bg-white/15 hover:bg-white/30",
+  "ghost-dark": "bg-white/30 text-[#0b1f3a] hover:bg-white/45 border border-[#0b1f3a]/20",
+  white: "bg-white text-[#0b1f3a] hover:bg-white/90 shadow-sm",
+  unstyled: "",
 } as const;
 
 const sizes = {

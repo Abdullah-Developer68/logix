@@ -64,7 +64,7 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="relative rounded-xl bg-primary p-4 sm:p-5 shadow-2xl border border-white/10"
+          className="relative rounded-xl bg-[#0b1f3a] dark:bg-[#091222] p-4 sm:p-5 shadow-2xl border border-white/10"
         >
           <div className="flex gap-1.5">
             <span className="size-2.5 rounded-full bg-[#ff5f56]" />

@@ -11,8 +11,8 @@ export function Card({
       className={cn(
         "rounded-xl border p-6",
         inverted
-          ? "border-primary bg-primary text-primary-foreground"
-          : "border-border bg-background text-foreground",
+          ? "border-primary bg-[#0b1f3a] text-white dark:bg-card dark:border-border dark:text-foreground"
+          : "border-border bg-card text-foreground",
         className,
       )}
       {...props}

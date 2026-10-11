@@ -98,7 +98,7 @@ export default function CareersPage() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b1f3a]/90 via-[#0b1f3a]/30 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-white">
                   <div>
                     <span className="eyebrow text-brand">LIFE AT LOGIX</span>

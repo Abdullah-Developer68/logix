@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/ui/logo";
 import { ButtonLink } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -65,7 +66,8 @@ export function Header() {
         </nav>
 
         {/* Desktop CTA & Phone */}
-        <div className="hidden items-center gap-4 lg:gap-5 md:flex">
+        <div className="hidden items-center gap-3 lg:gap-4 md:flex">
+          <ThemeToggle />
           <a
             href="tel:+15550123456"
             className="hidden text-xs font-medium text-muted-foreground hover:text-foreground transition-colors xl:inline-block"
@@ -77,24 +79,27 @@ export function Header() {
           </ButtonLink>
         </div>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          type="button"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="inline-flex size-10 items-center justify-center rounded-lg border border-border text-foreground hover:bg-muted md:hidden"
-          aria-expanded={mobileMenuOpen}
-          aria-label="Toggle navigation menu"
-        >
-          {mobileMenuOpen ? (
-            <svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          )}
-        </button>
+        {/* Mobile Actions: Theme Toggle & Hamburger */}
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="inline-flex size-10 items-center justify-center rounded-lg border border-border text-foreground hover:bg-muted"
+            aria-expanded={mobileMenuOpen}
+            aria-label="Toggle navigation menu"
+          >
+            {mobileMenuOpen ? (
+              <svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer Menu */}
