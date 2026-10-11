@@ -8,6 +8,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Cta } from "@/components/sections/cta";
+import { LeadershipDeck, type TeamMember } from "@/components/sections/leadership-deck";
 import { FadeIn, StaggerContainer, StaggerItem, MotionCardWrapper } from "@/components/ui/motion";
 
 export const metadata: Metadata = {
@@ -73,7 +74,7 @@ const milestones = [
   },
 ];
 
-const leadership = [
+const leadership: TeamMember[] = [
   {
     name: "Zain Malik",
     role: "Managing Director & Co-Founder",
@@ -97,6 +98,48 @@ const leadership = [
     role: "Director of UX & Design Systems",
     bio: "Passionate about accessible human-centered interfaces, typography, and cohesive design tokens.",
     image: "/images/team/sarah.jpg",
+  },
+  {
+    name: "Robert Hale",
+    role: "Principal Security Engineer",
+    bio: "Former red-team lead. Owns threat modeling, penetration testing and SOC2 / ISO 27001 readiness for every build.",
+    image: "/images/team/robert.jpg",
+    tag: "Security",
+  },
+  {
+    name: "Marco Bellini",
+    role: "Head of Mobile Engineering",
+    bio: "Ships Flutter and React Native apps used by millions, with a relentless focus on startup time and offline-first UX.",
+    image: "/images/team/marco.jpg",
+    tag: "Mobile",
+  },
+  {
+    name: "Amara Okafor",
+    role: "Director of Data & AI",
+    bio: "Builds LLM-powered assistants, retrieval pipelines and analytics platforms that turn raw data into decisions.",
+    image: "/images/team/amara.jpg",
+    tag: "AI",
+  },
+  {
+    name: "Rafael Reyes",
+    role: "Engineering Manager, Platform",
+    bio: "Leads delivery pods end to end - from sprint planning and code review culture to calm, predictable releases.",
+    image: "/images/team/rafael.jpg",
+    tag: "Delivery",
+  },
+  {
+    name: "Emily Carter",
+    role: "Head of Client Success",
+    bio: "Your single point of accountability. Keeps scope, budget and communication transparent from kickoff to launch.",
+    image: "/images/team/emily.jpg",
+    tag: "Success",
+  },
+  {
+    name: "Hannah Brooks",
+    role: "Lead QA & Test Automation",
+    bio: "Designs end-to-end test suites and CI quality gates so regressions are caught long before customers see them.",
+    image: "/images/team/hannah.jpg",
+    tag: "Quality",
   },
 ];
 
@@ -246,7 +289,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Leadership Team with Real Generated Portraits */}
+        {/* Leadership Team - sliding deck of tilted cards */}
         <section className="bg-background py-20 lg:py-28 border-b border-border">
           <div className="container-x">
             <SectionHeader
@@ -254,34 +297,9 @@ export default function AboutPage() {
               title="Led by engineers and practitioners."
               description="Our partners stay active on code review, architectural design, and direct client communication."
             />
-            <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {leadership.map((member) => (
-                <StaggerItem key={member.name}>
-                  <MotionCardWrapper>
-                    <Card className="flex flex-col justify-between p-6 h-full shadow-sm hover:shadow-lg transition-shadow">
-                      <div>
-                        {/* Member Photo */}
-                        <div className="relative mb-5 h-48 w-full overflow-hidden rounded-xl border border-border bg-muted">
-                          <Image
-                            src={member.image}
-                            alt={member.name}
-                            fill
-                            className="object-cover transition-transform duration-500 hover:scale-105"
-                          />
-                        </div>
-                        <h3 className="text-lg font-bold text-primary">{member.name}</h3>
-                        <p className="text-xs font-semibold text-brand-strong">{member.role}</p>
-                        <p className="mt-3 text-xs leading-5 text-muted-foreground">{member.bio}</p>
-                      </div>
-                      <div className="mt-6 pt-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
-                        <span>Verified Logix Lead</span>
-                        <Badge variant="brand" dot={false}>Core</Badge>
-                      </div>
-                    </Card>
-                  </MotionCardWrapper>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
+            <FadeIn>
+              <LeadershipDeck members={leadership} />
+            </FadeIn>
           </div>
         </section>
 

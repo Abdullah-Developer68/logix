@@ -126,3 +126,22 @@
     }
   }
 }
+
+/* Leadership deck: continuous right-to-left slide */
+@keyframes deck-slide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.deck-track {
+  animation: deck-slide 45s linear infinite;
+  will-change: transform;
+}
+.deck-track:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .deck-track {
+    animation: none;
+    overflow-x: auto;
+  }
+}
