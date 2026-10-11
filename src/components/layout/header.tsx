@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/home-2", label: "Home V2" },
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
@@ -27,39 +26,29 @@ export function Header() {
         <Logo />
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-7 md:flex" aria-label="Main Navigation">
+        <nav className="hidden items-center gap-5 lg:gap-8 md:flex" aria-label="Main Navigation">
           {links.map((l) => {
-            const isActive =
-              l.href === "/"
-                ? pathname === "/"
-                : l.href === "/home-2"
-                  ? pathname === "/home-2" || pathname === "/v2"
-                  : pathname.startsWith(l.href);
+            const isActive = pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href));
             return (
               <Link
                 key={l.href}
                 href={l.href}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-foreground flex items-center gap-1.5",
+                  "text-sm font-medium transition-colors hover:text-foreground",
                   isActive ? "text-foreground font-semibold" : "text-muted-foreground",
                 )}
               >
                 {l.label}
-                {l.href === "/home-2" && (
-                  <span className="text-[10px] font-semibold bg-accent text-accent-foreground px-1.5 py-0.5 rounded-full leading-none">
-                    Paper
-                  </span>
-                )}
               </Link>
             );
           })}
         </nav>
 
         {/* Desktop CTA & Phone */}
-        <div className="hidden items-center gap-5 md:flex">
+        <div className="hidden items-center gap-4 lg:gap-5 md:flex">
           <a
             href="tel:+15550123456"
-            className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors lg:inline-block"
+            className="hidden text-xs font-medium text-muted-foreground hover:text-foreground transition-colors xl:inline-block"
           >
             +1 (555) 012-3456
           </a>

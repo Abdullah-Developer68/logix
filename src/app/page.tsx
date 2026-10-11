@@ -9,9 +9,9 @@ import { Cta } from "@/components/sections/cta";
 
 export default function Home() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col overflow-x-clip">
       <Header />
-      <main>
+      <main className="flex-1">
         <Hero />
         <Clients />
         <About />
@@ -20,6 +20,6 @@ export default function Home() {
         <Cta />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

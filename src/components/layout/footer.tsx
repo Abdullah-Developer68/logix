@@ -6,7 +6,6 @@ const columns = [
     title: "Company",
     links: [
       { label: "About", href: "/about" },
-      { label: "Home V2 (Paper)", href: "/home-2" },
       { label: "Careers", href: "/careers" },
       { label: "Portfolio", href: "/portfolio" },
       { label: "Blog", href: "/blog" },
@@ -38,9 +37,9 @@ const columns = [
 export function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground border-t border-primary">
-      <div className="container-x pt-16 pb-10">
-        <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
-          <div>
+      <div className="container-x pt-12 sm:pt-16 pb-8 sm:pb-10">
+        <div className="grid gap-8 sm:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+          <div className="sm:col-span-2 lg:col-span-1">
             <Logo light />
             <p className="mt-4 max-w-xs text-sm leading-6 text-white/70">
               Logix is a software company that designs, builds and scales digital products for ambitious businesses.
@@ -74,9 +73,9 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-14 flex flex-col justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center">
+        <div className="mt-10 sm:mt-14 flex flex-col justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center">
           <span>© 2026 Logix Technologies Inc. All rights reserved.</span>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
             <Link href="/privacy" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>

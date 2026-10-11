@@ -100,9 +100,9 @@ const marqueeItems = [...clientLogos, ...clientLogos, ...clientLogos];
 
 export function Clients() {
   return (
-    <section className="border-y border-border bg-muted/60 py-12 overflow-hidden">
-      <div className="container-x text-center mb-8">
-        <p className="text-xs font-semibold tracking-wider uppercase text-muted-foreground">
+    <section className="border-y border-border bg-muted/60 py-8 sm:py-12 overflow-hidden">
+      <div className="container-x text-center mb-6 sm:mb-8">
+        <p className="text-xs font-semibold tracking-wider uppercase text-muted-foreground px-2">
           Trusted by 120+ teams, from startups to enterprise
         </p>
       </div>
@@ -116,7 +116,7 @@ export function Clients() {
         }}
       >
         <motion.div
-          className="flex w-max items-center gap-16 sm:gap-24 py-2"
+          className="flex w-max items-center gap-12 sm:gap-20 md:gap-24 py-2"
           animate={{ x: ["0%", "-33.333%"] }}
           transition={{
             ease: "linear",
