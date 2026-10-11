@@ -23,7 +23,6 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [portfolio, setPortfolio] = useState("");
   const [note, setNote] = useState("");
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -64,7 +63,6 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
         setName("");
         setEmail("");
         setPhone("");
-        setPortfolio("");
         setNote("");
         setResumeFile(null);
         setError(null);
@@ -140,7 +138,6 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
       formData.append("name", name.trim());
       formData.append("email", email.trim());
       formData.append("phone", phone.trim());
-      formData.append("portfolio", portfolio.trim());
       formData.append("note", note.trim());
       formData.append("role", role?.title || "General Internship Application");
       formData.append("resume", resumeFile);
@@ -380,21 +377,6 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
                     </p>
                   </div>
                 )}
-              </div>
-
-              {/* Portfolio / GitHub / LinkedIn */}
-              <div className="space-y-1">
-                <label htmlFor="student-portfolio" className="text-xs font-semibold uppercase tracking-wider text-primary">
-                  Portfolio / GitHub / LinkedIn URL
-                </label>
-                <Input
-                  id="student-portfolio"
-                  type="url"
-                  placeholder="https://github.com/yourhandle or portfolio link"
-                  value={portfolio}
-                  onChange={(e) => setPortfolio(e.target.value)}
-                  disabled={loading}
-                />
               </div>
 
               {/* Note / Message */}

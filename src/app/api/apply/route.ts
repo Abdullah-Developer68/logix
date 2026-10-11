@@ -9,7 +9,6 @@ export async function POST(request: NextRequest) {
     const email = formData.get("email")?.toString().trim();
     const phone = formData.get("phone")?.toString().trim() || "Not provided";
     const role = formData.get("role")?.toString().trim() || "General Internship";
-    const portfolio = formData.get("portfolio")?.toString().trim() || "Not provided";
     const note = formData.get("note")?.toString().trim() || "None";
     const resumeFile = formData.get("resume") as File | null;
 
@@ -62,7 +61,6 @@ export async function POST(request: NextRequest) {
     console.log(`Applicant Name: ${name}`);
     console.log(`Applicant Email: ${email}`);
     console.log(`Phone: ${phone}`);
-    console.log(`Portfolio/GitHub: ${portfolio}`);
     console.log(`Resume: ${resumeFileName} (${Math.round(resumeFile.size / 1024)} KB, ${resumeMimeType})`);
     console.log(`Note: ${note}`);
     console.log(`Notification Target: ${recipientEmail}`);
@@ -90,7 +88,6 @@ Role: ${role}
 Name: ${name}
 Email: ${email}
 Phone: ${phone}
-Portfolio / Links: ${portfolio}
 Note / Message:
 ${note}
 
@@ -119,10 +116,6 @@ Resume attached: ${resumeFileName}
                 <tr>
                   <td style="padding: 8px 0; color: #64748b; font-weight: 600;">Phone:</td>
                   <td style="padding: 8px 0; color: #0f172a;">${phone}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; color: #64748b; font-weight: 600;">Portfolio / Link:</td>
-                  <td style="padding: 8px 0;"><a href="${portfolio}" target="_blank" style="color: #0e9983; text-decoration: none;">${portfolio}</a></td>
                 </tr>
               </table>
               <div style="margin-top: 20px; padding: 16px; background-color: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0;">
