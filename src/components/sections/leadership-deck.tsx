@@ -19,7 +19,7 @@ function initialsOf(name: string) {
 
 function MemberCard({ member }: { member: TeamMember }) {
   return (
-    <article className="group relative flex h-full w-[260px] sm:w-[300px] -rotate-2 sm:-rotate-3 flex-col overflow-hidden rounded-xl border border-border bg-card p-5 sm:p-6 shadow-md transition-all duration-300 hover:z-10 hover:-translate-y-3 hover:rotate-0 hover:shadow-2xl hover:border-brand-strong/40">
+    <article className="group relative flex h-full w-[260px] sm:w-[300px] -rotate-2 sm:-rotate-3 flex-col overflow-hidden rounded-xl border border-border bg-card p-5 sm:p-6 shadow-md transition-[transform,box-shadow,border-color] duration-300 hover:z-10 hover:-translate-y-3 hover:rotate-0 hover:shadow-2xl hover:border-brand-strong/40">
       {/* Brand accent strip + soft glow give the card visual weight without a photo */}
       <span
         aria-hidden="true"
@@ -27,7 +27,7 @@ function MemberCard({ member }: { member: TeamMember }) {
       />
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -right-12 -top-12 size-36 rounded-full bg-brand/10 blur-2xl transition-opacity duration-300 group-hover:opacity-100 opacity-70"
+        className="pointer-events-none absolute -right-12 -top-12 size-44 rounded-full bg-[radial-gradient(circle,rgba(34,211,176,0.16)_0%,transparent_70%)] transition-opacity duration-300 group-hover:opacity-100 opacity-70"
       />
 
       <div className="relative flex items-start justify-between gap-3">

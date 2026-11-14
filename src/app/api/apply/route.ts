@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { isAllowedOrigin } from "@/lib/security/origin";
+import { checkRateLimit, getClientIp } from "@/lib/security/rate-limit";
 
 const MAX_LEN = { name: 120, email: 254, phone: 40, role: 120, note: 4000 } as const;
+// Vercel Functions reject request bodies over 4.5 MB, so keep the resume
+// limit (plus multipart overhead) safely below that.
+const MAX_RESUME_BYTES = 4 * 1024 * 1024; // 4 MB
+const MAX_MULTIPART_OVERHEAD_BYTES = 400 * 1024; // 400 KB
+const MAX_REQUEST_BYTES = MAX_RESUME_BYTES + MAX_MULTIPART_OVERHEAD_BYTES;
 const EMAIL_RE = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[^\s@<>()[\]\\,;:"]{2,}$/;
 const ALLOWED_RESUME_TYPES: Record<string, string> = {
   pdf: "application/pdf",
@@ -30,7 +37,57 @@ function field(formData: FormData, key: string): string {
 
 export async function POST(request: NextRequest) {
   try {
-    const formData = await request.formData();
+    if (!isAllowedOrigin(request.headers)) {
+      return NextResponse.json(
+        { error: "Request origin is not allowed." },
+        { status: 403 },
+      );
+    }
+
+    const contentLengthRaw = request.headers.get("content-length")?.trim();
+    if (contentLengthRaw && /^\d+$/.test(contentLengthRaw)) {
+      const contentLength = Number.parseInt(contentLengthRaw, 10);
+      if (contentLength > MAX_REQUEST_BYTES) {
+        return NextResponse.json(
+          { error: "Request payload is too large. Resume file size exceeds the 4MB limit." },
+          { status: 413 },
+        );
+      }
+    }
+
+    const clientIp = getClientIp(request.headers);
+    const rateLimit = checkRateLimit(`apply:${clientIp}`, {
+      windowMs: 10 * 60 * 1000,
+      maxRequests: 5,
+    });
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "Too many applications submitted. Please wait a few minutes and try again." },
+        {
+          status: 429,
+          headers: { "Retry-After": String(rateLimit.retryAfterSeconds) },
+        },
+      );
+    }
+
+    let formData: FormData;
+    try {
+      formData = await request.formData();
+    } catch {
+      return NextResponse.json(
+        { error: "Invalid form submission. Please check your inputs and try again." },
+        { status: 400 },
+      );
+    }
+
+    // Honeypot trap: silently accept bot submissions without processing or emailing.
+    const honeypot = field(formData, "website");
+    if (honeypot.length > 0) {
+      return NextResponse.json({
+        success: true,
+        message: "Application submitted successfully.",
+      });
+    }
 
     const name = singleLine(field(formData, "name"));
     const email = singleLine(field(formData, "email"));
@@ -73,18 +130,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Limit resume size to 10MB
-    const maxSizeBytes = 10 * 1024 * 1024;
-    if (resumeFile.size > maxSizeBytes) {
+    // Limit resume size to 4MB
+    if (resumeFile.size > MAX_RESUME_BYTES) {
       return NextResponse.json(
-        { error: "Resume file size exceeds the 10MB limit." },
+        { error: "Resume file size exceeds the 4MB limit." },
         { status: 400 },
       );
     }
 
     // Only accept PDF / Word documents, and derive the MIME type from the
     // extension rather than trusting the client-supplied type.
-    const ext = (resumeFile.name.split(".").pop() || "").toLowerCase();
+    const dotIndex = resumeFile.name.lastIndexOf(".");
+    const ext = dotIndex > 0 ? resumeFile.name.slice(dotIndex + 1).toLowerCase() : "";
     const resumeMimeType = ALLOWED_RESUME_TYPES[ext];
     if (!resumeMimeType) {
       return NextResponse.json(
@@ -96,10 +153,24 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await resumeFile.arrayBuffer();
     const resumeBuffer = Buffer.from(arrayBuffer);
 
+    if (resumeBuffer.length > MAX_RESUME_BYTES) {
+      return NextResponse.json(
+        { error: "Resume file size exceeds the 4MB limit." },
+        { status: 400 },
+      );
+    }
+
     // Verify file signature matches the extension.
-    const isPdf = resumeBuffer.subarray(0, 5).toString("latin1") === "%PDF-";
-    const isZip = resumeBuffer[0] === 0x50 && resumeBuffer[1] === 0x4b; // .docx
-    const isOle = resumeBuffer.subarray(0, 4).equals(Buffer.from([0xd0, 0xcf, 0x11, 0xe0])); // .doc
+    const isPdf = resumeBuffer.length >= 5 && resumeBuffer.subarray(0, 5).toString("latin1") === "%PDF-";
+    const isZip =
+      resumeBuffer.length >= 4 &&
+      resumeBuffer[0] === 0x50 &&
+      resumeBuffer[1] === 0x4b &&
+      resumeBuffer[2] === 0x03 &&
+      resumeBuffer[3] === 0x04; // .docx
+    const isOle =
+      resumeBuffer.length >= 4 &&
+      resumeBuffer.subarray(0, 4).equals(Buffer.from([0xd0, 0xcf, 0x11, 0xe0])); // .doc
     if ((ext === "pdf" && !isPdf) || (ext === "docx" && !isZip) || (ext === "doc" && !isOle)) {
       return NextResponse.json(
         { error: "The resume file appears to be corrupted or is not a real PDF/Word document." },
@@ -108,7 +179,7 @@ export async function POST(request: NextRequest) {
     }
 
     const baseName = resumeFile.name
-      .slice(0, -(ext.length + 1))
+      .slice(0, dotIndex)
       .replace(/[^\w.\- ]+/g, "_")
       .slice(0, 80) || "resume";
     const resumeFileName = `${baseName}.${ext}`;
@@ -122,19 +193,20 @@ export async function POST(request: NextRequest) {
       file: escapeHtml(resumeFileName),
     };
 
-    // Recipient email - configurable via env or placeholder
-    // The user will provide the exact email later.
     const recipientEmail =
       process.env.INTERNSHIP_NOTIFICATION_EMAIL ||
       process.env.HR_EMAIL ||
-      "internships@logix.dev";
+      "info@logixofficial.site";
 
     // Check if SMTP environment variables are configured
     const smtpHost = process.env.SMTP_HOST;
-    const smtpPort = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT, 10) : 587;
+    const parsedPort = process.env.SMTP_PORT ? Number.parseInt(process.env.SMTP_PORT, 10) : 587;
+    const smtpPort = Number.isInteger(parsedPort) && parsedPort > 0 && parsedPort <= 65535 ? parsedPort : 587;
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
-    const smtpFrom = process.env.SMTP_FROM || `"Logix Talent Portal" <notifications@logix.dev>`;
+    const smtpFrom =
+      process.env.SMTP_FROM ||
+      (smtpUser ? `"Logix Internships" <${smtpUser}>` : `"Logix Internships" <info@logixofficial.site>`);
 
     console.log(`[INTERNSHIP APPLICATION RECEIVED] role="${role}" resume=${ext} ${Math.round(resumeFile.size / 1024)}KB`);
 
@@ -143,6 +215,9 @@ export async function POST(request: NextRequest) {
         host: smtpHost,
         port: smtpPort,
         secure: smtpPort === 465,
+        connectionTimeout: 10_000,
+        greetingTimeout: 10_000,
+        socketTimeout: 15_000,
         auth: {
           user: smtpUser,
           pass: smtpPass,
@@ -213,10 +288,10 @@ Resume attached: ${resumeFileName}
       };
 
       await transporter.sendMail(mailOptions);
-      console.log(`[EMAIL DISPATCHED] Successfully emailed application to ${recipientEmail}`);
+      console.log("[EMAIL DISPATCHED] Successfully emailed internship application.");
     } else {
       console.log(
-        `[EMAIL READY] SMTP credentials not configured yet. Application details and resume (${resumeFileName}) captured and ready for dispatch once SMTP/target email is provided.`,
+        "[EMAIL READY] SMTP credentials not configured yet. Application validated and ready for dispatch once SMTP is provided.",
       );
     }
 
@@ -225,7 +300,7 @@ Resume attached: ${resumeFileName}
       message: "Application submitted successfully.",
     });
   } catch (err: unknown) {
-    console.error("[APPLICATION ERROR]", err);
+    console.error("[APPLICATION ERROR]", err instanceof Error ? err.message : "Unknown error");
     return NextResponse.json(
       {
         error: "An error occurred while submitting your application. Please try again or email us directly.",

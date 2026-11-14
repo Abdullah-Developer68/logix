@@ -54,7 +54,7 @@ export default function PrivacyPage() {
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-primary mb-2 sm:mb-3">5. Inquiries & Contact</h2>
               <p>
-                If you have questions regarding data retention or wish to request data deletion, contact our privacy desk at <a href="mailto:privacy@logix.dev" className="text-brand-strong font-semibold hover:underline break-all">privacy@logix.dev</a>.
+                If you have questions regarding data retention or wish to request data deletion, contact our privacy desk at <a href="mailto:info@logixofficial.site" className="text-brand-strong font-semibold hover:underline break-all">info@logixofficial.site</a>.
               </p>
             </div>
           </div>

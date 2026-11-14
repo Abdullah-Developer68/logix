@@ -54,7 +54,7 @@ export default function TermsPage() {
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-primary mb-2 sm:mb-3">5. Contact Legal Desk</h2>
               <p>
-                For legal inquiries, contract reviews, or enterprise vendor compliance requests, please email <a href="mailto:legal@logix.dev" className="text-brand-strong font-semibold hover:underline break-all">legal@logix.dev</a>.
+                For legal inquiries, contract reviews, or enterprise vendor compliance requests, please email <a href="mailto:info@logixofficial.site" className="text-brand-strong font-semibold hover:underline break-all">info@logixofficial.site</a>.
               </p>
             </div>
           </div>

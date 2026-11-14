@@ -1,7 +1,4 @@
-"use client";
-
-import type { ReactNode } from "react";
-import { motion } from "framer-motion";
+import type { CSSProperties, ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -27,11 +24,9 @@ export function PageHero({
   return (
     <section className={cn("border-b border-border bg-background py-16 md:py-24 overflow-hidden", className)}>
       <div className="container-x max-w-4xl">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="flex flex-wrap items-center gap-3 mb-4"
+        <div
+          className="animate-fade-up flex flex-wrap items-center gap-3 mb-4"
+          style={{ "--fade-y": "16px", "--fade-duration": "0.5s", "--fade-delay": "0s" } as CSSProperties}
         >
           <span className="eyebrow">{eyebrow}</span>
           {badgeText && (
@@ -39,35 +34,29 @@ export function PageHero({
               {badgeText}
             </Badge>
           )}
-        </motion.div>
+        </div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="text-2xl sm:text-4xl lg:text-5xl xl:text-[56px] xl:leading-[62px] font-bold tracking-tight text-primary break-words"
+        <h1
+          className="animate-fade-up text-2xl sm:text-4xl lg:text-5xl xl:text-[56px] xl:leading-[62px] font-bold tracking-tight text-primary break-words"
+          style={{ "--fade-y": "20px", "--fade-duration": "0.6s", "--fade-delay": "0.1s" } as CSSProperties}
         >
           {title}
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="lead mt-4 sm:mt-6 max-w-2xl text-sm sm:text-lg leading-relaxed text-muted-foreground"
+        <p
+          className="animate-fade-up lead mt-4 sm:mt-6 max-w-2xl text-sm sm:text-lg leading-relaxed text-muted-foreground"
+          style={{ "--fade-y": "20px", "--fade-duration": "0.6s", "--fade-delay": "0.2s" } as CSSProperties}
         >
           {description}
-        </motion.p>
+        </p>
 
         {children && (
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="mt-6 sm:mt-8 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4"
+          <div
+            className="animate-fade-up mt-6 sm:mt-8 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4"
+            style={{ "--fade-y": "16px", "--fade-duration": "0.5s", "--fade-delay": "0.3s" } as CSSProperties}
           >
             {children}
-          </motion.div>
+          </div>
         )}
       </div>
     </section>

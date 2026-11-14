@@ -16,7 +16,7 @@ export function Testimonials() {
         </div>
 
         <div className="mt-8 sm:mt-12 grid gap-4 lg:grid-cols-2">
-          <div className="transition-all duration-200 hover:-translate-y-1">
+          <div className="transition-transform duration-200 hover:-translate-y-1">
             <Card className="flex flex-col justify-between p-5 sm:p-8 h-full shadow-sm bg-card border border-border">
               <p className="text-base sm:text-xl font-medium leading-6 sm:leading-8 text-foreground">
                 “Logix rebuilt our dispatch platform in 14 weeks. Delivery times dropped 31% and our team finally has software they enjoy using.”
@@ -38,7 +38,7 @@ export function Testimonials() {
             {small.map((t) => (
               <div
                 key={t.name}
-                className="flex-1 transition-all duration-200 hover:-translate-y-1"
+                className="flex-1 transition-transform duration-200 hover:-translate-y-1"
               >
                 <Card className="flex flex-col justify-between h-full p-4 sm:p-6">
                   <p className="text-sm leading-6">“{t.quote}”</p>

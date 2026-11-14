@@ -135,40 +135,39 @@ export default function AboutPage() {
         {/* Studio / Engineering Office Visual Showcase */}
         <section className="bg-background py-10 sm:py-12 border-b border-border">
           <div className="container-x">
-            <FadeIn>
-              <div className="relative h-[360px] sm:h-[440px] md:h-[480px] w-full overflow-hidden rounded-2xl border border-border/80 shadow-2xl">
-                <Image
-                  src="/images/about/islamabad-office.jpg"
-                  alt="Logix engineering office in Islamabad"
-                  fill
-                  priority
-                  sizes="(max-width: 1200px) 100vw, 1200px"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050c18]/95 via-[#050c18]/45 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 sm:bottom-10 sm:left-10 sm:right-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-white">
-                  <div>
-                    <Badge variant="brand" dot className="bg-brand text-primary font-semibold">
-                      Engineering Hub
-                    </Badge>
-                    <h3 className="mt-2.5 text-lg sm:text-2xl font-bold text-white">
-                      Where craft meets velocity.
-                    </h3>
-                    <p className="mt-1 text-xs sm:text-sm text-white/80 max-w-lg">
-                      Our engineering hub in Islamabad builds around asynchronous deep work and rapid shipping.
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap gap-2 sm:gap-3 shrink-0">
-                    <span className="rounded-lg bg-white/10 px-2.5 py-1 text-xs backdrop-blur border border-white/15">
-                      100% In-house
-                    </span>
-                    <span className="rounded-lg bg-white/10 px-2.5 py-1 text-xs backdrop-blur border border-white/15">
-                      Zero Outsource
-                    </span>
-                  </div>
+            <div className="relative h-[360px] sm:h-[440px] md:h-[480px] w-full overflow-hidden rounded-2xl border border-border/80 shadow-2xl">
+              <Image
+                src="/images/about/islamabad-office.jpg"
+                alt="Logix engineering office in Islamabad"
+                fill
+                preload
+                fetchPriority="high"
+                sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1024px) calc(100vw - 48px), (max-width: 1200px) calc(100vw - 64px), 1136px"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050c18]/95 via-[#050c18]/45 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4 sm:bottom-10 sm:left-10 sm:right-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-white">
+                <div>
+                  <Badge variant="brand" dot className="bg-brand text-primary font-semibold">
+                    Engineering Hub
+                  </Badge>
+                  <h3 className="mt-2.5 text-lg sm:text-2xl font-bold text-white">
+                    Where craft meets velocity.
+                  </h3>
+                  <p className="mt-1 text-xs sm:text-sm text-white/80 max-w-lg">
+                    Our engineering hub in Islamabad builds around asynchronous deep work and rapid shipping.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2 sm:gap-3 shrink-0">
+                  <span className="rounded-lg bg-white/10 px-2.5 py-1 text-xs backdrop-blur border border-white/15">
+                    100% In-house
+                  </span>
+                  <span className="rounded-lg bg-white/10 px-2.5 py-1 text-xs backdrop-blur border border-white/15">
+                    Zero Outsource
+                  </span>
                 </div>
               </div>
-            </FadeIn>
+            </div>
           </div>
         </section>
 
@@ -179,7 +178,7 @@ export default function AboutPage() {
               {stats.map((s) => (
                 <StaggerItem key={s.label}>
                   <div
-                    className={`rounded-xl p-3.5 sm:p-6 border transition-all hover:shadow-md ${
+                    className={`rounded-xl p-3.5 sm:p-6 border transition-shadow hover:shadow-md ${
                       s.highlight
                         ? "bg-accent border-brand-strong/20"
                         : "bg-background border-border"

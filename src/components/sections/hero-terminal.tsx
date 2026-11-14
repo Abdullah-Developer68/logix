@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, type CSSProperties } from "react";
 
 interface CodeSnippet {
   filename: string;
@@ -248,13 +247,10 @@ export function HeroTerminal() {
   const tokens = tokenizeCode(visibleText);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
+    <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative rounded-xl bg-[#0b1f3a] dark:bg-[#091222] p-4 sm:p-5 shadow-2xl border border-white/10 select-none group"
+      className="animate-terminal-enter relative rounded-xl bg-[#0b1f3a] dark:bg-[#091222] p-4 sm:p-5 shadow-2xl border border-white/10 select-none group"
     >
       {/* Terminal Title Bar */}
       <div className="flex items-center justify-between">
@@ -293,20 +289,19 @@ export function HeroTerminal() {
         {barHeights.map((h, i) => {
           const isHighlighted = i === currentSnippet.activeBarIndex;
           return (
-            <motion.div
+            <div
               key={i}
-              style={{ height: `${h}%`, transformOrigin: "bottom" }}
-              initial={{ scaleY: 0 }}
-              animate={{ scaleY: 1 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.4 + i * 0.1,
-                ease: [0.34, 1.56, 0.64, 1],
-              }}
+              style={
+                {
+                  height: `${h}%`,
+                  transformOrigin: "bottom",
+                  "--bar-delay": `${0.4 + i * 0.1}s`,
+                } as CSSProperties
+              }
               className={
                 isHighlighted
-                  ? "w-full rounded-t bg-brand shadow-[0_0_20px_rgba(31,200,170,0.5)] transition-colors duration-500"
-                  : "w-full rounded-t bg-white/15 transition-colors duration-500"
+                  ? "animate-bar-grow w-full rounded-t bg-brand shadow-[0_0_20px_rgba(31,200,170,0.5)] transition-colors duration-500"
+                  : "animate-bar-grow w-full rounded-t bg-white/15 transition-colors duration-500"
               }
             />
           );
@@ -314,33 +309,30 @@ export function HeroTerminal() {
       </div>
 
       {/* Dynamic Status Badge */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 1.1, ease: "easeOut" }}
-        className="absolute bottom-3 left-3 right-3 sm:right-auto sm:bottom-6 sm:left-6 flex items-center gap-2.5 sm:gap-3 rounded-lg bg-white/10 px-3 py-2 sm:px-4 sm:py-3 text-white backdrop-blur border border-white/10 shadow-lg"
+      <div
+        className="animate-fade-up absolute bottom-3 left-3 right-3 sm:right-auto sm:bottom-6 sm:left-6 flex items-center gap-2.5 sm:gap-3 rounded-lg bg-white/10 px-3 py-2 sm:px-4 sm:py-3 text-white backdrop-blur border border-white/10 shadow-lg"
+        style={
+          {
+            "--fade-y": "15px",
+            "--fade-duration": "0.5s",
+            "--fade-delay": "1.1s",
+            "--fade-ease": "ease-out",
+          } as CSSProperties
+        }
       >
         <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-brand text-xs font-bold text-primary">
           ✓
         </span>
         <div className="text-xs">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSnippet.badgeTitle}
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.25 }}
-            >
-              <strong className="block font-semibold">{currentSnippet.badgeTitle}</strong>
-              <span className="text-white/60 text-[11px] sm:text-xs">
-                {currentSnippet.badgeDetail}
-              </span>
-            </motion.div>
-          </AnimatePresence>
+          <div key={currentSnippet.badgeTitle} className="animate-badge-enter">
+            <strong className="block font-semibold">{currentSnippet.badgeTitle}</strong>
+            <span className="text-white/60 text-[11px] sm:text-xs">
+              {currentSnippet.badgeDetail}
+            </span>
+          </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }
 

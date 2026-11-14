@@ -1,10 +1,10 @@
-"use client";
-
-import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ApplyModal, InternshipRole } from "@/components/internships/apply-modal";
+import type { InternshipRole } from "@/components/internships/apply-modal";
+import {
+  ApplyRoleButton,
+  InternshipApplyProvider,
+} from "@/components/internships/internship-apply-client";
 
 const internshipRoles: InternshipRole[] = [
   {
@@ -65,29 +65,18 @@ const internshipRoles: InternshipRole[] = [
   },
 ];
 
+const generalRole: InternshipRole = {
+  title: "General Engineering / Design Internship",
+  department: "Open Pod Application",
+  location: "100% Remote",
+  type: "Internship (2–3 Months)",
+  description:
+    "Open application for ambitious students who want to contribute across frontend, backend, mobile, design, or AI.",
+};
+
 export function InternshipList() {
-  const [selectedRole, setSelectedRole] = useState<InternshipRole | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleApply = (role: InternshipRole) => {
-    setSelectedRole(role);
-    setModalOpen(true);
-  };
-
-  const handleGeneralApply = () => {
-    setSelectedRole({
-      title: "General Engineering / Design Internship",
-      department: "Open Pod Application",
-      location: "100% Remote",
-      type: "Internship (2–3 Months)",
-      description:
-        "Open application for ambitious students who want to contribute across frontend, backend, mobile, design, or AI.",
-    });
-    setModalOpen(true);
-  };
-
   return (
-    <>
+    <InternshipApplyProvider>
       <div className="space-y-4">
         {internshipRoles.map((role) => (
           <Card
@@ -112,15 +101,12 @@ export function InternshipList() {
               </p>
             </div>
             <div className="shrink-0 w-full sm:w-auto">
-              <Button
-                type="button"
-                variant="default"
-                size="default"
-                onClick={() => handleApply(role)}
+              <ApplyRoleButton
+                role={role}
                 className="w-full sm:w-auto text-center justify-center cursor-pointer font-semibold"
               >
                 Apply Now →
-              </Button>
+              </ApplyRoleButton>
             </div>
           </Card>
         ))}
@@ -144,26 +130,16 @@ export function InternshipList() {
             </p>
           </div>
           <div className="shrink-0 w-full sm:w-auto">
-            <Button
-              type="button"
+            <ApplyRoleButton
+              role={generalRole}
               variant="outline"
-              size="default"
-              onClick={handleGeneralApply}
               className="w-full sm:w-auto text-center justify-center cursor-pointer font-semibold border-brand-strong/40 hover:bg-brand/10"
             >
               Submit Open Application →
-            </Button>
+            </ApplyRoleButton>
           </div>
         </Card>
       </div>
-
-      {/* Application Modal */}
-      <ApplyModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        role={selectedRole}
-      />
-    </>
+    </InternshipApplyProvider>
   );
 }
-

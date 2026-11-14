@@ -48,9 +48,10 @@ export default function InternshipsPage() {
                 src="/images/about/islamabad-office.jpg"
                 alt="Logix engineering office in Islamabad"
                 fill
-                sizes="(max-width: 1200px) 100vw, 1200px"
+                sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1024px) calc(100vw - 48px), (max-width: 1200px) calc(100vw - 64px), 1136px"
                 className="object-cover"
-                priority
+                preload
+                fetchPriority="high"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0b1f3a]/95 via-[#0b1f3a]/30 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 sm:bottom-8 sm:left-8 sm:right-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-white">

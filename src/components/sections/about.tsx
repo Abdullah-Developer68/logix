@@ -30,7 +30,7 @@ export function About() {
             <div
               key={s.label}
               className={cn(
-                "rounded-xl p-3.5 sm:p-6 border transition-all duration-200 hover:-translate-y-1 hover:shadow-md",
+                "rounded-xl p-3.5 sm:p-6 border transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-md",
                 s.highlight ? "bg-accent border-brand-strong/20" : "bg-background border-border",
               )}
             >

@@ -1,10 +1,39 @@
 "use client";
 
-import { motion, type HTMLMotionProps } from "framer-motion";
-import { type ReactNode } from "react";
+import { useEffect, useRef, type CSSProperties, type HTMLAttributes, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-// Standard fade-up animation wrapper
+function useInViewOnce(rootMargin = "-40px") {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || el.dataset.visible === "true") return;
+    if (typeof IntersectionObserver === "undefined") {
+      el.dataset.visible = "true";
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            el.dataset.visible = "true";
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { rootMargin, threshold: 0 },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [rootMargin]);
+
+  return ref;
+}
+
 export function FadeIn({
   children,
   className,
@@ -12,6 +41,8 @@ export function FadeIn({
   duration = 0.5,
   direction = "up",
   distance = 24,
+  rootMargin = "-40px",
+  style,
   ...props
 }: {
   children: ReactNode;
@@ -20,103 +51,96 @@ export function FadeIn({
   duration?: number;
   direction?: "up" | "down" | "left" | "right" | "none";
   distance?: number;
-} & HTMLMotionProps<"div">) {
-  const directions = {
-    up: { y: distance, x: 0 },
-    down: { y: -distance, x: 0 },
+  rootMargin?: string;
+} & HTMLAttributes<HTMLDivElement>) {
+  const ref = useInViewOnce(rootMargin);
+
+  const offsets = {
+    up: { x: 0, y: distance },
+    down: { x: 0, y: -distance },
     left: { x: distance, y: 0 },
     right: { x: -distance, y: 0 },
     none: { x: 0, y: 0 },
   };
-
-  const offset = directions[direction];
+  const offset = offsets[direction];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, ...offset }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{
-        duration,
-        delay,
-        ease: [0.21, 0.47, 0.32, 0.98],
-      }}
-      className={className}
+    <div
+      ref={ref}
+      data-visible="false"
+      className={cn("reveal-item", className)}
+      style={
+        {
+          "--reveal-x": `${offset.x}px`,
+          "--reveal-y": `${offset.y}px`,
+          "--reveal-duration": `${duration}s`,
+          "--reveal-delay": `${delay}s`,
+          ...style,
+        } as CSSProperties
+      }
       {...props}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
-// Staggered list container
 export function StaggerContainer({
   children,
   className,
   staggerDelay = 0.1,
   delayChildren = 0.1,
+  style,
   ...props
 }: {
   children: ReactNode;
   className?: string;
   staggerDelay?: number;
   delayChildren?: number;
-} & HTMLMotionProps<"div">) {
+} & HTMLAttributes<HTMLDivElement>) {
+  const ref = useInViewOnce("-40px");
+
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-40px" }}
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: staggerDelay,
-            delayChildren,
-          },
-        },
-      }}
-      className={className}
+    <div
+      ref={ref}
+      data-visible="false"
+      className={cn("stagger-container", className)}
+      style={
+        {
+          "--stagger-base": `${delayChildren}s`,
+          "--stagger-step": `${staggerDelay}s`,
+          ...style,
+        } as CSSProperties
+      }
       {...props}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
-// Staggered item inside StaggerContainer
 export function StaggerItem({
   children,
   className,
   distance = 20,
+  style,
   ...props
 }: {
   children: ReactNode;
   className?: string;
   distance?: number;
-} & HTMLMotionProps<"div">) {
+} & HTMLAttributes<HTMLDivElement>) {
   return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: distance },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: {
-            duration: 0.5,
-            ease: [0.21, 0.47, 0.32, 0.98],
-          },
-        },
-      }}
-      className={className}
+    <div
+      className={cn("stagger-item", className)}
+      style={{ "--stagger-y": `${distance}px`, ...style } as CSSProperties}
       {...props}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
-// Card with subtle hover lift and scale
 export function MotionCardWrapper({
   children,
   className,
@@ -125,12 +149,8 @@ export function MotionCardWrapper({
   className?: string;
 }) {
   return (
-    <motion.div
-      whileHover={{ y: -4, transition: { duration: 0.2, ease: "easeOut" } }}
-      className={cn("h-full", className)}
-    >
+    <div className={cn("h-full transition-transform duration-200 ease-out hover:-translate-y-1", className)}>
       {children}
-    </motion.div>
+    </div>
   );
 }
-

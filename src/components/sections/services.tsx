@@ -106,7 +106,7 @@ const services = [
 
 function ServiceCard({ service }: { service: (typeof services)[number] }) {
   return (
-    <article className="group flex h-full w-[260px] sm:w-[310px] -rotate-2 sm:-rotate-3 flex-col justify-between overflow-hidden rounded-xl border border-border bg-card shadow-md transition-all duration-300 hover:z-10 hover:-translate-y-3 hover:rotate-0 hover:shadow-2xl">
+    <article className="group flex h-full w-[260px] sm:w-[310px] -rotate-2 sm:-rotate-3 flex-col justify-between overflow-hidden rounded-xl border border-border bg-card shadow-md transition-[transform,box-shadow] duration-300 hover:z-10 hover:-translate-y-3 hover:rotate-0 hover:shadow-2xl">
       <div>
         {/* Service image preview */}
         <div className="relative h-40 w-full overflow-hidden bg-muted sm:h-48">
@@ -121,7 +121,7 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/25 via-transparent to-transparent" />
           <div className="absolute left-3 top-3 sm:left-3.5 sm:top-3.5 z-10">
-            <div className="flex size-9 sm:size-10 items-center justify-center rounded-lg border border-brand-strong/20 bg-background/90 text-brand-strong shadow-md backdrop-blur-md">
+            <div className="flex size-9 sm:size-10 items-center justify-center rounded-lg border border-brand-strong/20 bg-background/95 text-brand-strong shadow-md">
               {service.icon}
             </div>
           </div>

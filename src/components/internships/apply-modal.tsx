@@ -24,6 +24,7 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [note, setNote] = useState("");
+  const [website, setWebsite] = useState("");
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -59,16 +60,19 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
   // Reset form when modal opens or closes
   useEffect(() => {
     if (!isOpen) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setName("");
         setEmail("");
         setPhone("");
         setNote("");
+        setWebsite("");
         setResumeFile(null);
         setError(null);
         setIsSuccess(false);
         setLoading(false);
       }, 200);
+      // Cancel the pending reset if the modal is reopened within 200ms.
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
@@ -83,13 +87,18 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
 
   const validateAndSetFile = (file: File) => {
     const allowedExtensions = [".pdf", ".doc", ".docx"];
-    const ext = "." + file.name.split(".").pop()?.toLowerCase();
+    const dotIndex = file.name.lastIndexOf(".");
+    const ext = dotIndex > 0 ? file.name.slice(dotIndex).toLowerCase() : "";
     if (!allowedExtensions.includes(ext)) {
       setError("Please upload a PDF or Word document (.pdf, .doc, .docx).");
       return;
     }
-    if (file.size > 10 * 1024 * 1024) {
-      setError("File size exceeds 10MB limit. Please upload a smaller resume.");
+    if (file.size === 0) {
+      setError("The selected resume file is empty. Please choose a valid file.");
+      return;
+    }
+    if (file.size > 4 * 1024 * 1024) {
+      setError("File size exceeds 4MB limit. Please upload a smaller resume.");
       return;
     }
     setError(null);
@@ -140,6 +149,7 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
       formData.append("phone", phone.trim());
       formData.append("note", note.trim());
       formData.append("role", role?.title || "General Internship Application");
+      formData.append("website", website);
       formData.append("resume", resumeFile);
 
       const res = await fetch("/api/apply", {
@@ -147,10 +157,25 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
         body: formData,
       });
 
-      const data = await res.json();
+      let data: { error?: string } | null = null;
+      try {
+        data = (await res.json()) as { error?: string };
+      } catch {
+        data = null;
+      }
 
       if (!res.ok) {
-        throw new Error(data.error || "Failed to submit application. Please try again.");
+        const fallbackByStatus: Record<number, string> = {
+          400: "Please check your form details and resume file.",
+          403: "Request blocked for security reasons. Please refresh the page and try again.",
+          413: "Resume file or request is too large (max 4MB).",
+          429: "Too many submissions from your connection. Please wait a few minutes and try again.",
+        };
+        throw new Error(
+          data?.error ||
+            fallbackByStatus[res.status] ||
+            "Failed to submit application. Please try again.",
+        );
       }
 
       setIsSuccess(true);
@@ -167,7 +192,7 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 sm:p-6 overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
@@ -259,7 +284,24 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="mt-5 space-y-4">
+            <form onSubmit={handleSubmit} className="mt-5 space-y-4 relative">
+              {/* Honeypot field for bot detection */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -left-[9999px] h-px w-px overflow-hidden opacity-0"
+              >
+                <label htmlFor="student-website">Website</label>
+                <input
+                  id="student-website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </div>
+
               {/* Full Name */}
               <div className="space-y-1">
                 <label htmlFor="student-name" className="text-xs font-semibold uppercase tracking-wider text-primary">
@@ -268,6 +310,7 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
                 <Input
                   id="student-name"
                   required
+                  maxLength={120}
                   placeholder="Your Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -285,6 +328,7 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
                     id="student-email"
                     required
                     type="email"
+                    maxLength={254}
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -298,6 +342,7 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
                   <Input
                     id="student-phone"
                     type="tel"
+                    maxLength={40}
                     placeholder="Phone Number"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -310,7 +355,7 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold uppercase tracking-wider text-primary flex items-center justify-between">
                   <span>Resume / CV <span className="text-brand-strong">*</span></span>
-                  <span className="text-[11px] font-normal normal-case text-muted-foreground">PDF, DOC, DOCX (Max 10MB)</span>
+                  <span className="text-[11px] font-normal normal-case text-muted-foreground">PDF, DOC, DOCX (Max 4MB)</span>
                 </label>
 
                 <input
@@ -387,6 +432,7 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
                 <Textarea
                   id="student-note"
                   rows={3}
+                  maxLength={4000}
                   placeholder="Tell us what you're excited to learn or any projects you've worked on..."
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
