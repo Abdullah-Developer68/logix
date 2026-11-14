@@ -11,41 +11,18 @@ import { FadeIn, StaggerContainer, StaggerItem, MotionCardWrapper } from "@/comp
 export const metadata: Metadata = {
   title: "Contact Us & Start a Project — Logix Software Consultancy",
   description:
-    "Get in touch with Logix. Book a discovery call with a senior engineer or request a project estimate. Direct offices in Karachi, Lahore, London, and Austin.",
+    "Get in touch with Logix. Book a discovery call with a senior engineer or request a project estimate. Engineering office in Islamabad, Pakistan.",
 };
 
 const offices = [
   {
-    city: "Karachi, Pakistan",
-    role: "Global Engineering HQ",
-    address: "Clifton Block 4, Executive Tower, Suite 702",
-    email: "karachi@logix.dev",
-    phone: "+92 (21) 3582-9011",
+    city: "Islamabad, Pakistan",
+    role: "Engineering HQ",
+    address: "Bahria Town Phase 8, Islamabad",
+    email: "info@logixofficial.site",
+    phone: "+92 349 9780508",
+    phoneHref: "tel:+923499780508",
     timezone: "UTC+5 (PKT)",
-  },
-  {
-    city: "Lahore, Pakistan",
-    role: "Mobile & AI Systems Lab",
-    address: "Gulberg III, Tech Hub Center, Level 4",
-    email: "lahore@logix.dev",
-    phone: "+92 (42) 3578-4100",
-    timezone: "UTC+5 (PKT)",
-  },
-  {
-    city: "London, United Kingdom",
-    role: "European Client Operations",
-    address: "70 St Mary Axe, City of London, EC3A 8EP",
-    email: "london@logix.dev",
-    phone: "+44 20 7946 0912",
-    timezone: "UTC+0 (GMT/BST)",
-  },
-  {
-    city: "Austin, United States",
-    role: "Americas Strategy & Partnerships",
-    address: "500 W 2nd St, Suite 1900, Austin, TX 78701",
-    email: "austin@logix.dev",
-    phone: "+1 (512) 555-0199",
-    timezone: "UTC-5 (CDT)",
   },
 ];
 
@@ -110,16 +87,16 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Global Office Locations */}
+        {/* Office Location */}
         <section id="offices" className="bg-muted py-16 sm:py-20 lg:py-28 border-b border-border">
           <div className="container-x">
             <SectionHeader
-              eyebrow="GLOBAL REACH"
-              title="Our engineering hubs and regional offices."
-              description="With synchronized timezones across the Americas, Europe, and Asia, our pods provide round-the-clock delivery capability."
+              eyebrow="OUR OFFICE"
+              title="Our engineering office in Islamabad."
+              description="Based in Islamabad, our team works closely with clients across time zones, delivering dependable and responsive support for every project."
             />
 
-            <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <StaggerContainer className="grid gap-6 w-full sm:max-w-sm">
               {offices.map((office) => (
                 <StaggerItem key={office.city}>
                   <MotionCardWrapper>
@@ -131,7 +108,11 @@ export default function ContactPage() {
                         <p className="mt-4 text-xs leading-5 text-muted-foreground">{office.address}</p>
                       </div>
                       <div className="mt-6 pt-4 border-t border-border space-y-1 text-xs">
-                        <p className="text-muted-foreground">{office.phone}</p>
+                        <p>
+                          <a href={office.phoneHref} className="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
+                            {office.phone}
+                          </a>
+                        </p>
                         <p>
                           <a href={`mailto:${office.email}`} className="text-brand-strong font-semibold hover:underline break-all">
                             {office.email}

@@ -11,7 +11,7 @@ const internshipRoles: InternshipRole[] = [
     title: "Software Engineering Intern (Fullstack Web)",
     department: "Web Platform Pod",
     location: "100% Remote",
-    type: "Internship (3–6 Months)",
+    type: "Internship (2–3 Months)",
     description:
       "Work directly alongside senior engineers shipping production features using Next.js App Router, React, TypeScript, and modern Node.js services.",
   },
@@ -19,7 +19,7 @@ const internshipRoles: InternshipRole[] = [
     title: "Mobile App Development Intern (React Native / Flutter)",
     department: "Mobile Engineering Pod",
     location: "100% Remote",
-    type: "Internship (3–6 Months)",
+    type: "Internship (2–3 Months)",
     description:
       "Build user-facing mobile interfaces and assist in engineering cross-platform apps with React Native, TypeScript, and native mobile device integrations.",
   },
@@ -27,7 +27,7 @@ const internshipRoles: InternshipRole[] = [
     title: "Cloud & DevOps Engineering Intern",
     department: "Infrastructure Pod",
     location: "100% Remote",
-    type: "Internship (3–6 Months)",
+    type: "Internship (2–3 Months)",
     description:
       "Learn modern infrastructure automation, Docker containerization, CI/CD pipelines with GitHub Actions, and cloud deployments on AWS/GCP.",
   },
@@ -35,7 +35,7 @@ const internshipRoles: InternshipRole[] = [
     title: "UI/UX & Product Design Intern",
     department: "Design Systems Pod",
     location: "100% Remote",
-    type: "Internship (3–6 Months)",
+    type: "Internship (2–3 Months)",
     description:
       "Collaborate with lead designers on Figma design systems, wireframes, user journeys, and component library maintenance for client platforms.",
   },
@@ -43,7 +43,7 @@ const internshipRoles: InternshipRole[] = [
     title: "AI & Machine Learning Intern",
     department: "AI & Automation Pod",
     location: "100% Remote",
-    type: "Internship (3–6 Months)",
+    type: "Internship (2–3 Months)",
     description:
       "Contribute to LLM-powered applications, document processing pipelines, prompt workflows, and automated retrieval-augmented generation (RAG) systems.",
   },
@@ -51,7 +51,7 @@ const internshipRoles: InternshipRole[] = [
     title: "Backend & Systems Engineering Intern",
     department: "Core Systems Pod",
     location: "100% Remote",
-    type: "Internship (3–6 Months)",
+    type: "Internship (2–3 Months)",
     description:
       "Build high-throughput REST and GraphQL APIs, optimize relational database schemas, and implement scalable microservices.",
   },
@@ -59,7 +59,7 @@ const internshipRoles: InternshipRole[] = [
     title: "QA & Test Automation Intern",
     department: "Quality Engineering Pod",
     location: "100% Remote",
-    type: "Internship (3–6 Months)",
+    type: "Internship (2–3 Months)",
     description:
       "Learn automated end-to-end testing with Playwright, write regression test suites, and ensure zero-defect software releases.",
   },
@@ -79,7 +79,7 @@ export function InternshipList() {
       title: "General Engineering / Design Internship",
       department: "Open Pod Application",
       location: "100% Remote",
-      type: "Internship (3–6 Months)",
+      type: "Internship (2–3 Months)",
       description:
         "Open application for ambitious students who want to contribute across frontend, backend, mobile, design, or AI.",
     });

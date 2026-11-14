@@ -1,36 +1,56 @@
-import Image from "next/image";
+import { BadgeCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export type TeamMember = {
   name: string;
   role: string;
   bio: string;
-  image: string;
   tag?: string;
 };
 
+function initialsOf(name: string) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]!.toUpperCase())
+    .join("");
+}
+
 function MemberCard({ member }: { member: TeamMember }) {
   return (
-    <article className="group flex h-full w-[250px] sm:w-[290px] -rotate-2 sm:-rotate-3 flex-col justify-between rounded-xl border border-border bg-card p-4 sm:p-5 shadow-md transition-all duration-300 hover:z-10 hover:-translate-y-3 hover:rotate-0 hover:shadow-2xl">
-      <div>
-        <div className="relative mb-3.5 h-40 w-full overflow-hidden rounded-lg border border-border bg-muted sm:h-48 sm:mb-4">
-          <Image
-            src={member.image}
-            alt={member.name}
-            fill
-            sizes="(max-width: 640px) 250px, 290px"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        </div>
-        <h3 className="text-base sm:text-lg font-bold text-primary">{member.name}</h3>
-        <p className="text-xs font-semibold text-brand-strong">{member.role}</p>
-        <p className="mt-2.5 sm:mt-3 text-xs leading-5 text-muted-foreground">{member.bio}</p>
-      </div>
-      <div className="mt-4 sm:mt-5 flex items-center justify-between border-t border-border pt-3 text-xs text-muted-foreground">
-        <span>Verified Logix Lead</span>
-        <Badge variant="brand" dot={false}>
+    <article className="group relative flex h-full w-[260px] sm:w-[300px] -rotate-2 sm:-rotate-3 flex-col overflow-hidden rounded-xl border border-border bg-card p-5 sm:p-6 shadow-md transition-all duration-300 hover:z-10 hover:-translate-y-3 hover:rotate-0 hover:shadow-2xl hover:border-brand-strong/40">
+      {/* Brand accent strip + soft glow give the card visual weight without a photo */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand via-brand-strong/70 to-transparent"
+      />
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-12 -top-12 size-36 rounded-full bg-brand/10 blur-2xl transition-opacity duration-300 group-hover:opacity-100 opacity-70"
+      />
+
+      <div className="relative flex items-start justify-between gap-3">
+        <span
+          aria-hidden="true"
+          className="inline-flex size-12 sm:size-14 shrink-0 select-none items-center justify-center rounded-xl border border-brand-strong/20 bg-accent text-base sm:text-lg font-bold tracking-wide text-brand-strong"
+        >
+          {initialsOf(member.name)}
+        </span>
+        <Badge variant="brand" dot={false} className="mt-1 shrink-0">
           {member.tag ?? "Core"}
         </Badge>
+      </div>
+
+      <div className="relative mt-4 sm:mt-5 flex flex-1 flex-col">
+        <h3 className="text-base sm:text-lg font-bold leading-snug text-primary">{member.name}</h3>
+        <p className="mt-0.5 text-xs font-semibold text-brand-strong">{member.role}</p>
+        <p className="mt-3 flex-1 text-xs leading-5 text-muted-foreground">{member.bio}</p>
+      </div>
+
+      <div className="relative mt-5 flex items-center gap-1.5 border-t border-border pt-3 text-xs text-muted-foreground">
+        <BadgeCheck className="size-3.5 shrink-0 text-brand-strong" aria-hidden="true" />
+        <span>Verified Logix Lead</span>
       </div>
     </article>
   );
@@ -66,4 +86,3 @@ export function LeadershipDeck({ members }: { members: TeamMember[] }) {
     </div>
   );
 }
-

@@ -24,10 +24,7 @@ const columns = [
   {
     title: "Offices",
     links: [
-      { label: "Karachi, PK (Engineering HQ)", href: "/contact#offices" },
-      { label: "Lahore, PK (Mobile Lab)", href: "/contact#offices" },
-      { label: "London, UK (Europe)", href: "/contact#offices" },
-      { label: "Austin, US (Americas)", href: "/contact#offices" },
+      { label: "Islamabad, PK", href: "/contact#offices" },
     ],
   },
 ];
@@ -44,10 +41,10 @@ export function Footer() {
             </p>
             <div className="mt-5 space-y-1 text-sm text-white/60">
               <p>
-                <a href="mailto:hello@logix.dev" className="hover:text-brand transition-colors break-all">hello@logix.dev</a>
+                <a href="mailto:info@logixofficial.site" className="hover:text-brand transition-colors break-all">info@logixofficial.site</a>
               </p>
               <p>
-                <a href="tel:+15550123456" className="hover:text-brand transition-colors">+1 (555) 012-3456</a>
+                <a href="tel:+923499780508" className="hover:text-brand transition-colors whitespace-nowrap">+92 349 9780508</a>
               </p>
             </div>
           </div>

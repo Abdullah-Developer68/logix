@@ -45,8 +45,8 @@ export default function InternshipsPage() {
           <div className="container-x">
             <div className="relative h-72 sm:h-80 w-full overflow-hidden rounded-2xl border border-border/80 shadow-xl">
               <Image
-                src="/images/about/team-office.jpg"
-                alt="Logix engineering work environment"
+                src="/images/about/islamabad-office.jpg"
+                alt="Logix engineering office in Islamabad"
                 fill
                 sizes="(max-width: 1200px) 100vw, 1200px"
                 className="object-cover"

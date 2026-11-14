@@ -268,7 +268,7 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
                 <Input
                   id="student-name"
                   required
-                  placeholder="e.g. Maya Johnson"
+                  placeholder="Your Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   disabled={loading}
@@ -285,7 +285,7 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
                     id="student-email"
                     required
                     type="email"
-                    placeholder="you@university.edu"
+                    placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={loading}
@@ -298,7 +298,7 @@ export function ApplyModal({ isOpen, onClose, role }: ApplyModalProps) {
                   <Input
                     id="student-phone"
                     type="tel"
-                    placeholder="+1 (555) 000-0000"
+                    placeholder="Phone Number"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     disabled={loading}

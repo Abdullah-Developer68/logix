@@ -41,21 +41,21 @@ export function ContactForm() {
         <label htmlFor="name" className="text-xs font-semibold uppercase tracking-wider text-primary">
           Your Name *
         </label>
-        <Input id="name" required placeholder="Alex Mercer" />
+        <Input id="name" required placeholder="Your Name" />
       </div>
 
       <div className="flex flex-col gap-1.5">
         <label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-primary">
           Work Email *
         </label>
-        <Input id="email" required type="email" placeholder="you@company.com" />
+        <Input id="email" required type="email" placeholder="Email" />
       </div>
 
       <div className="flex flex-col gap-1.5">
         <label htmlFor="company" className="text-xs font-semibold uppercase tracking-wider text-primary">
           Company / Organization
         </label>
-        <Input id="company" placeholder="Northwind Logistics" />
+        <Input id="company" placeholder="Your Company" />
       </div>
 
       <div className="flex flex-col gap-1.5">

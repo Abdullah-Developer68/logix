@@ -49,69 +49,59 @@ const milestones = [
 
 const leadership: TeamMember[] = [
   {
-    name: "Zain Malik",
+    name: "Usman Qureshi",
     role: "Managing Director & Co-Founder",
     bio: "Former Staff Engineer at global tech firms. 14+ years designing high-throughput distributed systems.",
-    image: "/images/team/zain.jpg",
   },
   {
     name: "Ayesha Tariq",
     role: "VP of Product Engineering",
     bio: "Specializes in Next.js architectures, scalable microfrontends, and rapid MVP execution.",
-    image: "/images/team/ayesha.jpg",
   },
   {
-    name: "David Chen",
+    name: "Daniyal Raza",
     role: "Head of Cloud & Infrastructure",
     bio: "AWS & GCP certified architect with deep experience in SOC2 compliance and zero-downtime migrations.",
-    image: "/images/team/david.jpg",
   },
   {
-    name: "Sarah Jenkins",
+    name: "Mahnoor Ahmed",
     role: "Director of UX & Design Systems",
     bio: "Passionate about accessible human-centered interfaces, typography, and cohesive design tokens.",
-    image: "/images/team/sarah.jpg",
   },
   {
-    name: "Robert Hale",
+    name: "Bilal Hashmi",
     role: "Principal Security Engineer",
     bio: "Former red-team lead. Owns threat modeling, penetration testing and SOC2 / ISO 27001 readiness for every build.",
-    image: "/images/team/robert.jpg",
     tag: "Security",
   },
   {
-    name: "Marco Bellini",
+    name: "Faisal Mehmood",
     role: "Head of Mobile Engineering",
     bio: "Ships Flutter and React Native apps used by millions, with a relentless focus on startup time and offline-first UX.",
-    image: "/images/team/marco.jpg",
     tag: "Mobile",
   },
   {
-    name: "Amara Okafor",
+    name: "Zainab Farooq",
     role: "Director of Data & AI",
     bio: "Builds LLM-powered assistants, retrieval pipelines and analytics platforms that turn raw data into decisions.",
-    image: "/images/team/amara.jpg",
     tag: "AI",
   },
   {
-    name: "Rafael Reyes",
+    name: "Saad Rehman",
     role: "Engineering Manager, Platform",
     bio: "Leads delivery pods end to end - from sprint planning and code review culture to calm, predictable releases.",
-    image: "/images/team/rafael.jpg",
     tag: "Delivery",
   },
   {
-    name: "Emily Carter",
+    name: "Mariam Iqbal",
     role: "Head of Client Success",
     bio: "Your single point of accountability. Keeps scope, budget and communication transparent from kickoff to launch.",
-    image: "/images/team/emily.jpg",
     tag: "Success",
   },
   {
-    name: "Hannah Brooks",
+    name: "Hina Siddiqui",
     role: "Lead QA & Test Automation",
     bio: "Designs end-to-end test suites and CI quality gates so regressions are caught long before customers see them.",
-    image: "/images/team/hannah.jpg",
     tag: "Quality",
   },
 ];
@@ -148,23 +138,24 @@ export default function AboutPage() {
             <FadeIn>
               <div className="relative h-[360px] sm:h-[440px] md:h-[480px] w-full overflow-hidden rounded-2xl border border-border/80 shadow-2xl">
                 <Image
-                  src="/images/about/team-office.jpg"
-                  alt="Logix engineering studio and collaborative workspace"
+                  src="/images/about/islamabad-office.jpg"
+                  alt="Logix engineering office in Islamabad"
                   fill
                   priority
+                  sizes="(max-width: 1200px) 100vw, 1200px"
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050c18]/95 via-[#050c18]/45 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 sm:bottom-10 sm:left-10 sm:right-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 text-white">
                   <div>
                     <Badge variant="brand" dot className="bg-brand text-primary font-semibold">
-                      Engineering Hubs
+                      Engineering Hub
                     </Badge>
                     <h3 className="mt-2.5 text-lg sm:text-2xl font-bold text-white">
                       Where craft meets velocity.
                     </h3>
                     <p className="mt-1 text-xs sm:text-sm text-white/80 max-w-lg">
-                      Our distributed engineering hubs in Karachi, Lahore, London, and Austin build around asynchronous deep work and rapid shipping.
+                      Our engineering hub in Islamabad builds around asynchronous deep work and rapid shipping.
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-2 sm:gap-3 shrink-0">

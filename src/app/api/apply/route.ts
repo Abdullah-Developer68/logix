@@ -1,16 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+const MAX_LEN = { name: 120, email: 254, phone: 40, role: 120, note: 4000 } as const;
+const EMAIL_RE = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[^\s@<>()[\]\\,;:"]{2,}$/;
+const ALLOWED_RESUME_TYPES: Record<string, string> = {
+  pdf: "application/pdf",
+  doc: "application/msword",
+  docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+};
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/** Strip control characters (incl. CR/LF) from single-line fields. */
+function singleLine(value: string): string {
+  return value.replace(/[\u0000-\u001f\u007f]+/g, " ").trim();
+}
+
+function field(formData: FormData, key: string): string {
+  const v = formData.get(key);
+  return typeof v === "string" ? v.trim() : "";
+}
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
 
-    const name = formData.get("name")?.toString().trim();
-    const email = formData.get("email")?.toString().trim();
-    const phone = formData.get("phone")?.toString().trim() || "Not provided";
-    const role = formData.get("role")?.toString().trim() || "General Internship";
-    const note = formData.get("note")?.toString().trim() || "None";
-    const resumeFile = formData.get("resume") as File | null;
+    const name = singleLine(field(formData, "name"));
+    const email = singleLine(field(formData, "email"));
+    const phone = singleLine(field(formData, "phone")) || "Not provided";
+    const role = singleLine(field(formData, "role")) || "General Internship";
+    const note = field(formData, "note").replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, "") || "None";
+    const resumeFile = formData.get("resume");
 
     if (!name || !email) {
       return NextResponse.json(
@@ -19,7 +46,27 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!resumeFile || typeof resumeFile === "string" || resumeFile.size === 0) {
+    if (
+      name.length > MAX_LEN.name ||
+      email.length > MAX_LEN.email ||
+      phone.length > MAX_LEN.phone ||
+      role.length > MAX_LEN.role ||
+      note.length > MAX_LEN.note
+    ) {
+      return NextResponse.json(
+        { error: "One or more fields are too long." },
+        { status: 400 },
+      );
+    }
+
+    if (!EMAIL_RE.test(email)) {
+      return NextResponse.json(
+        { error: "Please provide a valid email address." },
+        { status: 400 },
+      );
+    }
+
+    if (!(resumeFile instanceof File) || resumeFile.size === 0) {
       return NextResponse.json(
         { error: "A valid resume file is required." },
         { status: 400 },
@@ -35,11 +82,45 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Convert resume file to buffer for email attachment
+    // Only accept PDF / Word documents, and derive the MIME type from the
+    // extension rather than trusting the client-supplied type.
+    const ext = (resumeFile.name.split(".").pop() || "").toLowerCase();
+    const resumeMimeType = ALLOWED_RESUME_TYPES[ext];
+    if (!resumeMimeType) {
+      return NextResponse.json(
+        { error: "Resume must be a PDF or Word document (.pdf, .doc, .docx)." },
+        { status: 400 },
+      );
+    }
+
     const arrayBuffer = await resumeFile.arrayBuffer();
     const resumeBuffer = Buffer.from(arrayBuffer);
-    const resumeFileName = resumeFile.name || "resume.pdf";
-    const resumeMimeType = resumeFile.type || "application/pdf";
+
+    // Verify file signature matches the extension.
+    const isPdf = resumeBuffer.subarray(0, 5).toString("latin1") === "%PDF-";
+    const isZip = resumeBuffer[0] === 0x50 && resumeBuffer[1] === 0x4b; // .docx
+    const isOle = resumeBuffer.subarray(0, 4).equals(Buffer.from([0xd0, 0xcf, 0x11, 0xe0])); // .doc
+    if ((ext === "pdf" && !isPdf) || (ext === "docx" && !isZip) || (ext === "doc" && !isOle)) {
+      return NextResponse.json(
+        { error: "The resume file appears to be corrupted or is not a real PDF/Word document." },
+        { status: 400 },
+      );
+    }
+
+    const baseName = resumeFile.name
+      .slice(0, -(ext.length + 1))
+      .replace(/[^\w.\- ]+/g, "_")
+      .slice(0, 80) || "resume";
+    const resumeFileName = `${baseName}.${ext}`;
+
+    const h = {
+      name: escapeHtml(name),
+      email: escapeHtml(email),
+      phone: escapeHtml(phone),
+      role: escapeHtml(role),
+      note: escapeHtml(note),
+      file: escapeHtml(resumeFileName),
+    };
 
     // Recipient email - configurable via env or placeholder
     // The user will provide the exact email later.
@@ -55,16 +136,7 @@ export async function POST(request: NextRequest) {
     const smtpPass = process.env.SMTP_PASS;
     const smtpFrom = process.env.SMTP_FROM || `"Logix Talent Portal" <notifications@logix.dev>`;
 
-    console.log("====================================================");
-    console.log("[INTERNSHIP APPLICATION RECEIVED]");
-    console.log(`Role: ${role}`);
-    console.log(`Applicant Name: ${name}`);
-    console.log(`Applicant Email: ${email}`);
-    console.log(`Phone: ${phone}`);
-    console.log(`Resume: ${resumeFileName} (${Math.round(resumeFile.size / 1024)} KB, ${resumeMimeType})`);
-    console.log(`Note: ${note}`);
-    console.log(`Notification Target: ${recipientEmail}`);
-    console.log("====================================================");
+    console.log(`[INTERNSHIP APPLICATION RECEIVED] role="${role}" resume=${ext} ${Math.round(resumeFile.size / 1024)}KB`);
 
     if (smtpHost && smtpUser && smtpPass) {
       const transporter = nodemailer.createTransport({
@@ -103,27 +175,27 @@ Resume attached: ${resumeFileName}
               <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
                 <tr>
                   <td style="padding: 8px 0; color: #64748b; width: 140px; font-weight: 600;">Position Applied:</td>
-                  <td style="padding: 8px 0; font-weight: 700; color: #0f172a;">${role}</td>
+                  <td style="padding: 8px 0; font-weight: 700; color: #0f172a;">${h.role}</td>
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; color: #64748b; font-weight: 600;">Full Name:</td>
-                  <td style="padding: 8px 0; color: #0f172a;">${name}</td>
+                  <td style="padding: 8px 0; color: #0f172a;">${h.name}</td>
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; color: #64748b; font-weight: 600;">Email:</td>
-                  <td style="padding: 8px 0;"><a href="mailto:${email}" style="color: #0e9983; text-decoration: none;">${email}</a></td>
+                  <td style="padding: 8px 0;"><a href="mailto:${encodeURIComponent(email)}" style="color: #0e9983; text-decoration: none;">${h.email}</a></td>
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; color: #64748b; font-weight: 600;">Phone:</td>
-                  <td style="padding: 8px 0; color: #0f172a;">${phone}</td>
+                  <td style="padding: 8px 0; color: #0f172a;">${h.phone}</td>
                 </tr>
               </table>
               <div style="margin-top: 20px; padding: 16px; background-color: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0;">
                 <p style="margin: 0 0 8px 0; font-weight: 600; color: #334155; font-size: 13px;">Applicant Note:</p>
-                <p style="margin: 0; color: #475569; font-size: 14px; white-space: pre-wrap;">${note}</p>
+                <p style="margin: 0; color: #475569; font-size: 14px; white-space: pre-wrap;">${h.note}</p>
               </div>
               <div style="margin-top: 20px; padding: 12px 16px; background-color: #f0fdfa; border-radius: 6px; border: 1px solid #99f6e4; color: #0f766e; font-size: 13px;">
-                📎 <strong>Resume Attached:</strong> ${resumeFileName} (${Math.round(resumeFile.size / 1024)} KB)
+                📎 <strong>Resume Attached:</strong> ${h.file} (${Math.round(resumeFile.size / 1024)} KB)
               </div>
             </div>
             <div style="background-color: #f8fafc; padding: 16px 24px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #94a3b8; text-align: center;">
@@ -151,12 +223,6 @@ Resume attached: ${resumeFileName}
     return NextResponse.json({
       success: true,
       message: "Application submitted successfully.",
-      applicant: {
-        name,
-        email,
-        role,
-        resume: resumeFileName,
-      },
     });
   } catch (err: unknown) {
     console.error("[APPLICATION ERROR]", err);

@@ -95,10 +95,10 @@ export function Header() {
         <div className="hidden items-center gap-3 lg:gap-4 md:flex">
           <ThemeToggle />
           <a
-            href="tel:+15550123456"
-            className="hidden text-xs font-medium text-muted-foreground hover:text-foreground transition-colors xl:inline-block"
+            href="tel:+923499780508"
+            className="hidden whitespace-nowrap text-xs font-medium text-muted-foreground hover:text-foreground transition-colors xl:inline-block"
           >
-            +1 (555) 012-3456
+            +92 349 9780508
           </a>
           <ButtonLink href="/contact" size="sm" variant="default">
             Get a quote
@@ -157,8 +157,8 @@ export function Header() {
             })}
           </nav>
           <div className="mt-5 flex flex-col gap-3 border-t border-border pt-4">
-            <a href="tel:+15550123456" className="text-xs sm:text-sm font-medium text-muted-foreground">
-              Call us: +1 (555) 012-3456
+            <a href="tel:+923499780508" className="text-xs sm:text-sm font-medium text-muted-foreground">
+              Call us: +92 349 9780508
             </a>
             <ButtonLink href="/contact" size="default" className="w-full justify-center" onClick={() => setMobileMenuOpen(false)}>
               Get a quote
