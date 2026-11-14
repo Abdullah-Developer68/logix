@@ -19,7 +19,10 @@ function initialsOf(name: string) {
 
 function MemberCard({ member }: { member: TeamMember }) {
   return (
-    <article className="group relative flex h-full w-[260px] sm:w-[300px] -rotate-2 sm:-rotate-3 flex-col overflow-hidden rounded-xl border border-border bg-card p-5 sm:p-6 shadow-md transition-[transform,box-shadow,border-color] duration-300 hover:z-10 hover:-translate-y-3 hover:rotate-0 hover:shadow-2xl hover:border-brand-strong/40">
+    // Stable, untransformed hover target; the tilted/lifted card is the inner
+    // <article> (pointer-events-none) so its movement can't change :hover.
+    <div className="group h-full w-[260px] sm:w-[300px]">
+    <article className="pointer-events-none relative flex h-full w-full -rotate-2 sm:-rotate-3 flex-col overflow-hidden rounded-xl border border-border bg-card p-5 sm:p-6 shadow-md transition-[transform,box-shadow,border-color] duration-300 group-hover:z-10 group-hover:-translate-y-3 group-hover:rotate-0 group-hover:shadow-2xl group-hover:border-brand-strong/40">
       {/* Brand accent strip + soft glow give the card visual weight without a photo */}
       <span
         aria-hidden="true"
@@ -53,6 +56,7 @@ function MemberCard({ member }: { member: TeamMember }) {
         <span>Verified Logix Lead</span>
       </div>
     </article>
+    </div>
   );
 }
 

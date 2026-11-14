@@ -106,7 +106,11 @@ const services = [
 
 function ServiceCard({ service }: { service: (typeof services)[number] }) {
   return (
-    <article className="group flex h-full w-[260px] sm:w-[310px] -rotate-2 sm:-rotate-3 flex-col justify-between overflow-hidden rounded-xl border border-border bg-card shadow-md transition-[transform,box-shadow] duration-300 hover:z-10 hover:-translate-y-3 hover:rotate-0 hover:shadow-2xl">
+    // The outer wrapper is the hover target and never moves, so its hit area
+    // stays put. The tilt/lift lives on the inner <article>, which ignores
+    // pointer events itself (only the link opts back in).
+    <div className="group h-full w-[260px] sm:w-[310px]">
+    <article className="pointer-events-none relative flex h-full w-full -rotate-2 sm:-rotate-3 flex-col justify-between overflow-hidden rounded-xl border border-border bg-card shadow-md transition-[transform,box-shadow] duration-300 group-hover:z-10 group-hover:-translate-y-3 group-hover:rotate-0 group-hover:shadow-2xl">
       <div>
         {/* Service image preview */}
         <div className="relative h-40 w-full overflow-hidden bg-muted sm:h-48">
@@ -137,13 +141,14 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
         <div className="border-t border-border/60 pt-3">
           <Link
             href="/contact"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary transition-colors hover:text-brand-strong"
+            className="pointer-events-auto inline-flex items-center gap-1.5 text-xs font-semibold text-primary transition-colors hover:text-brand-strong"
           >
             Get in touch →
           </Link>
         </div>
       </div>
     </article>
+    </div>
   );
 }
 
