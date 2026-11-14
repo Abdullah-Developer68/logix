@@ -22,6 +22,9 @@ export function getDb(): Database | null {
       max: 1,
       idle_timeout: 20,
       connect_timeout: 10,
+      // Supabase's transaction pooler hangs on pipelined parameterized
+      // queries, so send one query at a time on the connection.
+      max_pipeline: 1,
     });
   }
 
