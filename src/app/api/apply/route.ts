@@ -1,39 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { eq } from "drizzle-orm";
+import { getDb } from "@/db";
+import { internshipApplications } from "@/db/schema";
+import { createMailer } from "@/lib/mailer";
 import { isAllowedOrigin } from "@/lib/security/origin";
 import { checkRateLimit, getClientIp } from "@/lib/security/rate-limit";
+import { uploadResume } from "@/lib/storage";
+import {
+  APPLY_MAX_LEN,
+  EMAIL_RE,
+  escapeHtml,
+  field,
+  multiLine,
+  parseContentLength,
+  singleLine,
+} from "@/lib/validation";
 
-const MAX_LEN = { name: 120, email: 254, phone: 40, role: 120, note: 4000 } as const;
 // Vercel Functions reject request bodies over 4.5 MB, so keep the resume
 // limit (plus multipart overhead) safely below that.
 const MAX_RESUME_BYTES = 4 * 1024 * 1024; // 4 MB
 const MAX_MULTIPART_OVERHEAD_BYTES = 400 * 1024; // 400 KB
 const MAX_REQUEST_BYTES = MAX_RESUME_BYTES + MAX_MULTIPART_OVERHEAD_BYTES;
-const EMAIL_RE = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[^\s@<>()[\]\\,;:"]{2,}$/;
 const ALLOWED_RESUME_TYPES: Record<string, string> = {
   pdf: "application/pdf",
   doc: "application/msword",
   docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 };
-
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
-/** Strip control characters (incl. CR/LF) from single-line fields. */
-function singleLine(value: string): string {
-  return value.replace(/[\u0000-\u001f\u007f]+/g, " ").trim();
-}
-
-function field(formData: FormData, key: string): string {
-  const v = formData.get(key);
-  return typeof v === "string" ? v.trim() : "";
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -44,15 +36,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const contentLengthRaw = request.headers.get("content-length")?.trim();
-    if (contentLengthRaw && /^\d+$/.test(contentLengthRaw)) {
-      const contentLength = Number.parseInt(contentLengthRaw, 10);
-      if (contentLength > MAX_REQUEST_BYTES) {
-        return NextResponse.json(
-          { error: "Request payload is too large. Resume file size exceeds the 4MB limit." },
-          { status: 413 },
-        );
-      }
+    const contentLength = parseContentLength(request.headers);
+    if (contentLength !== null && contentLength > MAX_REQUEST_BYTES) {
+      return NextResponse.json(
+        { error: "Request payload is too large. Resume file size exceeds the 4MB limit." },
+        { status: 413 },
+      );
     }
 
     const clientIp = getClientIp(request.headers);
@@ -80,7 +69,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Honeypot trap: silently accept bot submissions without processing or emailing.
+    // Honeypot trap: silently accept bot submissions without processing, storing, or emailing.
     const honeypot = field(formData, "website");
     if (honeypot.length > 0) {
       return NextResponse.json({
@@ -91,9 +80,9 @@ export async function POST(request: NextRequest) {
 
     const name = singleLine(field(formData, "name"));
     const email = singleLine(field(formData, "email"));
-    const phone = singleLine(field(formData, "phone")) || "Not provided";
+    const phone = singleLine(field(formData, "phone")) || null;
     const role = singleLine(field(formData, "role")) || "General Internship";
-    const note = field(formData, "note").replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, "") || "None";
+    const note = multiLine(field(formData, "note")) || null;
     const resumeFile = formData.get("resume");
 
     if (!name || !email) {
@@ -104,11 +93,11 @@ export async function POST(request: NextRequest) {
     }
 
     if (
-      name.length > MAX_LEN.name ||
-      email.length > MAX_LEN.email ||
-      phone.length > MAX_LEN.phone ||
-      role.length > MAX_LEN.role ||
-      note.length > MAX_LEN.note
+      name.length > APPLY_MAX_LEN.name ||
+      email.length > APPLY_MAX_LEN.email ||
+      (phone !== null && phone.length > APPLY_MAX_LEN.phone) ||
+      role.length > APPLY_MAX_LEN.role ||
+      (note !== null && note.length > APPLY_MAX_LEN.note)
     ) {
       return NextResponse.json(
         { error: "One or more fields are too long." },
@@ -178,54 +167,72 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const baseName = resumeFile.name
-      .slice(0, dotIndex)
-      .replace(/[^\w.\- ]+/g, "_")
-      .slice(0, 80) || "resume";
+    const baseName =
+      resumeFile.name
+        .slice(0, dotIndex)
+        .replace(/[^\w.\- ]+/g, "_")
+        .slice(0, 80) || "resume";
     const resumeFileName = `${baseName}.${ext}`;
 
-    const h = {
-      name: escapeHtml(name),
-      email: escapeHtml(email),
-      phone: escapeHtml(phone),
-      role: escapeHtml(role),
-      note: escapeHtml(note),
-      file: escapeHtml(resumeFileName),
-    };
+    console.log(
+      `[INTERNSHIP APPLICATION RECEIVED] role="${role}" resume=${ext} ${Math.round(resumeFile.size / 1024)}KB`,
+    );
 
-    const recipientEmail =
-      process.env.INTERNSHIP_NOTIFICATION_EMAIL ||
-      process.env.HR_EMAIL ||
-      "info@logixofficial.site";
+    // 1. Upload resume to private Storage (continue with null path if storage fails).
+    let resumePath: string | null = null;
+    try {
+      resumePath = await uploadResume(resumeBuffer, resumeMimeType, ext);
+    } catch (err: unknown) {
+      console.error("[RESUME UPLOAD ERROR]", err instanceof Error ? err.message : "Unknown storage error");
+    }
 
-    // Check if SMTP environment variables are configured
-    const smtpHost = process.env.SMTP_HOST;
-    const parsedPort = process.env.SMTP_PORT ? Number.parseInt(process.env.SMTP_PORT, 10) : 587;
-    const smtpPort = Number.isInteger(parsedPort) && parsedPort > 0 && parsedPort <= 65535 ? parsedPort : 587;
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
-    const smtpFrom =
-      process.env.SMTP_FROM ||
-      (smtpUser ? `"Logix Internships" <${smtpUser}>` : `"Logix Internships" <info@logixofficial.site>`);
+    // 2. Persist application row to Postgres.
+    const db = getDb();
+    let insertedId: string | null = null;
+    if (db) {
+      try {
+        const [inserted] = await db
+          .insert(internshipApplications)
+          .values({
+            fullName: name,
+            email,
+            phone,
+            role,
+            note,
+            resumePath,
+            resumeFileName,
+            resumeMimeType,
+            resumeSizeBytes: resumeBuffer.length,
+          })
+          .returning({ id: internshipApplications.id });
+        insertedId = inserted?.id ?? null;
+      } catch (err: unknown) {
+        console.error("[APPLICATION DB ERROR]", err instanceof Error ? err.message : "Unknown database error");
+      }
+    }
 
-    console.log(`[INTERNSHIP APPLICATION RECEIVED] role="${role}" resume=${ext} ${Math.round(resumeFile.size / 1024)}KB`);
+    // 3. Send email notification if SMTP is configured.
+    const mailer = createMailer("Logix Internships");
+    let emailSent = false;
+    if (mailer) {
+      const displayPhone = phone ?? "Not provided";
+      const displayNote = note ?? "None";
+      const h = {
+        name: escapeHtml(name),
+        email: escapeHtml(email),
+        phone: escapeHtml(displayPhone),
+        role: escapeHtml(role),
+        note: escapeHtml(displayNote),
+        file: escapeHtml(resumeFileName),
+      };
 
-    if (smtpHost && smtpUser && smtpPass) {
-      const transporter = nodemailer.createTransport({
-        host: smtpHost,
-        port: smtpPort,
-        secure: smtpPort === 465,
-        connectionTimeout: 10_000,
-        greetingTimeout: 10_000,
-        socketTimeout: 15_000,
-        auth: {
-          user: smtpUser,
-          pass: smtpPass,
-        },
-      });
+      const recipientEmail =
+        process.env.INTERNSHIP_NOTIFICATION_EMAIL ||
+        process.env.HR_EMAIL ||
+        "info@logixofficial.site";
 
       const mailOptions = {
-        from: smtpFrom,
+        from: mailer.from,
         to: recipientEmail,
         replyTo: email,
         subject: `[New Internship Application] ${role} — ${name}`,
@@ -234,9 +241,9 @@ export async function POST(request: NextRequest) {
 Role: ${role}
 Name: ${name}
 Email: ${email}
-Phone: ${phone}
+Phone: ${displayPhone}
 Note / Message:
-${note}
+${displayNote}
 
 Resume attached: ${resumeFileName}
 `,
@@ -287,11 +294,37 @@ Resume attached: ${resumeFileName}
         ],
       };
 
-      await transporter.sendMail(mailOptions);
-      console.log("[EMAIL DISPATCHED] Successfully emailed internship application.");
+      try {
+        await mailer.transporter.sendMail(mailOptions);
+        emailSent = true;
+        console.log("[EMAIL DISPATCHED] Successfully emailed internship application.");
+      } catch (err: unknown) {
+        console.error("[APPLICATION EMAIL ERROR]", err instanceof Error ? err.message : "Unknown email error");
+      }
     } else {
       console.log(
         "[EMAIL READY] SMTP credentials not configured yet. Application validated and ready for dispatch once SMTP is provided.",
+      );
+    }
+
+    if (db && insertedId && emailSent) {
+      try {
+        await db
+          .update(internshipApplications)
+          .set({ emailSent: true })
+          .where(eq(internshipApplications.id, insertedId));
+      } catch (err: unknown) {
+        console.error("[APPLICATION DB UPDATE ERROR]", err instanceof Error ? err.message : "Unknown database error");
+      }
+    }
+
+    const neitherConfigured = !db && !mailer;
+    if (!insertedId && !emailSent && !neitherConfigured) {
+      return NextResponse.json(
+        {
+          error: "An error occurred while submitting your application. Please try again or email us directly.",
+        },
+        { status: 500 },
       );
     }
 
