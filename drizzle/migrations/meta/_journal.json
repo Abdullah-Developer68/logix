@@ -15,6 +15,13 @@
       "when": 1794667148047,
       "tag": "0001_revoke_public_roles",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794673772666,
+      "tag": "0002_application_pipeline",
+      "breakpoints": true
     }
   ]
 }

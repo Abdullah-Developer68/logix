@@ -17,13 +17,21 @@ export const internshipApplications = pgTable(
     resumeSizeBytes: integer("resume_size_bytes"),
     status: text("status").default("new").notNull(),
     emailSent: boolean("email_sent").default(false).notNull(),
+    // Admin pipeline fields, managed from the internship portal.
+    adminNotes: text("admin_notes"),
+    contactedAt: timestamp("contacted_at", { withTimezone: true }),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+    reviewedBy: text("reviewed_by"),
+    internRecordId: text("intern_record_id"),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [
+    index("internship_applications_status_idx").on(table.status),
     index("internship_applications_created_at_idx").on(table.createdAt.desc()),
     index("internship_applications_email_idx").on(table.email),
     check(
       "internship_applications_status_check",
-      sql`${table.status} IN ('new', 'reviewing', 'shortlisted', 'rejected', 'hired')`,
+      sql`${table.status} IN ('new', 'contacted', 'reviewing', 'shortlisted', 'rejected', 'hired')`,
     ),
   ],
 ).enableRLS();
