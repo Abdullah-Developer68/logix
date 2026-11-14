@@ -15,8 +15,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://logixofficial.site"),
   title: "Logix — Software that moves your business forward",
   description: "Logix designs, builds and scales digital products for ambitious businesses.",
+  openGraph: {
+    type: "website",
+    siteName: "Logix",
+    url: "https://logixofficial.site",
+    title: "Logix — Software that moves your business forward",
+    description: "Logix designs, builds and scales digital products for ambitious businesses.",
+  },
 };
 
 export const viewport: Viewport = {
