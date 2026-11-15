@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -8,11 +9,12 @@ import { ButtonLink } from "@/components/ui/button";
 import { Cta } from "@/components/sections/cta";
 import { InternshipList } from "@/components/internships/internship-list";
 
-export const metadata: Metadata = {
-  title: "Internships — Remote Engineering & Design Internships at Logix",
+export const metadata: Metadata = pageMetadata({
+  title: "Remote Software Engineering & Design Internships",
   description:
     "Launch your engineering journey with Logix. All internships are 100% remote with hands-on mentorship from senior practitioners, real-world production systems, and pathways to full-time roles.",
-};
+  path: "/internships",
+});
 
 export default function InternshipsPage() {
   return (

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -11,11 +12,12 @@ import { LeadershipDeck, type TeamMember } from "@/components/sections/leadershi
 import { TechnicalPrinciples } from "@/components/sections/technical-principles";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 
-export const metadata: Metadata = {
-  title: "About Us — Logix Software Consultancy",
+export const metadata: Metadata = pageMetadata({
+  title: "About Logix — Senior Software Engineering Team",
   description:
     "Learn about Logix: a senior team of engineers, designers, and strategists building reliable digital products since 2016.",
-};
+  path: "/about",
+});
 
 const stats = [
   { value: "250+", label: "Projects shipped", highlight: false },

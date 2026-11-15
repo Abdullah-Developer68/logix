@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { PageHero } from "@/components/ui/page-hero";
 
-export const metadata: Metadata = {
-  title: "Terms of Service — Logix Software Consultancy",
-  description: "Terms of service and engineering engagement agreements of Logix Technologies Inc.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Terms of Service",
+  description:
+    "Terms of service and engineering engagement agreements of Logix Technologies Inc.",
+  path: "/terms",
+});
 
 export default function TermsPage() {
   return (

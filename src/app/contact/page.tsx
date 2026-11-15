@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { PageHero } from "@/components/ui/page-hero";
@@ -8,11 +9,12 @@ import { Accordion } from "@/components/ui/accordion";
 import { ContactForm } from "@/components/contact/contact-form";
 import { FadeIn, StaggerContainer, StaggerItem, MotionCardWrapper } from "@/components/ui/motion";
 
-export const metadata: Metadata = {
-  title: "Contact Us & Start a Project — Logix Software Consultancy",
+export const metadata: Metadata = pageMetadata({
+  title: "Contact Logix — Start a Software Project",
   description:
     "Get in touch with Logix. Book a discovery call with a senior engineer or request a project estimate. Engineering office in Islamabad, Pakistan.",
-};
+  path: "/contact",
+});
 
 const offices = [
   {

@@ -17,15 +17,29 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://logixofficial.site"),
-  title: "Logix — Software that moves your business forward",
-  description: "Logix designs, builds and scales digital products for ambitious businesses.",
+  title: {
+    default: "Logix — Custom Software, Web & Mobile App Development",
+    template: "%s | Logix",
+  },
+  description:
+    "Logix is a software house in Islamabad, Pakistan building custom software, web and mobile apps, UI/UX, cloud and AI automation for startups and businesses.",
+  applicationName: "Logix",
   openGraph: {
     type: "website",
     siteName: "Logix",
+    locale: "en_US",
     url: "https://logixofficial.site",
-    title: "Logix — Software that moves your business forward",
-    description: "Logix designs, builds and scales digital products for ambitious businesses.",
+    title: "Logix — Custom Software, Web & Mobile App Development",
+    description:
+      "Custom software, web and mobile apps, UI/UX, cloud and AI automation from a senior team in Islamabad, Pakistan.",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Logix — Custom Software, Web & Mobile App Development",
+    description:
+      "Custom software, web and mobile apps, UI/UX, cloud and AI automation from a senior team in Islamabad, Pakistan.",
+  },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {

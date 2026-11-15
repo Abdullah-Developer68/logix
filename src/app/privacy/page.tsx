@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { PageHero } from "@/components/ui/page-hero";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy — Logix Software Consultancy",
-  description: "Privacy policy and client data confidentiality commitments of Logix Technologies Inc.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Privacy Policy",
+  description:
+    "Privacy policy and client data confidentiality commitments of Logix Technologies Inc.",
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (
